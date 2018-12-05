@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Properties
 {
-    public class Player : IPlayer
+    public static class GameSettings
     {
 
     }

@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Common\Fields.cs" />
-    <Compile Include="Assets\Scripts\Common\HudController.cs" />
+    <Compile Include="Assets\Scripts\LocalSettings\HudController.cs" />
     <Compile Include="Assets\Scripts\Common\MainCameraController.cs" />
     <Compile Include="Assets\Scripts\Common\Tools\FpsCounter.cs" />
     <Compile Include="Assets\Scripts\Common\Triangulator.cs" />
@@ -70,12 +70,15 @@
     <Compile Include="Assets\Scripts\Player\CharacterController2D.cs" />
     <Compile Include="Assets\Scripts\Player\DrawErase.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IEraser.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\ILine.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\Scripts\Properties\Eraser.cs" />
-    <Compile Include="Assets\Scripts\Properties\Game.cs" />
+    <Compile Include="Assets\Scripts\Game\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Properties\Line.cs" />
     <Compile Include="Assets\Scripts\Properties\Player.cs" />
-    <Compile Include="Assets\Scripts\Settings\DisplaySettings.cs" />
-    <Compile Include="Assets\Scripts\Settings\HudSettings.cs" />
+    <Compile Include="Assets\Scripts\LocalSettings\DisplaySettings.cs" />
+    <Compile Include="Assets\Scripts\LocalSettings\HudSettings.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Code/Github/LineFighter/LineFighter/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

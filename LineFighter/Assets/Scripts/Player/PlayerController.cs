@@ -1,17 +1,30 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Properties;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-
+public class PlayerController : MonoBehaviour
+{
+    #region Private Fields
     private Animator _animator;
     private Rigidbody2D _rigidbody;
     private float _speed;
+    private float _time = 0;
     private bool _moving = false;
     private bool _queueJump = false;
     private bool _isGrounded = false;
     private List<Direction> _keysDown;
+    #endregion Private Fields
 
+    #region Public Properties/Fields
+    public Eraser Eraser { get; set; }
+
+    public Line Line { get; set; }
+
+    public Player Player { get; set; }
+    #endregion Public Properties/Fields
+
+    #region Enum Types
     private enum Direction
     {
         None,
@@ -20,8 +33,10 @@ public class PlayerController : MonoBehaviour {
         Down,
         Left
     }
+    #endregion Enum Types
 
-	void Start ()
+    #region MonoBehaviour
+    void Start()
     {
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
@@ -29,9 +44,13 @@ public class PlayerController : MonoBehaviour {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        Eraser = new Eraser();
+        Line = new Line();
+        Player = new Player();
     }
-	
-	void Update ()
+
+    void Update()
     {
         // Movement
         if (Input.GetKeyDown(KeyCode.D))
@@ -55,6 +74,25 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _queueJump = true;
+        }
+
+        // Increment Draw/Erase Gauges
+        _time += Time.deltaTime;
+        if (Line.ResourceCurrent < Line.ResourceMax && _time < .1f)
+        {
+            if (Line.ResourceCurrent < Line.ResourceMax)
+            {
+                Line.ResourceCurrent += Line.RefillRate;
+            }
+
+            if (Eraser.ResourceCurrent < Eraser.ResourceMax)
+            {
+                Eraser.ResourceCurrent += Eraser.RefillRate;
+            }
+        }
+        else
+        {
+            _time = 0;
         }
     }
 
@@ -156,4 +194,5 @@ public class PlayerController : MonoBehaviour {
     {
         _rigidbody.velocity = Vector2.zero;
     }
+    #endregion MonoBehaviour
 }

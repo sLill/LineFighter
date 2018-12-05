@@ -1,15 +1,26 @@
-﻿public static class Eraser
+﻿namespace Assets.Scripts.Properties
 {
-	public enum EraserSize
+    public class Eraser : MonoBehaviour, IEraser<Eraser.EraserSize>
     {
-        Small,
-        Medium,
-        Large
+        #region Properties
+        public float Radius { get; set; }
+
+        public int RefillRate { get; set; }
+
+        public int ResourceCurrent { get; set; }
+
+        public int ResourceMax { get; set; }
+
+        public EraserSize Size { get; set; }
+        #endregion Properties
+
+        #region Enum Types
+        public enum EraserSize
+        {
+            Small,
+            Medium,
+            Large
+        }
+        #endregion Enum Types
     }
-	
-	public static EraserSize Size { get; set; }
-	
-    public static float Radius { get; set; }
-	
-	public static float RefillRate { get; set; }
 }

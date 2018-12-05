@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawErase   : MonoBehaviour
+public class DrawErase : MonoBehaviour
 {
-	private GameObject _cameraMain;
+    private Camera _cameraMain;
     private GameObject _hud;
-	private HudController _hudController;
-	private Transform _parentObject;
-	private GameObject _playerLines;
-	private EdgeCollider2D _lineCollider;
+    private HudController _hudController;
+    private Transform _parentObject;
+    private GameObject _playerLines;
+    private EdgeCollider2D _lineCollider;
     private GameObject _lineObject;
-	private Vector3 _mousePos;
+    private Vector3 _mousePos;
     private LineRenderer _renderer;
     private bool _isMousePressed = false;
 
@@ -19,24 +19,24 @@ public class DrawErase   : MonoBehaviour
 
     private void Start()
     {
-		_cameraMain = Camera.main;
+        _cameraMain = Camera.main;
         _hud = GameObject.Find(Fields.GameObjects.HUD);
-		_hudController = GameObject.FindObjectOfType<HudController>();
-		_parentObject = gameObject.GetComponentInParent<Transform>();
-		_playerLines = GameObject.Find(Fields.GameObjects.PlayerLines);
+        _hudController = GameObject.FindObjectOfType<HudController>();
+        _parentObject = gameObject.GetComponentInParent<Transform>();
+        _playerLines = GameObject.Find(Fields.GameObjects.PlayerLines);
     }
 
     void Update()
     {
-		switch(_hudController.DrawMode)
-		{
-			case HudController.DrawType.Draw:
-				DrawLine();
-				break;
-			case HudController.DrawType.Erase:
-				EraseLine();
-				break;
-		}		
+        switch (_hudController.DrawMode)
+        {
+            case HudController.DrawType.Draw:
+                DrawLine();
+                break;
+            case HudController.DrawType.Erase:
+                EraseLine();
+                break;
+        }
     }
 
     private void DrawLine()
@@ -104,7 +104,7 @@ public class DrawErase   : MonoBehaviour
         }
 
         if (_isMousePressed)
-        { 
+        {
             Ray mouseRay = _cameraMain.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D[] mouseHits = Physics2D.CircleCastAll(mouseRay.origin, Eraser.Radius, mouseRay.direction);
 
@@ -131,37 +131,26 @@ public class DrawErase   : MonoBehaviour
                         }
 
                         // Split into two lines
-						int firstLineSize = closestPointIndex - 1;
-						int secondLineSize = lineCollider.points.Length - closestPointIndex;
-						
-						Vector2[] firstLineV2Arr = new Vector2[firstLineSize];
-						Vector3[] firstLineV3Arr = new Vector3[firstLineSize];
-						
-						Vector2[] secondLineV2Arr = new Vector2[secondLineSize];
-						Vector3[] secondLineV3Arr = new Vector3[secondLineSize];
-						
-                        // List<Vector2> firstLineV2List = new List<Vector2>();
-                        // List<Vector3> firstLineV3List = new List<Vector3>();
+                        int firstLineSize = closestPointIndex;
+                        int secondLineSize = lineCollider.points.Length - closestPointIndex - 1;
 
-                        // List<Vector2> secondLineV2List = new List<Vector2>();
-                        // List<Vector3> secondLineV3List = new List<Vector3>();
+                        Vector2[] firstLineV2Arr = new Vector2[firstLineSize];
+                        Vector3[] firstLineV3Arr = new Vector3[firstLineSize];
+
+                        Vector2[] secondLineV2Arr = new Vector2[secondLineSize];
+                        Vector3[] secondLineV3Arr = new Vector3[secondLineSize];
 
                         for (int i = 0; i < lineCollider.points.Length; i++)
                         {
                             if (i < closestPointIndex)
                             {
-								firstLineV2Arr[i] = lineCollider.points[i];
-								firstLineV3Arr[i] = lineCollider.points[i];
-                                //firstLineV2List.Add(lineCollider.points[i]);
-                                //firstLineV3List.Add(lineCollider.points[i]);
+                                firstLineV2Arr[i] = lineCollider.points[i];
+                                firstLineV3Arr[i] = lineCollider.points[i];
                             }
                             else if (i > closestPointIndex)
                             {
-								secondLineV2Arr[i] = lineCollider.points[i];
-								secondLineV3Arr[i] = lineCollider.points[i];
-								
-                                //secondLineV2List.Add(lineCollider.points[i]);
-                                //secondLineV3List.Add(lineCollider.points[i]);
+                                secondLineV2Arr[i - closestPointIndex - 1] = lineCollider.points[i];
+                                secondLineV3Arr[i - closestPointIndex - 1] = lineCollider.points[i];
                             }
                         }
 
@@ -235,7 +224,7 @@ public class DrawErase   : MonoBehaviour
         }
     }
 
-        private void SetLineProperties(LineRenderer lineRenderer)
+    private void SetLineProperties(LineRenderer lineRenderer)
     {
         lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
         lineRenderer.startColor = new Color(255, 255, 255, 100);

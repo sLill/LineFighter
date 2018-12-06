@@ -5,9 +5,9 @@ using UnityEngine;
 public class DrawErase : MonoBehaviour
 {
     private Camera _cameraMain;
-    private GameObject _hud;
     private HudController _hudController;
     private Transform _parentObject;
+    private PlayerController _playerController;
     private GameObject _playerLines;
     private EdgeCollider2D _lineCollider;
     private GameObject _lineObject;
@@ -20,9 +20,9 @@ public class DrawErase : MonoBehaviour
     private void Start()
     {
         _cameraMain = Camera.main;
-        _hud = GameObject.Find(Fields.GameObjects.HUD);
         _hudController = GameObject.FindObjectOfType<HudController>();
         _parentObject = gameObject.GetComponentInParent<Transform>();
+        _playerController = GameObject.FindObjectOfType<PlayerController>();
         _playerLines = GameObject.Find(Fields.GameObjects.PlayerLines);
     }
 
@@ -80,7 +80,7 @@ public class DrawErase : MonoBehaviour
                 if (_pointsList.Count > 1)
                 {
                     _lineCollider = _lineObject.AddComponent<EdgeCollider2D>();
-                    _lineCollider.edgeRadius = Line.Thickness - 0.01f;
+                    _lineCollider.edgeRadius = _playerController.Line.Thickness - 0.01f;
                     _lineCollider.offset = new Vector2(0.0f, 0.04f);
                     Vector2[] vertices = new Vector2[_pointsList.Count];
 
@@ -106,7 +106,7 @@ public class DrawErase : MonoBehaviour
         if (_isMousePressed)
         {
             Ray mouseRay = _cameraMain.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D[] mouseHits = Physics2D.CircleCastAll(mouseRay.origin, Eraser.Radius, mouseRay.direction);
+            RaycastHit2D[] mouseHits = Physics2D.CircleCastAll(mouseRay.origin, _playerController.Eraser.Radius, mouseRay.direction);
 
             foreach (RaycastHit2D mouseHit in mouseHits)
             {
@@ -173,7 +173,7 @@ public class DrawErase : MonoBehaviour
                             lineRendererOne.SetPositions(firstLineV3Arr);
 
                             EdgeCollider2D lineColliderOne = firstLineObject.AddComponent<EdgeCollider2D>();
-                            lineColliderOne.edgeRadius = Line.Thickness - 0.01f;
+                            lineColliderOne.edgeRadius = _playerController.Line.Thickness - 0.01f;
                             lineColliderOne.offset = new Vector2(0.0f, 0.04f);
                             Vector2[] lineOneVertices = new Vector2[firstLineV2Arr.Length];
 
@@ -201,7 +201,7 @@ public class DrawErase : MonoBehaviour
                             lineRendererTwo.SetPositions(secondLineV3Arr);
 
                             EdgeCollider2D lineColliderTwo = secondLineObject.AddComponent<EdgeCollider2D>();
-                            lineColliderTwo.edgeRadius = Line.Thickness - 0.01f;
+                            lineColliderTwo.edgeRadius = _playerController.Line.Thickness - 0.01f;
                             lineColliderTwo.offset = new Vector2(0.0f, 0.04f);
                             Vector2[] lineTwoVertices = new Vector2[secondLineV2Arr.Length];
 
@@ -229,8 +229,8 @@ public class DrawErase : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
         lineRenderer.startColor = new Color(255, 255, 255, 100);
         lineRenderer.endColor = new Color(255, 255, 255, 100);
-        lineRenderer.startWidth = Line.Thickness;
-        lineRenderer.endWidth = Line.Thickness;
+        lineRenderer.startWidth = _playerController.Line.Thickness;
+        lineRenderer.endWidth = _playerController.Line.Thickness;
         lineRenderer.useWorldSpace = true;
     }
 }

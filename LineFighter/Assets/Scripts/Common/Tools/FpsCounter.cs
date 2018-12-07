@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 public class FpsCounter : MonoBehaviour
 {
+    #region Member Variables
     private Text _fpsText;
     private Stopwatch _stopwatch;
     private int _frameCounter = 0;
+    #endregion Member Variables
 
+    #region MonoBehaviour
     void Start()
     {
         _fpsText = this.GetComponentInParent<Text>();
@@ -33,4 +36,5 @@ public class FpsCounter : MonoBehaviour
             _stopwatch = Stopwatch.StartNew();
         }
     }
+    #endregion MonoBehaviour
 }

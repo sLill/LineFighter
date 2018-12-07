@@ -2,52 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MainMenuController : MonoBehaviour
 {
-
-	// Use this for initialization
-	void Start ()
+    #region MonoBehaviour
+    void Start()
     {
         InitializeMenuButtonEvents();
-
     }
+    #endregion MonoBehaviour
 
     #region Events
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Text textObject = eventData.pointerEnter.GetComponentInChildren<Text>();
-        textObject.color = Color.red;
-    }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        Text textObject = eventData.pointerEnter.GetComponentInChildren<Text>();
-        textObject.color = Color.white;
-    }
-
-    public void AboutButton_Clicked()
+    private void AboutButton_Clicked()
     {
 
     }
 
-    public void ExitButton_Clicked()
+    private void ExitButton_Clicked()
     {
 
     }
 
-    public void LordsOfLineButton_Clicked()
+    private void LordsOfLineButton_Clicked()
     {
 
     }
 
-    public void MultiplayerButton_Clicked()
+    private void MultiplayerButton_Clicked()
     {
 
     }
 
-    public void SettingsButton_Clicked()
+    private void SettingsButton_Clicked()
     {
 
     }

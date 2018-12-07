@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HudController : MonoBehaviour
 {
+    #region Member Variables
     private float _drawAlphaFocus;
     private float _drawAlphaUnfocus;
     private Image _eraserGauge;
@@ -16,6 +17,7 @@ public class HudController : MonoBehaviour
     private Image _pencilGaugeContainer;
     private SpriteRenderer _pencilSpriteRenderer;
     private PlayerController _playerController;
+    #endregion Member Variables
 
     public DrawType DrawMode { get; private set; }
 

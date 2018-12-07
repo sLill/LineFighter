@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DrawErase : MonoBehaviour
 {
+    #region Member Variables
     private Camera _cameraMain;
     private HudController _hudController;
     private Transform _parentObject;
@@ -14,9 +15,10 @@ public class DrawErase : MonoBehaviour
     private Vector3 _mousePos;
     private LineRenderer _renderer;
     private bool _isMousePressed = false;
+    private List<Vector2> _pointsList;
+    #endregion Member Variables
 
-    public List<Vector2> _pointsList;
-
+    #region MonoBehaviour
     private void Start()
     {
         _cameraMain = Camera.main;
@@ -38,7 +40,9 @@ public class DrawErase : MonoBehaviour
                 break;
         }
     }
+    #endregion MonoBehaviour
 
+    #region Private Methods
     private void DrawLine()
     {
         try
@@ -233,5 +237,6 @@ public class DrawErase : MonoBehaviour
         lineRenderer.endWidth = _playerController.Line.Thickness;
         lineRenderer.useWorldSpace = true;
     }
+    #endregion Private Methods
 }
 

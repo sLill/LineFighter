@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    #region Private Fields
+    #region Member Variables
     private Animator _animator;
     private Rigidbody2D _rigidbody;
     private float _speed;
@@ -14,15 +14,15 @@ public class PlayerController : MonoBehaviour
     private bool _queueJump = false;
     private bool _isGrounded = false;
     private List<Direction> _keysDown;
-    #endregion Private Fields
+    #endregion Member Variables
 
-    #region Public Properties/Fields
+    #region Public Properties
     public Eraser Eraser { get; set; }
 
     public Line Line { get; set; }
 
     public Player Player { get; set; }
-    #endregion Public Properties/Fields
+    #endregion Public Properties
 
     #region Enum Types
     private enum Direction

@@ -2,57 +2,67 @@
 {
     public static class Tags
     {
-        public static string LineObject { get { return "LineObject"; } }
+        public const string LineObject = "LineObject"; 
 
-        public static string SplitLine { get { return "SplitLine"; } }
+        public const string SplitLine = "SplitLine"; 
     }
 
     public static class GameObjects
     {
-        public static string EraserGauge { get { return "EraserGauge"; } }
+        public const string AboutButton = "AboutButton"; 
 
-        public static string EraserGaugeContainer { get { return "EraserGaugeContainer"; } }
+        public const string EraserGauge = "EraserGauge"; 
 
-        public static string EraserSprite { get { return "EraserSprite"; } }
+        public const string EraserGaugeContainer = "EraserGaugeContainer"; 
 
-        public static string EraserCursor { get { return "EraserCursor"; } }
+        public const string EraserSprite = "EraserSprite"; 
 
-        public static string FpsCounter { get { return "FpsCounter"; } }
+        public const string EraserCursor = "EraserCursor"; 
 
-        public static string Game { get { return "Game"; } }
+        public const string ExitButton = "ExitButton"; 
 
-        public static string HUD { get { return "HUD"; } }
+        public const string FpsCounter = "FpsCounter"; 
 
-        public static string LineObject { get { return "LineObject"; } }
+        public const string Game = "Game"; 
 
-        public static string MainCamera { get { return "MainCamera"; } }
+        public const string HUD = "HUD"; 
 
-        public static string PencilGauge { get { return "PencilGauge"; } }
+        public const string LineObject = "LineObject"; 
 
-        public static string PencilGaugeContainer { get { return "PencilGaugeContainer"; } }
+        public const string LordsOfLineButton = "LordsOfLineButton";
 
-        public static string PencilSprite { get { return "PencilSprite"; } }
+        public const string MainCamera = "MainCamera"; 
 
-        public static string Platform { get { return "Platform"; } }
+        public const string MultiplayerButton = "MultiplayerButton"; 
 
-        public static string Player { get { return "Player"; } }
+        public const string PencilGauge = "PencilGauge"; 
 
-        public static string PlayerLines { get { return "PlayerLines"; } }
+        public const string PencilGaugeContainer = "PencilGaugeContainer"; 
+
+        public const string PencilSprite = "PencilSprite"; 
+
+        public const string Platform = "Platform"; 
+
+        public const string Player = "Player"; 
+
+        public const string PlayerLines = "PlayerLines"; 
+
+        public const string SettingsButton = "SettingsButton"; 
     }
 
     public static class Animator
     {
-        public static string Airborne { get { return "Airborne"; } }
+        public const string Airborne = "Airborne"; 
 
-        public static string Moving { get { return "Moving"; } }
+        public const string Moving = "Moving"; 
 		
-        public static string Speed { get { return "Speed"; } }
+        public const string Speed = "Speed"; 
     }
 
     public static class AssetPaths
     {
-        public static string DrawCursor { get { return "Assets/Resources/Artwork/UI/Draw_Cursor.png"; } }
+        public const string DrawCursor = "Assets/Resources/Artwork/UI/Draw_Cursor.png"; 
 
-        public static string EraseCursorSmall { get { return "Assets/Resources/Artwork/UI/Erase_Cursor_Small.png"; } }
+        public const string EraseCursorSmall = "Assets/Resources/Artwork/UI/Erase_Cursor_Small.png"; 
     }
 }

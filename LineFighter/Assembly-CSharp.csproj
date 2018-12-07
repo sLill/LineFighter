@@ -72,9 +72,6 @@
     <Compile Include="Assets\Scripts\Interfaces\IEraser.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ILine.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayer.cs" />
-    <Compile Include="Assets\Scripts\LocalSettings\DisplaySettings.cs" />
-    <Compile Include="Assets\Scripts\LocalSettings\HudController.cs" />
-    <Compile Include="Assets\Scripts\LocalSettings\HudSettings.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterController2D.cs" />
     <Compile Include="Assets\Scripts\Player\DrawErase.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
@@ -82,6 +79,10 @@
     <Compile Include="Assets\Scripts\Properties\Eraser.cs" />
     <Compile Include="Assets\Scripts\Properties\Line.cs" />
     <Compile Include="Assets\Scripts\Properties\Player.cs" />
+    <Compile Include="Assets\Scripts\System\DisplaySettings.cs" />
+    <Compile Include="Assets\Scripts\UI\HudController.cs" />
+    <Compile Include="Assets\Scripts\UI\HudSettings.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Code/Github/LineFighter/LineFighter/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

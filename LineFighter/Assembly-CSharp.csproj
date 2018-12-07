@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Common\EncryptionEngine.cs" />
     <Compile Include="Assets\Scripts\Common\Fields.cs" />
     <Compile Include="Assets\Scripts\Common\MainCameraController.cs" />
     <Compile Include="Assets\Scripts\Common\Tools\FpsCounter.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Assets\Scripts\Interfaces\IEraser.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ILine.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayer.cs" />
+    <Compile Include="Assets\Scripts\Networking\LobbyController.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterController2D.cs" />
     <Compile Include="Assets\Scripts\Player\DrawErase.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
@@ -80,9 +82,12 @@
     <Compile Include="Assets\Scripts\Properties\Line.cs" />
     <Compile Include="Assets\Scripts\Properties\Player.cs" />
     <Compile Include="Assets\Scripts\System\DisplaySettings.cs" />
+    <Compile Include="Assets\Scripts\System\KeyboardSettings.cs" />
     <Compile Include="Assets\Scripts\UI\HudController.cs" />
     <Compile Include="Assets\Scripts\UI\HudSettings.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuButtonManager.cs" />
+    <Compile Include="Assets\Scripts\UI\SettingsMenuController.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Code/Github/LineFighter/LineFighter/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
@@ -327,6 +332,7 @@
       <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/Boo.Lang.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    HudController _hudController;
-    PlayerController _playerController;
+    #region Member Variables
+    private HudController _hudController;
+    private PlayerController _playerController;
+    #endregion Member Variables
 
     private void Awake()
     {
         HudSettings.FpsCounterActive = true;
-        HudSettings.DrawEraseResourceDisplay = false;
         DisplaySettings.FrameRateCap = 300;
-        DisplaySettings.UseVSync = 0;
+        DisplaySettings.VSyncEnabled = 0;
     }
 
     // Use this for initialization
@@ -44,8 +45,8 @@ public class GameController : MonoBehaviour
 
     private void InitDisplaySettings()
     {
-        QualitySettings.vSyncCount = DisplaySettings.UseVSync;
-        Application.targetFrameRate = 300;
+        QualitySettings.vSyncCount = DisplaySettings.VSyncEnabled;
+        Application.targetFrameRate = DisplaySettings.FrameRateCap;
     }
 }
 

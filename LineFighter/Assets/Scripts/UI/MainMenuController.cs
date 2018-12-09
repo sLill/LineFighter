@@ -7,9 +7,12 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    private GameObject _settingsPanel;
+
     #region MonoBehaviour
     void Start()
     {
+        InitializeMenu();
         InitializeMenuButtonEvents();
     }
     #endregion MonoBehaviour
@@ -38,11 +41,17 @@ public class MainMenuController : MonoBehaviour
 
     private void SettingsButton_Clicked()
     {
-
+        _settingsPanel.SetActive(true);
     }
     #endregion Events
 
     #region Private Methods
+    private void InitializeMenu()
+    {
+        _settingsPanel = GameObject.Find(Fields.GameObjects.SettingsPanel);
+        _settingsPanel.SetActive(false);
+    }
+
     private void InitializeMenuButtonEvents()
     {
         Button[] menuButtons = GameObject.FindObjectsOfType<Button>();

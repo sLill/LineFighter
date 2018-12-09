@@ -20,6 +20,12 @@
     {
         public const string AboutButton = "AboutButton";
 
+        public const string ApplyButton = "ApplyButton";
+
+        public const string CancelButton = "CancelButton";
+
+        public const string DisplayTab = "DisplayTab";
+
         public const string EraserGauge = "EraserGauge";
 
         public const string EraserGaugeContainer = "EraserGaugeContainer";
@@ -30,11 +36,17 @@
 
         public const string ExitButton = "ExitButton";
 
+        public const string EventSystem = "EventSystem";
+
         public const string FpsCounter = "FpsCounter";
 
         public const string Game = "Game";
 
         public const string HUD = "HUD";
+
+        public const string HudTab = "HudTab";
+
+        public const string KeyboardTab = "KeyboardTab";
 
         public const string LineObject = "LineObject";
 
@@ -55,6 +67,10 @@
         public const string Player = "Player";
 
         public const string PlayerLines = "PlayerLines";
+
+        public const string SavedText = "SavedText";
+
+        public const string SettingsPanel = "SettingsPanel";
 
         public const string SettingsButton = "SettingsButton";
     }

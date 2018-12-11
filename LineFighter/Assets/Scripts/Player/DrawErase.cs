@@ -21,11 +21,7 @@ public class DrawErase : MonoBehaviour
     #region MonoBehaviour
     private void Start()
     {
-        _cameraMain = Camera.main;
-        _hudController = GameObject.FindObjectOfType<HudController>();
-        _parentObject = gameObject.GetComponentInParent<Transform>();
-        _playerController = GameObject.FindObjectOfType<PlayerController>();
-        _playerLines = GameObject.Find(Fields.GameObjects.PlayerLines);
+
     }
 
     void Update()
@@ -41,6 +37,19 @@ public class DrawErase : MonoBehaviour
         }
     }
     #endregion MonoBehaviour
+
+    #region Public Methods
+    public void Initialize()
+    {
+        _cameraMain = Camera.main;
+        _hudController = GameObject.FindObjectOfType<HudController>();
+        _parentObject = gameObject.GetComponentInParent<Transform>();
+        _playerController = GameObject.FindObjectOfType<PlayerController>();
+        _playerLines = GameObject.Find(Fields.GameObjects.PlayerLines);
+
+        _pointsList = new List<Vector2>();
+    }
+    #endregion Public Methods
 
     #region Private Methods
     private void DrawLine()

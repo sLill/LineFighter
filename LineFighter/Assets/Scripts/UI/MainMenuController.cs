@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    private NetworkManager _networkManager;
+    private NetworkManagerHUD _networkManagerHud;
     private GameObject _settingsPanel;
 
     #region MonoBehaviour
@@ -26,7 +29,7 @@ public class MainMenuController : MonoBehaviour
 
     private void ExitButton_Clicked()
     {
-
+        Application.Quit();
     }
 
     private void LordsOfLineButton_Clicked()
@@ -36,7 +39,7 @@ public class MainMenuController : MonoBehaviour
 
     private void MultiplayerButton_Clicked()
     {
-
+        _networkManagerHud.showGUI = true;
     }
 
     private void SettingsButton_Clicked()
@@ -48,6 +51,9 @@ public class MainMenuController : MonoBehaviour
     #region Private Methods
     private void InitializeMenu()
     {
+        _networkManager = GameObject.FindObjectOfType<NetworkManager>();
+        _networkManagerHud = GameObject.FindObjectOfType<NetworkManagerHUD>();
+
         _settingsPanel = GameObject.Find(Fields.GameObjects.SettingsPanel);
         _settingsPanel.SetActive(false);
     }

@@ -7,13 +7,15 @@ public class PlayerController : MonoBehaviour
 {
     #region Member Variables
     private Animator _animator;
+    private DrawErase _drawErase;
+    private bool _isGrounded = false;
+    private List<Direction> _keysDown;
+    private bool _moving = false;
+    private GameObject _playerLines;
+    private bool _queueJump = false;
     private Rigidbody2D _rigidbody;
     private float _speed;
     private float _time = 0;
-    private bool _moving = false;
-    private bool _queueJump = false;
-    private bool _isGrounded = false;
-    private List<Direction> _keysDown;
     #endregion Member Variables
 
     #region Public Properties
@@ -48,6 +50,9 @@ public class PlayerController : MonoBehaviour
         Eraser = new Eraser();
         Line = new Line();
         Player = new Player();
+
+        InitializeProperties();
+        CreatePlayerLineObject();        
     }
 
     void Update()
@@ -195,4 +200,26 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = Vector2.zero;
     }
     #endregion MonoBehaviour
+
+    #region Private Methods
+    private void CreatePlayerLineObject()
+    {
+        _playerLines = new GameObject(Fields.GameObjects.PlayerLines);
+        _playerLines.tag = Fields.Tags.PlayerOne;
+        _drawErase = _playerLines.AddComponent<DrawErase>();
+        _drawErase.Initialize();
+    }
+
+    private void InitializeProperties()
+    {
+        this.Eraser.Radius = 0.21f;
+        this.Eraser.RefillRate = 30;
+        this.Eraser.ResourceMax = 1000;
+        this.Eraser.Size = Eraser.EraserSize.Small;
+        this.Line.RefillRate = 30;
+        this.Line.ResourceMax = 1000;
+        this.Line.LineGravity = true;
+        this.Line.Thickness = 0.13f;
+    }
+    #endregion Private Methods
 }

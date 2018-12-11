@@ -7,7 +7,6 @@ public class GameController : MonoBehaviour
 {
     #region Member Variables
     private HudController _hudController;
-    private PlayerController _playerController;
     #endregion Member Variables
 
     private void Awake()
@@ -22,15 +21,6 @@ public class GameController : MonoBehaviour
     {
         // Initialize game and player settings
         // These will be moved over to the Settings screen once it gets finished
-        _playerController = GameObject.FindObjectOfType<PlayerController>();
-        _playerController.Eraser.Radius = 0.21f;
-        _playerController.Eraser.RefillRate = 30;
-        _playerController.Eraser.ResourceMax = 1000;
-        _playerController.Eraser.Size = Eraser.EraserSize.Small;
-        _playerController.Line.RefillRate = 30;
-        _playerController.Line.ResourceMax = 1000;
-        _playerController.Line.LineGravity = true;
-        _playerController.Line.Thickness = 0.13f;
 
          _hudController = GameObject.FindObjectOfType<HudController>();
 

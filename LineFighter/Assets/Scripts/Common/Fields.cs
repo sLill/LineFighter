@@ -24,8 +24,6 @@
 
         public const string CancelButton = "CancelButton";
 
-        public const string DisplayTab = "DisplayTab";
-
         public const string EraserGauge = "EraserGauge";
 
         public const string EraserGaugeContainer = "EraserGaugeContainer";
@@ -43,10 +41,6 @@
         public const string Game = "Game";
 
         public const string HUD = "HUD";
-
-        public const string HudTab = "HudTab";
-
-        public const string KeyboardTab = "KeyboardTab";
 
         public const string LineObject = "LineObject";
 
@@ -96,8 +90,16 @@
 
     public static class Tags
     {
-        public const string LineObject = "LineObject"; 
+        public const string LineObject = "LineObject";
 
-        public const string SplitLine = "SplitLine"; 
+        public const string PlayerOne = "PlayerOne";
+
+        public const string PlayerTwo = "PlayerTwo";
+
+        public const string PlayerThree = "PlayerThree";
+
+        public const string PlayerFour = "PlayerFour";
+
+        public const string SplitLine = "SplitLine";
     }
 }

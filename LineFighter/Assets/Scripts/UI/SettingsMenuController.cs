@@ -9,11 +9,7 @@ using UnityEngine.UI;
 
 public class SettingsMenuController : MonoBehaviour
 {
-    private Button _displayTab;
-    private Button _hudTab;
-    private Button _keyboardTab;
     private Text _savedText;
-    private Button _selectedTab;
     
     #region MonoBehaviour
     void Start()
@@ -35,21 +31,6 @@ public class SettingsMenuController : MonoBehaviour
         this.gameObject.SetActive(false);
     }
     #endregion Events
-
-    private void DisplayTab_Clicked()
-    {
-        _selectedTab = _displayTab;
-    }
-
-    private void HudTab_Clicked()
-    {
-        _selectedTab = _hudTab;
-    }
-
-    private void KeyboardTab_Clicked()
-    {
-        _selectedTab = _keyboardTab;
-    }
 
     #region Public Methods
     private void SaveAndEncodeSettings()
@@ -95,18 +76,6 @@ public class SettingsMenuController : MonoBehaviour
                     break;
                 case Fields.GameObjects.CancelButton:
                     menuButton.onClick.AddListener(CancelButton_Clicked);
-                    break;
-                case Fields.GameObjects.DisplayTab:
-                    _displayTab = menuButton;
-                    menuButton.onClick.AddListener(DisplayTab_Clicked);
-                    break;
-                case Fields.GameObjects.HudTab:
-                    _hudTab = menuButton;
-                    menuButton.onClick.AddListener(HudTab_Clicked);
-                    break;
-                case Fields.GameObjects.KeyboardTab:
-                    _keyboardTab = menuButton;
-                    menuButton.onClick.AddListener(KeyboardTab_Clicked);
                     break;
             }
         }

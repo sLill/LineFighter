@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -11,7 +9,7 @@ public static class EncryptionEngine
     private const string _initialVector = "OhLna7^m*bDD$12s";
     private const int _iterations = 2;
     private const int _keySize = 256;
-    private const string _password = "NotJustABoulder";
+    private const string _password = "ItsNotJustABoulder";
     private const string _salt = "ItsARock";
 
 

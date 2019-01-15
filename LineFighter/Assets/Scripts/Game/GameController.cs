@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     #endregion Member Variables
 
     private void Awake()
-    {
+    { 
         HudSettings.FpsCounterActive = true;
         DisplaySettings.FrameRateCap = 300;
         DisplaySettings.VSyncEnabled = 0;
@@ -20,8 +20,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         // Initialize game and player settings
-        // These will be moved over to the Settings screen once it gets finished
-
          _hudController = GameObject.FindObjectOfType<HudController>();
 
         InitDisplaySettings();

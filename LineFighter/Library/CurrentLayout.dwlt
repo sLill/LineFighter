@@ -42,8 +42,8 @@ MonoBehaviour:
     y: 30
     width: 1624
     height: 834
-  m_MinSize: {x: 583, y: 342}
-  m_MaxSize: {x: 12008, y: 8042}
+  m_MinSize: {x: 581, y: 342}
+  m_MaxSize: {x: 12006, y: 8042}
   vertical: 0
   controlID: 11
 --- !u!114 &3
@@ -64,8 +64,8 @@ MonoBehaviour:
     y: 0
     width: 340
     height: 834
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -90,8 +90,8 @@ MonoBehaviour:
     y: 0
     width: 284
     height: 563
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -115,8 +115,8 @@ MonoBehaviour:
     y: 563
     width: 1284
     height: 271
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 16}
@@ -253,8 +253,8 @@ MonoBehaviour:
     y: 0
     width: 1000
     height: 563
-  m_MinSize: {x: 104, y: 121}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 19}
@@ -514,20 +514,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts/Game
   m_ViewMode: 1
   m_StartGridSize: 87
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts/Game
   m_LastFoldersGridSize: 87
   m_LastProjectPath: D:\Code\Github\LineFighter\LineFighter
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 31}
-    m_SelectedIDs: ee370000
-    m_LastClickedID: 14318
-    m_ExpandedIDs: 00000000022a0000dc2b00008a2f00008c2f00008e2f0000
+    scrollPos: {x: 0, y: 75}
+    m_SelectedIDs: 2c2a0000
+    m_LastClickedID: 10796
+    m_ExpandedIDs: 00000000142a0000f22b0000322e0000342e0000362e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -555,7 +555,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000022a0000dc2b0000f22b0000822c00008a2f00008c2f00008e2f0000
+    m_ExpandedIDs: 00000000142a0000f22b0000322e0000342e0000362e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -580,9 +580,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 222affff
-    m_LastClickedInstanceID: -54750
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 8a2e0000
+    m_LastClickedInstanceID: 11914
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ae060000b028000084290000644000009438000068330000a63a00002e320000542c0000e03effff34270000642f0000502a0000f02e0000542a0000882c0000a22c0000882d0000aa2c00000000000074270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -671,23 +671,23 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 5aa1f5ff36a8f5ff68d1f5ff3af0f5ffcef0f5ff9031f6ff127af6ff227ef6fff08cf6ffc290f6ff1c9ff6ffce11f7ff5022f7ff2435f7ff2237f7ff4c39f7ff723ff7ff984af7ff7a55f7ff4e5af7ffde5af7ff985cf7ff805df7ffec8af7ffa0abf7ff40bbf7ff26d4f7fff605f8ffe448f8ff744af8ff2ca3f9ff0e6efffff075ffff04a4ffff7ea4ffff5ec0ffffdefbfffff4ffffff000000007e310000e44200009e560000f6670000646f000060900000
+    m_SelectedIDs: 562e0000
+    m_LastClickedID: 11862
+    m_ExpandedIDs: b8b9ffff08c8ffff06d3ffff42f7ffffc8fbffff00000000722f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: PlayerLines
-      m_OriginalName: PlayerLines
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: -667316
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 

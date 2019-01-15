@@ -239,7 +239,7 @@ public class DrawErase : MonoBehaviour
 
     private void SetLineProperties(LineRenderer lineRenderer)
     {
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.material = AssetLibrary.MaterialAssets[Fields.Assets.LineMaterialBase];
         lineRenderer.startColor = new Color(255, 255, 255, 100);
         lineRenderer.endColor = new Color(255, 255, 255, 100);
         lineRenderer.startWidth = _playerController.Line.Thickness;

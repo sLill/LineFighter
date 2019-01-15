@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     private NetworkManager _networkManager;
-    private NetworkManagerHUD _networkManagerHud;
+    private MainMenuNetworkManagerHud _mainMenuNetworkManagerHud;
     private GameObject _settingsPanel;
 
     #region MonoBehaviour
@@ -39,7 +39,7 @@ public class MainMenuController : MonoBehaviour
 
     private void MultiplayerButton_Clicked()
     {
-        _networkManagerHud.showGUI = true;
+        _mainMenuNetworkManagerHud.showGUI = true;
     }
 
     private void SettingsButton_Clicked()
@@ -52,7 +52,7 @@ public class MainMenuController : MonoBehaviour
     private void InitializeMenu()
     {
         _networkManager = GameObject.FindObjectOfType<NetworkManager>();
-        _networkManagerHud = GameObject.FindObjectOfType<NetworkManagerHUD>();
+        _mainMenuNetworkManagerHud = GameObject.FindObjectOfType<MainMenuNetworkManagerHud>();
 
         _settingsPanel = GameObject.Find(Fields.GameObjects.SettingsPanel);
         _settingsPanel.SetActive(false);

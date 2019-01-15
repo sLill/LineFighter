@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    #region Member Variables
+    #region Member Variables..
     private HudController _hudController;
-    #endregion Member Variables
+    #endregion Member Variables..
 
     private void Awake()
-    { 
+    {
+        // Load Assets
+        AssetLibrary.LoadUiAssets();
+        AssetLibrary.LoadMaterialAssets();
+
         HudSettings.FpsCounterActive = true;
         DisplaySettings.FrameRateCap = 300;
         DisplaySettings.VSyncEnabled = 0;

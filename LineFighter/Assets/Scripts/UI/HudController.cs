@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HudController : MonoBehaviour
 {
     #region Member Variables
+    private object[] _assets;
     private float _drawAlphaFocus;
     private float _drawAlphaUnfocus;
     private Image _eraserGauge;
@@ -58,25 +59,31 @@ public class HudController : MonoBehaviour
             Sprite cursorSprite;
             Vector2 hotspot;
 
+            if (_playerController == null)
+            {
+                _playerController = GameObject.FindObjectOfType<PlayerController>();
+            }
+
             if (hudController.DrawMode == HudController.DrawType.Draw)
             {
-                cursorSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(Fields.AssetPaths.DrawCursor);
+                cursorSprite = AssetLibrary.UiAssets["Draw_Cursor"];
                 hotspot = new Vector2(0, 48);
             }
             else
             {
-                string path = string.Empty;
+                Sprite cursor = null;
                 switch (_playerController.Eraser.Size)
                 {
                     case Eraser.EraserSize.Small:
-                        path = Fields.AssetPaths.EraseCursorSmall;
+                        cursor = AssetLibrary.UiAssets[Fields.Assets.EraseCursorSmall];
                         break;
                     default:
-                        path = Fields.AssetPaths.EraseCursorSmall;
+                        //cursor = AssetLibrary.UiAssets["Erase_Cursor_Large"];
                         break;
                 }
 
-                cursorSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(path);
+
+                cursorSprite = cursor;
                 hotspot = new Vector2(24, 24);
             }
 

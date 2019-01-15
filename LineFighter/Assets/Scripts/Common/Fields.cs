@@ -9,11 +9,18 @@
         public const string Speed = "Speed";
     }
 
+    public static class Assets
+    {
+        public const string EraseCursorSmall = "Erase_Cursor_Small";
+
+        public const string LineMaterialBase = "LineMaterial_Base";
+    }
+
     public static class AssetPaths
     {
-        public const string DrawCursor = "Assets/Resources/Artwork/UI/Draw_Cursor.png";
+        public const string Ui = "Artwork/UI";
 
-        public const string EraseCursorSmall = "Assets/Resources/Artwork/UI/Erase_Cursor_Small.png";
+        public const string Materials = "Materials";
     }
 
     public static class GameObjects

@@ -49,7 +49,6 @@ public class SettingsMenuController : MonoBehaviour
             // Keyboard
             settingsFile += (Fields.Settings.DrawModeKey + "=" + KeyboardSettings.DrawModeKey + "\n");
 
-            //string encryptedString = EncryptionEngine.Encrypt(settingsFile);
             string path = Path.Combine(Application.persistentDataPath, "Config.cfg");
             File.WriteAllText(path, settingsFile);
 

@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Properties;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -49,6 +50,7 @@ public class PlayerController : NetworkBehaviour
     void Start()
     {
         Player.IsLocalPlayer = isLocalPlayer;
+        Player.PlayerControllerId = this.GetComponentInParent<NetworkIdentity>().playerControllerId;
 
         if (!isLocalPlayer)
         {
@@ -58,22 +60,22 @@ public class PlayerController : NetworkBehaviour
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        NetworkLobbyManager NetworkLobbyManager = GameObject.FindObjectOfType<NetworkLobbyManager>();
+        NetworkLobbyController networkLobbyController = GameObject.FindObjectOfType<NetworkLobbyController>();
 
         string playerTag = string.Empty;
-        int numPlayers = GameObject.FindObjectsOfType<PlayerController>().Length;
-        switch (numPlayers)
+        int playerNumber = networkLobbyController.PlayerList.IndexOf(networkLobbyController.PlayerList.First(x => x.PlayerControllerIds.Any(z => z == Player.PlayerControllerId)));
+        switch (playerNumber)
         {
-            case 1:
+            case 0:
                 playerTag = Fields.Tags.PlayerOne;
                 break;
-            case 2:
+            case 1:
                 playerTag = Fields.Tags.PlayerTwo;
                 break;
-            case 3:
+            case 2:
                 playerTag = Fields.Tags.PlayerThree;
                 break;
-            case 4:
+            case 3:
                 playerTag = Fields.Tags.PlayerFour;
                 break;
         }
@@ -81,7 +83,7 @@ public class PlayerController : NetworkBehaviour
         this.GetComponentInParent<Transform>().tag = playerTag;
 
         Player.PlayerTag = playerTag;
-        Player.PlayerNumber = NetworkLobbyManager.numPlayers;
+        Player.PlayerNumber = playerNumber + 1;
 
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -243,7 +245,8 @@ public class PlayerController : NetworkBehaviour
         _playerLines = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
         _playerLines.tag = Player.PlayerTag;
         _playerLines.name = Player.PlayerTag + "Lines";
-        _drawErase = _playerLines.AddComponent<DrawErase>();
+        DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
+        drawErase.Player = this.Player;
     }
 
     private void InitializeProperties()

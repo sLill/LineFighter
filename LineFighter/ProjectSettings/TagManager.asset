@@ -9,7 +9,7 @@ TagManager:
   - PlayerTwo
   - PlayerThree
   - PlayerFour
-  - PlayerLines
+  - NetworkLobbyPlayer
   layers:
   - Default
   - TransparentFX

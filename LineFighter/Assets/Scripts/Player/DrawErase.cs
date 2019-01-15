@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Properties;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class DrawErase : MonoBehaviour
+public class DrawErase : NetworkBehaviour
 {
     #region Member Variables
     private Camera _cameraMain;
@@ -19,12 +21,18 @@ public class DrawErase : MonoBehaviour
     private List<Vector2> _pointsList;
     #endregion Member Variables
 
+    #region Properties..
+    public Player Player { get; set; } 
+    #endregion Properties..
+
     #region Events..
     private void Start()
     {
-        Initialize();
-
-        if (!_playerController.isLocalPlayer)
+        if (Player.IsLocalPlayer)
+        {
+            Initialize();
+        }
+        else
         {
             this.enabled = false;
         }
@@ -32,6 +40,11 @@ public class DrawErase : MonoBehaviour
 
     void Update()
     {
+        if (_hudController == null)
+        {
+            _hudController = GameObject.FindObjectOfType<HudController>();
+        }
+
         switch (_hudController.DrawMode)
         {
             case HudController.DrawType.Draw:
@@ -41,6 +54,9 @@ public class DrawErase : MonoBehaviour
                 EraseLine();
                 break;
         }
+
+        // Spawn/De-spawn line objects
+        NetworkServer.SpawnObjects();
     }
     #endregion Events..
 

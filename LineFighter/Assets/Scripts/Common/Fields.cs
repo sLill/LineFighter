@@ -107,6 +107,8 @@
     {
         public const string LineObject = "LineObject";
 
+        public const string NetworkLobbyPlayer = "NetworkLobbyPlayer";
+
         public const string PlayerOne = "PlayerOne";
 
         public const string PlayerTwo = "PlayerTwo";

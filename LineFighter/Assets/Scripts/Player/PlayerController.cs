@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     #region Member Variables
     private Animator _animator;
@@ -38,20 +38,33 @@ public class PlayerController : MonoBehaviour
     }
     #endregion Enum Types
 
-    #region Events..
-    void Start()
+    private void Awake()
     {
-        // Used like a Queue, except elements can be removed at various indexes
-        _keysDown = new List<Direction>() { Direction.None };
-
         Eraser = new Eraser();
         Line = new Line();
         Player = new Player();
 
+        InitializeProperties();
+        CreatePlayerLineObject();
+    }
+
+    #region Events..
+    void Start()
+    {
+        Player.IsLocalPlayer = isLocalPlayer;
+
+        if (!isLocalPlayer)
+        {
+            this.enabled = false;
+        }
+
+        // Used like a Queue, except elements can be removed at various indexes
+        _keysDown = new List<Direction>() { Direction.None };
+
         NetworkManager networkManager = GameObject.FindObjectOfType<NetworkManager>();
 
         string playerTag = string.Empty;
-        switch(networkManager.numPlayers)
+        switch (networkManager.numPlayers)
         {
             case 1:
                 playerTag = Fields.Tags.PlayerOne;
@@ -76,8 +89,6 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
-        InitializeProperties();
-        CreatePlayerLineObject();        
     }
 
     void Update()

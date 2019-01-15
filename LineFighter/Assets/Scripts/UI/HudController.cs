@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class HudController : MonoBehaviour
@@ -61,7 +62,26 @@ public class HudController : MonoBehaviour
 
             if (_playerController == null)
             {
-                _playerController = GameObject.FindObjectOfType<PlayerController>();
+                int playerNumber = GameObject.FindObjectOfType<NetworkManager>().numPlayers;
+
+                string playerTag = string.Empty;
+                switch (playerNumber)
+                {
+                    case 1:
+                        playerTag = Fields.Tags.PlayerOne;
+                        break;
+                    case 2:
+                        playerTag = Fields.Tags.PlayerTwo;
+                        break;
+                    case 3:
+                        playerTag = Fields.Tags.PlayerThree;
+                        break;
+                    case 4:
+                        playerTag = Fields.Tags.PlayerFour;
+                        break;
+                }
+
+                _playerController = GameObject.FindGameObjectWithTag(playerTag).GetComponent<PlayerController>();
             }
 
             if (hudController.DrawMode == HudController.DrawType.Draw)

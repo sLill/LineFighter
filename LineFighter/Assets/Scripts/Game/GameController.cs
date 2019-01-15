@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
         // Load Assets
         AssetLibrary.LoadUiAssets();
         AssetLibrary.LoadMaterialAssets();
+        AssetLibrary.LoadPrefabAssets();
 
         HudSettings.FpsCounterActive = true;
         DisplaySettings.FrameRateCap = 300;

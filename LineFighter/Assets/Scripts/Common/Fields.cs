@@ -14,6 +14,10 @@
         public const string EraseCursorSmall = "Erase_Cursor_Small";
 
         public const string LineMaterialBase = "LineMaterial_Base";
+
+        public const string PlayerPrefab = "Player";
+
+        public const string PlayerLinesPrefab = "PlayerLines";
     }
 
     public static class AssetPaths
@@ -21,6 +25,8 @@
         public const string Ui = "Artwork/UI";
 
         public const string Materials = "Materials";
+
+        public const string Prefabs = "Prefabs";
     }
 
     public static class GameObjects

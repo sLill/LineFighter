@@ -8,6 +8,8 @@ public static class AssetLibrary
     public static Dictionary<string, Sprite> UiAssets { get; private set; }
 
     public static Dictionary<string, Material> MaterialAssets { get; private set; }
+
+    public static Dictionary<string, GameObject> PrefabAssets { get; private set; }
     #endregion Properties..
 
     #region Methods..
@@ -32,6 +34,16 @@ public static class AssetLibrary
             UiAssets[sprite.name] = sprite;
         }
     }
-    #endregion Methods..
 
+    public static void LoadPrefabAssets()
+    {
+        PrefabAssets = new Dictionary<string, GameObject>();
+        var assets = Resources.LoadAll<GameObject>(Fields.AssetPaths.Prefabs);
+
+        foreach (GameObject prefab in assets)
+        {
+            PrefabAssets[prefab.name] = prefab;
+        }
+    }
+    #endregion Methods..
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class PlayerController : MonoBehaviour
 {
@@ -43,13 +44,37 @@ public class PlayerController : MonoBehaviour
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        _animator = GetComponent<Animator>();
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-
         Eraser = new Eraser();
         Line = new Line();
         Player = new Player();
+
+        NetworkManager networkManager = GameObject.FindObjectOfType<NetworkManager>();
+
+        string playerTag = string.Empty;
+        switch(networkManager.numPlayers)
+        {
+            case 1:
+                playerTag = Fields.Tags.PlayerOne;
+                break;
+            case 2:
+                playerTag = Fields.Tags.PlayerTwo;
+                break;
+            case 3:
+                playerTag = Fields.Tags.PlayerThree;
+                break;
+            case 4:
+                playerTag = Fields.Tags.PlayerFour;
+                break;
+        }
+
+        this.GetComponentInParent<Transform>().tag = playerTag;
+
+        Player.PlayerTag = playerTag;
+        Player.PlayerNumber = networkManager.numPlayers;
+
+        _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         InitializeProperties();
         CreatePlayerLineObject();        
@@ -204,10 +229,9 @@ public class PlayerController : MonoBehaviour
     #region Private Methods
     private void CreatePlayerLineObject()
     {
-        _playerLines = new GameObject(Fields.GameObjects.PlayerLines);
-        _playerLines.tag = Fields.Tags.PlayerOne;
+        _playerLines = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
+        _playerLines.tag = Player.PlayerTag;
         _drawErase = _playerLines.AddComponent<DrawErase>();
-        _drawErase.Initialize();
     }
 
     private void InitializeProperties()

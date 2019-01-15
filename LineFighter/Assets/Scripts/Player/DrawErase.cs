@@ -21,7 +21,7 @@ public class DrawErase : MonoBehaviour
     #region MonoBehaviour
     private void Start()
     {
-
+        Initialize();
     }
 
     void Update()

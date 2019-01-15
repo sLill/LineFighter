@@ -58,10 +58,11 @@ public class PlayerController : NetworkBehaviour
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        NetworkManager networkManager = GameObject.FindObjectOfType<NetworkManager>();
+        NetworkLobbyManager NetworkLobbyManager = GameObject.FindObjectOfType<NetworkLobbyManager>();
 
         string playerTag = string.Empty;
-        switch (networkManager.numPlayers)
+        int numPlayers = GameObject.FindObjectsOfType<PlayerController>().Length;
+        switch (numPlayers)
         {
             case 1:
                 playerTag = Fields.Tags.PlayerOne;
@@ -80,7 +81,7 @@ public class PlayerController : NetworkBehaviour
         this.GetComponentInParent<Transform>().tag = playerTag;
 
         Player.PlayerTag = playerTag;
-        Player.PlayerNumber = networkManager.numPlayers;
+        Player.PlayerNumber = NetworkLobbyManager.numPlayers;
 
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();

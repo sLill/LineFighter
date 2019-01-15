@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-[AddComponentMenu("Network/MainMenuNetworkManagerHUD")]
-[RequireComponent(typeof(NetworkManager))]
+[AddComponentMenu("Network/MainMenuNetworkLobbyManagerHUD")]
+[RequireComponent(typeof(NetworkLobbyManager))]
 [EditorBrowsable(EditorBrowsableState.Never)]
-public class MainMenuNetworkManagerHud : MonoBehaviour
+public class MainMenuNetworkLobbyManagerHud : MonoBehaviour
 {
     #region Member Variables..
     // Runtime variable
@@ -16,7 +16,7 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
     #endregion Member Variables..
 
     #region Properties..
-    public NetworkManager Manager;
+    public NetworkLobbyManager Manager;
     [SerializeField] public bool ShowGUI = false;
     [SerializeField] public int OffsetX;
     [SerializeField] public int FffsetY; 
@@ -25,7 +25,7 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
     #region Events..
     void Awake()
     {
-        Manager = GetComponent<NetworkManager>();
+        Manager = GetComponent<NetworkLobbyManager>();
     }
 
     void Update()

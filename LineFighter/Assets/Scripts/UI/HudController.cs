@@ -67,7 +67,7 @@ public class HudController : MonoBehaviour
 
             if (_playerController == null)
             {
-                int playerNumber = GameObject.FindObjectOfType<NetworkManager>().numPlayers;
+                int playerNumber = GameObject.FindObjectOfType<NetworkLobbyManager>().numPlayers;
 
                 string playerTag = string.Empty;
                 switch (playerNumber)

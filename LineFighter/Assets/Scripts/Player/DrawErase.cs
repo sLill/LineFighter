@@ -74,8 +74,6 @@ public class DrawErase : MonoBehaviour
                 _lineObject.transform.parent = _parentObject;
                 _renderer = _lineObject.AddComponent<LineRenderer>();
                 SetLineProperties(_renderer);
-                //_parentObject.GetComponent<NetworkTransformChild>().target = _lineObject.GetComponent<NetworkTransform>().transform;
-
             }
 
             // Drawing line when mouse is moving(presses)
@@ -182,7 +180,6 @@ public class DrawErase : MonoBehaviour
                             // Create a new GameObject, LineRenderer and Collider for the first new line
                             GameObject firstLineObject = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                             firstLineObject.transform.parent = _playerLines.transform;
-                            //firstLineObject.GetComponent<NetworkTransformChild>().target = _lineObject.GetComponent<NetworkTransform>().transform;
 
                             LineRenderer lineRendererOne = firstLineObject.AddComponent<LineRenderer>();
                             SetLineProperties(lineRendererOne);
@@ -208,7 +205,6 @@ public class DrawErase : MonoBehaviour
                         {
                             GameObject secondLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                             secondLineObject.transform.parent = _playerLines.transform;
-                            //secondLineObject.GetComponent<NetworkTransformChild>().target = _lineObject.GetComponent<NetworkTransform>().transform;
 
                             LineRenderer lineRendererTwo = secondLineObject.AddComponent<LineRenderer>();
                             SetLineProperties(lineRendererTwo);

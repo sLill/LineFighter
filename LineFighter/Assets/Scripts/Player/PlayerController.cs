@@ -43,9 +43,6 @@ public class PlayerController : NetworkBehaviour
         Eraser = new Eraser();
         Line = new Line();
         Player = new Player();
-
-        InitializeProperties();
-        CreatePlayerLineObject();
     }
 
     #region Events..
@@ -89,6 +86,8 @@ public class PlayerController : NetworkBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
+        InitializeProperties();
+        CreatePlayerLineObject();
     }
 
     void Update()
@@ -242,6 +241,7 @@ public class PlayerController : NetworkBehaviour
     {
         _playerLines = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
         _playerLines.tag = Player.PlayerTag;
+        _playerLines.name = Player.PlayerTag + "Lines";
         _drawErase = _playerLines.AddComponent<DrawErase>();
     }
 

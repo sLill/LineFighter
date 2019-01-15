@@ -15,6 +15,8 @@
 
         public const string LineMaterialBase = "LineMaterial_Base";
 
+        public const string LineObjectPrefab = "LineObject";
+
         public const string PlayerPrefab = "Player";
 
         public const string PlayerLinesPrefab = "PlayerLines";
@@ -112,7 +114,5 @@
         public const string PlayerThree = "PlayerThree";
 
         public const string PlayerFour = "PlayerFour";
-
-        public const string SplitLine = "SplitLine";
     }
 }

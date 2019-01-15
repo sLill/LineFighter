@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class DrawErase : MonoBehaviour
 {
@@ -22,6 +23,11 @@ public class DrawErase : MonoBehaviour
     private void Start()
     {
         Initialize();
+
+        if (!_playerController.isLocalPlayer)
+        {
+            this.enabled = false;
+        }
     }
 
     void Update()
@@ -45,7 +51,9 @@ public class DrawErase : MonoBehaviour
         _hudController = GameObject.FindObjectOfType<HudController>();
         _parentObject = gameObject.GetComponentInParent<Transform>();
         _playerController = GameObject.FindObjectOfType<PlayerController>();
-        _playerLines = GameObject.Find(Fields.GameObjects.PlayerLines);
+
+        string playerLinesObjectName = _playerController.Player.PlayerTag + "Lines";
+        _playerLines = GameObject.Find(playerLinesObjectName);
 
         _pointsList = new List<Vector2>();
     }
@@ -62,13 +70,12 @@ public class DrawErase : MonoBehaviour
                 _isMousePressed = true;
 
                 // Create a new line Object
-                _lineObject = new GameObject();
-                _lineObject.name = Fields.GameObjects.LineObject;
-                _lineObject.tag = Fields.Tags.LineObject;
+                _lineObject = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                 _lineObject.transform.parent = _parentObject;
-                _lineObject.AddComponent<LineRenderer>();
-                _renderer = _lineObject.GetComponent<LineRenderer>();
+                _renderer = _lineObject.AddComponent<LineRenderer>();
                 SetLineProperties(_renderer);
+                //_parentObject.GetComponent<NetworkTransformChild>().target = _lineObject.GetComponent<NetworkTransform>().transform;
+
             }
 
             // Drawing line when mouse is moving(presses)
@@ -125,9 +132,9 @@ public class DrawErase : MonoBehaviour
             {
                 try
                 {
-                    if (mouseHit && (mouseHit.collider.tag == Fields.Tags.LineObject || mouseHit.collider.tag == Fields.Tags.SplitLine))
+                    if (mouseHit && mouseHit.collider.tag == Fields.Tags.LineObject)
                     {
-                        EdgeCollider2D lineCollider = (EdgeCollider2D)mouseHit.collider;
+                        EdgeCollider2D lineCollider = (EdgeCollider2D) mouseHit.collider;
                         Vector2 contactPoint = mouseHit.point;
                         int closestPointIndex = -1;
                         float closestPointDistance = (float)int.MaxValue;
@@ -173,13 +180,11 @@ public class DrawErase : MonoBehaviour
                         if (firstLineV2Arr.Length > 1)
                         {
                             // Create a new GameObject, LineRenderer and Collider for the first new line
-                            GameObject firstLineObject = new GameObject();
-                            firstLineObject.name = Fields.GameObjects.LineObject;
-                            firstLineObject.tag = Fields.Tags.SplitLine;
+                            GameObject firstLineObject = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                             firstLineObject.transform.parent = _playerLines.transform;
-                            firstLineObject.AddComponent<LineRenderer>();
+                            //firstLineObject.GetComponent<NetworkTransformChild>().target = _lineObject.GetComponent<NetworkTransform>().transform;
 
-                            LineRenderer lineRendererOne = firstLineObject.GetComponent<LineRenderer>();
+                            LineRenderer lineRendererOne = firstLineObject.AddComponent<LineRenderer>();
                             SetLineProperties(lineRendererOne);
 
                             lineRendererOne.positionCount = firstLineV3Arr.Length;
@@ -201,13 +206,11 @@ public class DrawErase : MonoBehaviour
                         // Create a new GameObject, LineRenderer and Collider for the second new line
                         if (secondLineV2Arr.Length > 1)
                         {
-                            GameObject secondLineObject = new GameObject();
-                            secondLineObject.name = Fields.GameObjects.LineObject;
-                            secondLineObject.tag = Fields.Tags.SplitLine;
+                            GameObject secondLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                             secondLineObject.transform.parent = _playerLines.transform;
-                            secondLineObject.AddComponent<LineRenderer>();
+                            //secondLineObject.GetComponent<NetworkTransformChild>().target = _lineObject.GetComponent<NetworkTransform>().transform;
 
-                            LineRenderer lineRendererTwo = secondLineObject.GetComponent<LineRenderer>();
+                            LineRenderer lineRendererTwo = secondLineObject.AddComponent<LineRenderer>();
                             SetLineProperties(lineRendererTwo);
 
                             lineRendererTwo.positionCount = secondLineV3Arr.Length;

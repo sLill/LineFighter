@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion Enum Types
 
-    #region MonoBehaviour
+    #region Events..
     void Start()
     {
         // Used like a Queue, except elements can be removed at various indexes
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody.velocity = Vector2.zero;
     }
-    #endregion MonoBehaviour
+    #endregion Events..
 
     #region Private Methods
     private void CreatePlayerLineObject()

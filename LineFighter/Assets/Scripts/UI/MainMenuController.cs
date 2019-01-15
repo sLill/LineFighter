@@ -8,9 +8,11 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    #region Member Variables..
     private NetworkManager _networkManager;
     private MainMenuNetworkManagerHud _mainMenuNetworkManagerHud;
     private GameObject _settingsPanel;
+    #endregion Member Variables..
 
     #region MonoBehaviour
     void Start()
@@ -39,7 +41,7 @@ public class MainMenuController : MonoBehaviour
 
     private void MultiplayerButton_Clicked()
     {
-        _mainMenuNetworkManagerHud.showGUI = true;
+        _mainMenuNetworkManagerHud.ShowGUI = true;
     }
 
     private void SettingsButton_Clicked()

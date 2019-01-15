@@ -18,7 +18,7 @@ public class DrawErase : MonoBehaviour
     private List<Vector2> _pointsList;
     #endregion Member Variables
 
-    #region MonoBehaviour
+    #region Events..
     private void Start()
     {
         Initialize();
@@ -36,7 +36,7 @@ public class DrawErase : MonoBehaviour
                 break;
         }
     }
-    #endregion MonoBehaviour
+    #endregion Events..
 
     #region Public Methods
     public void Initialize()

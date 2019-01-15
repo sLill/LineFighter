@@ -11,68 +11,68 @@ using UnityEngine.UI;
 public class MainMenuNetworkManagerHud : MonoBehaviour
 {
     #region Member Variables..
-
-    #endregion Member Variables..
-
-    public NetworkManager _manager;
-    [SerializeField] public bool showGUI = false;
-    [SerializeField] public int offsetX;
-    [SerializeField] public int offsetY;
-
     // Runtime variable
     bool m_ShowServer;
+    #endregion Member Variables..
 
+    #region Properties..
+    public NetworkManager Manager;
+    [SerializeField] public bool ShowGUI = false;
+    [SerializeField] public int OffsetX;
+    [SerializeField] public int FffsetY; 
+    #endregion
+
+    #region Events..
     void Awake()
     {
-        _manager = GetComponent<NetworkManager>();
+        Manager = GetComponent<NetworkManager>();
     }
 
     void Update()
     {
-        if (!showGUI)
+        if (!ShowGUI)
             return;
 
-        if (!_manager.IsClientConnected() && !NetworkServer.active && _manager.matchMaker == null)
+        if (!Manager.IsClientConnected() && !NetworkServer.active && Manager.matchMaker == null)
         {
             if (UnityEngine.Application.platform != RuntimePlatform.WebGLPlayer)
             {
                 if (Input.GetKeyDown(KeyCode.S))
                 {
-                    _manager.StartServer();
+                    Manager.StartServer();
                 }
                 if (Input.GetKeyDown(KeyCode.H))
                 {
-                    _manager.StartHost();
+                    Manager.StartHost();
                 }
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
-                _manager.StartClient();
+                Manager.StartClient();
             }
         }
-        if (NetworkServer.active && _manager.IsClientConnected())
+        if (NetworkServer.active && Manager.IsClientConnected())
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
-                _manager.StopHost();
+                Manager.StopHost();
             }
         }
     }
-    
 
-     void OnGUI()
+    void OnGUI()
     {
-        if (!showGUI)
+        if (!ShowGUI)
             return;
 
-        int xpos = 10 + offsetX;
-        int ypos = 40 + offsetY;
+        int xpos = 10 + OffsetX;
+        int ypos = 40 + FffsetY;
         const int spacing = 24;
 
-        bool noConnection = (_manager.client == null || _manager.client.connection == null ||
-                             _manager.client.connection.connectionId == -1);
+        bool noConnection = (Manager.client == null || Manager.client.connection == null ||
+                             Manager.client.connection.connectionId == -1);
 
-        if (!_manager.IsClientConnected() && !NetworkServer.active && _manager.matchMaker == null)
+        if (!Manager.IsClientConnected() && !NetworkServer.active && Manager.matchMaker == null)
         {
             if (noConnection)
             {
@@ -80,17 +80,17 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
                 {
                     if (GUI.Button(new Rect(xpos, ypos, 200, 20), "LAN Host(H)"))
                     {
-                        _manager.StartHost();
+                        Manager.StartHost();
                     }
                     ypos += spacing;
                 }
 
                 if (GUI.Button(new Rect(xpos, ypos, 105, 20), "LAN Client(C)"))
                 {
-                    _manager.StartClient();
+                    Manager.StartClient();
                 }
 
-                _manager.networkAddress = GUI.TextField(new Rect(xpos + 100, ypos, 95, 20), _manager.networkAddress);
+                Manager.networkAddress = GUI.TextField(new Rect(xpos + 100, ypos, 95, 20), Manager.networkAddress);
                 ypos += spacing;
 
                 if (UnityEngine.Application.platform == RuntimePlatform.WebGLPlayer)
@@ -103,20 +103,20 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
                 {
                     if (GUI.Button(new Rect(xpos, ypos, 200, 20), "LAN Server Only(S)"))
                     {
-                        _manager.StartServer();
+                        Manager.StartServer();
                     }
                     ypos += spacing;
                 }
             }
             else
             {
-                GUI.Label(new Rect(xpos, ypos, 200, 20), "Connecting to " + _manager.networkAddress + ":" + _manager.networkPort + "..");
+                GUI.Label(new Rect(xpos, ypos, 200, 20), "Connecting to " + Manager.networkAddress + ":" + Manager.networkPort + "..");
                 ypos += spacing;
 
 
                 if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Cancel Connection Attempt"))
                 {
-                    _manager.StopClient();
+                    Manager.StopClient();
                 }
             }
         }
@@ -124,26 +124,26 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
         {
             if (NetworkServer.active)
             {
-                string serverMsg = "Server: port=" + _manager.networkPort;
-                if (_manager.useWebSockets)
+                string serverMsg = "Server: port=" + Manager.networkPort;
+                if (Manager.useWebSockets)
                 {
                     serverMsg += " (Using WebSockets)";
                 }
                 GUI.Label(new Rect(xpos, ypos, 300, 20), serverMsg);
                 ypos += spacing;
             }
-            if (_manager.IsClientConnected())
+            if (Manager.IsClientConnected())
             {
-                GUI.Label(new Rect(xpos, ypos, 300, 20), "Client: address=" + _manager.networkAddress + " port=" + _manager.networkPort);
+                GUI.Label(new Rect(xpos, ypos, 300, 20), "Client: address=" + Manager.networkAddress + " port=" + Manager.networkPort);
                 ypos += spacing;
             }
         }
 
-        if (_manager.IsClientConnected() && !ClientScene.ready)
+        if (Manager.IsClientConnected() && !ClientScene.ready)
         {
             if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Client Ready"))
             {
-                ClientScene.Ready(_manager.client.connection);
+                ClientScene.Ready(Manager.client.connection);
 
                 if (ClientScene.localPlayers.Count == 0)
                 {
@@ -153,16 +153,16 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
             ypos += spacing;
         }
 
-        if (NetworkServer.active || _manager.IsClientConnected())
+        if (NetworkServer.active || Manager.IsClientConnected())
         {
             if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Stop (X)"))
             {
-                _manager.StopHost();
+                Manager.StopHost();
             }
             ypos += spacing;
         }
 
-        if (!NetworkServer.active && !_manager.IsClientConnected() && noConnection)
+        if (!NetworkServer.active && !Manager.IsClientConnected() && noConnection)
         {
             ypos += 10;
 
@@ -172,54 +172,54 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
                 return;
             }
 
-            if (_manager.matchMaker == null)
+            if (Manager.matchMaker == null)
             {
                 if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Enable Match Maker (M)"))
                 {
-                    _manager.StartMatchMaker();
+                    Manager.StartMatchMaker();
                 }
                 ypos += spacing;
             }
             else
             {
-                if (_manager.matchInfo == null)
+                if (Manager.matchInfo == null)
                 {
-                    if (_manager.matches == null)
+                    if (Manager.matches == null)
                     {
                         if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Create Internet Match"))
                         {
-                            _manager.matchMaker.CreateMatch(_manager.matchName, _manager.matchSize, true, "", "", "", 0, 0, _manager.OnMatchCreate);
+                            Manager.matchMaker.CreateMatch(Manager.matchName, Manager.matchSize, true, "", "", "", 0, 0, Manager.OnMatchCreate);
                         }
                         ypos += spacing;
 
                         GUI.Label(new Rect(xpos, ypos, 100, 20), "Room Name:");
-                        _manager.matchName = GUI.TextField(new Rect(xpos + 100, ypos, 100, 20), _manager.matchName);
+                        Manager.matchName = GUI.TextField(new Rect(xpos + 100, ypos, 100, 20), Manager.matchName);
                         ypos += spacing;
 
                         ypos += 10;
 
                         if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Find Internet Match"))
                         {
-                            _manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, _manager.OnMatchList);
+                            Manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, Manager.OnMatchList);
                         }
                         ypos += spacing;
                     }
                     else
                     {
-                        for (int i = 0; i < _manager.matches.Count; i++)
+                        for (int i = 0; i < Manager.matches.Count; i++)
                         {
-                            var match = _manager.matches[i];
+                            var match = Manager.matches[i];
                             if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Join Match:" + match.name))
                             {
-                                _manager.matchName = match.name;
-                                _manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, _manager.OnMatchJoined);
+                                Manager.matchName = match.name;
+                                Manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, Manager.OnMatchJoined);
                             }
                             ypos += spacing;
                         }
 
                         if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Back to Match Menu"))
                         {
-                            _manager.matches = null;
+                            Manager.matches = null;
                         }
                         ypos += spacing;
                     }
@@ -234,34 +234,35 @@ public class MainMenuNetworkManagerHud : MonoBehaviour
                     ypos += spacing;
                     if (GUI.Button(new Rect(xpos, ypos, 100, 20), "Local"))
                     {
-                        _manager.SetMatchHost("localhost", 1337, false);
+                        Manager.SetMatchHost("localhost", 1337, false);
                         m_ShowServer = false;
                     }
                     ypos += spacing;
                     if (GUI.Button(new Rect(xpos, ypos, 100, 20), "Internet"))
                     {
-                        _manager.SetMatchHost("mm.unet.unity3d.com", 443, true);
+                        Manager.SetMatchHost("mm.unet.unity3d.com", 443, true);
                         m_ShowServer = false;
                     }
                     ypos += spacing;
                     if (GUI.Button(new Rect(xpos, ypos, 100, 20), "Staging"))
                     {
-                        _manager.SetMatchHost("staging-mm.unet.unity3d.com", 443, true);
+                        Manager.SetMatchHost("staging-mm.unet.unity3d.com", 443, true);
                         m_ShowServer = false;
                     }
                 }
 
                 ypos += spacing;
 
-                GUI.Label(new Rect(xpos, ypos, 300, 20), "MM Uri: " + _manager.matchMaker.baseUri);
+                GUI.Label(new Rect(xpos, ypos, 300, 20), "MM Uri: " + Manager.matchMaker.baseUri);
                 ypos += spacing;
 
                 if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Disable Match Maker"))
                 {
-                    _manager.StopMatchMaker();
+                    Manager.StopMatchMaker();
                 }
                 ypos += spacing;
             }
         }
     }
+    #endregion Events..
 }

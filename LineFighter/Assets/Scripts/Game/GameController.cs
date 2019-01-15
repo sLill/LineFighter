@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     private HudController _hudController;
     #endregion Member Variables..
 
+    #region Events..
     private void Awake()
     {
         // Load Assets
@@ -25,7 +26,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         // Initialize game and player settings
-         _hudController = GameObject.FindObjectOfType<HudController>();
+        _hudController = GameObject.FindObjectOfType<HudController>();
 
         InitDisplaySettings();
     }
@@ -35,11 +36,14 @@ public class GameController : MonoBehaviour
     {
 
     }
+    #endregion Events..
 
+    #region Private Methods..
     private void InitDisplaySettings()
     {
         QualitySettings.vSyncCount = DisplaySettings.VSyncEnabled;
         Application.targetFrameRate = DisplaySettings.FrameRateCap;
     }
+    #endregion Private Methods..
 }
 

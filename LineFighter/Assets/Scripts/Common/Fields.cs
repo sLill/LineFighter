@@ -17,6 +17,8 @@
 
         public const string LineObjectPrefab = "LineObject";
 
+        public const string NetworkLobbyManagerObjectPrefab = "NetworkLobbyManagerObject";
+
         public const string PlayerPrefab = "Player";
 
         public const string PlayerLinesPrefab = "PlayerLines";

@@ -9,6 +9,10 @@ public class GameController : MonoBehaviour
     private HudController _hudController;
     #endregion Member Variables..
 
+    #region Properties..
+
+    #endregion Properties..
+
     #region Events..
     private void Awake()
     {
@@ -20,9 +24,11 @@ public class GameController : MonoBehaviour
         HudSettings.FpsCounterActive = true;
         DisplaySettings.FrameRateCap = 300;
         DisplaySettings.VSyncEnabled = 0;
+
+        GameObject Game = GameObject.Find(Fields.GameObjects.Game);
+        DontDestroyOnLoad(Game);
     }
 
-    // Use this for initialization
     void Start()
     {
         // Initialize game and player settings
@@ -31,7 +37,6 @@ public class GameController : MonoBehaviour
         InitDisplaySettings();
     }
 
-    // Update is called once per frame
     void Update()
     {
 

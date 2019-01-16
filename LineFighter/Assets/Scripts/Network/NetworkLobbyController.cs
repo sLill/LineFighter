@@ -21,31 +21,31 @@ public class NetworkLobbyController : NetworkLobbyManager
 
     }
 
-    public override void OnLobbyStartServer()
+    public override void OnLobbyClientConnect(NetworkConnection conn)
     {
-        base.OnLobbyStartServer();
+        base.OnLobbyClientConnect(conn);
+
+        // Create unique player profile
+        PlayerProfile playerProfile = new PlayerProfile() { NetworkConnection = conn, PlayerName = "RippStudwell" };
+        PlayerList.Add(playerProfile);
     }
 
     public override GameObject OnLobbyServerCreateLobbyPlayer(NetworkConnection conn, short playerControllerId)
     {
         return base.OnLobbyServerCreateLobbyPlayer(conn, playerControllerId);
-    }
-    public override void OnLobbyClientConnect(NetworkConnection conn)
-    {
-        base.OnLobbyClientConnect(conn);
 
-        List<short> playerControllerIds = new List<short>();
-        foreach (UnityEngine.Networking.PlayerController playerController in conn.playerControllers)
-        {
-            playerControllerIds.Add(playerController.playerControllerId);
-        }
-
-        PlayerList.Add(new PlayerProfile() { NetworkConnection = conn, PlayerControllerIds = playerControllerIds });
+        // Does conn name get updated automatically?
     }
 
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
     {
         base.OnLobbyServerDisconnect(conn);
     }
+
+    public override void OnLobbyServerPlayerRemoved(NetworkConnection conn, short playerControllerId)
+    {
+        base.OnLobbyServerPlayerRemoved(conn, playerControllerId);
+    }
+
     #endregion Events..
 }

@@ -11,6 +11,8 @@ public class PlayerProfile : MonoBehaviour, IPlayerProfile
     public NetworkConnection NetworkConnection { get; set; }
 
     public List<short> PlayerControllerIds { get; set; }
+
+    public string PlayerName { get; set; }
     #endregion Properties..
 
     #region Events..

@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     #endregion Member Variables..
 
     #region Properties..
-
+    public List<PlayerProfile> PlayerList { get; set; }
     #endregion Properties..
 
     #region Events..
@@ -20,12 +20,15 @@ public class GameController : MonoBehaviour
         AssetLibrary.LoadUiAssets();
         AssetLibrary.LoadMaterialAssets();
         AssetLibrary.LoadPrefabAssets();
-
+        
         HudSettings.FpsCounterActive = true;
         DisplaySettings.FrameRateCap = 300;
         DisplaySettings.VSyncEnabled = 0;
 
         GameObject Game = GameObject.Find(Fields.GameObjects.Game);
+
+        PlayerList = new List<PlayerProfile>();
+
         DontDestroyOnLoad(Game);
     }
 

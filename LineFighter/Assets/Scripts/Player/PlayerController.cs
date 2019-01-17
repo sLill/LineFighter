@@ -60,10 +60,10 @@ public class PlayerController : NetworkBehaviour
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        NetworkLobbyController networkLobbyController = GameObject.FindObjectOfType<NetworkLobbyController>();
+        GameController gameController = GameObject.FindObjectOfType<GameController>();
 
         string playerTag = string.Empty;
-        int playerNumber = networkLobbyController.PlayerList.IndexOf(networkLobbyController.PlayerList.First(x => x.PlayerControllerIds.Any(z => z == Player.PlayerControllerId)));
+        int playerNumber = gameController.PlayerList.IndexOf(gameController.PlayerList.First(x => x.PlayerControllerIds.Any(z => z == Player.PlayerControllerId)));
         switch (playerNumber)
         {
             case 0:

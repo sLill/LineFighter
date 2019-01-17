@@ -75,7 +75,8 @@
     <Compile Include="Assets\Scripts\Interfaces\ILine.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayerProfile.cs" />
-    <Compile Include="Assets\Scripts\Network\NetworkLobbyController.cs" />
+    <Compile Include="Assets\Scripts\Network\LobbyInformationMessage.cs" />
+    <Compile Include="Assets\Scripts\Network\NetworkController.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterController2D.cs" />
     <Compile Include="Assets\Scripts\Player\DrawErase.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />

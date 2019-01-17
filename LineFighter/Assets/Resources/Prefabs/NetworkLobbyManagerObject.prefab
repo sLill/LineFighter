@@ -44,8 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e740bffb44126f4cb7ef67eaf929d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Manager: {fileID: 0}
-  ShowGUI: 1
+  Manager: {fileID: 4030140946746790634}
   OffsetX: 0
   FffsetY: 0
 --- !u!114 &4030140946746790634

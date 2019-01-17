@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts.Properties;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     #region Member Variables
     private Animator _animator;
@@ -38,31 +39,43 @@ public class PlayerController : MonoBehaviour
     }
     #endregion Enum Types
 
-    #region MonoBehaviour
-    void Start()
+    private void Awake()
     {
-        // Used like a Queue, except elements can be removed at various indexes
-        _keysDown = new List<Direction>() { Direction.None };
-
         Eraser = new Eraser();
         Line = new Line();
         Player = new Player();
+    }
 
-        NetworkManager networkManager = GameObject.FindObjectOfType<NetworkManager>();
+    #region Events..
+    void Start()
+    {
+        Player.IsLocalPlayer = isLocalPlayer;
+        Player.PlayerControllerId = this.GetComponentInParent<NetworkIdentity>().playerControllerId;
+
+        if (!isLocalPlayer)
+        {
+            this.enabled = false;
+        }
+
+        // Used like a Queue, except elements can be removed at various indexes
+        _keysDown = new List<Direction>() { Direction.None };
+
+        GameController gameController = GameObject.FindObjectOfType<GameController>();
 
         string playerTag = string.Empty;
-        switch(networkManager.numPlayers)
+        int playerNumber = gameController.PlayerList.IndexOf(gameController.PlayerList.First(x => x.PlayerControllerIds.Any(z => z == Player.PlayerControllerId)));
+        switch (playerNumber)
         {
-            case 1:
+            case 0:
                 playerTag = Fields.Tags.PlayerOne;
                 break;
-            case 2:
+            case 1:
                 playerTag = Fields.Tags.PlayerTwo;
                 break;
-            case 3:
+            case 2:
                 playerTag = Fields.Tags.PlayerThree;
                 break;
-            case 4:
+            case 3:
                 playerTag = Fields.Tags.PlayerFour;
                 break;
         }
@@ -70,14 +83,14 @@ public class PlayerController : MonoBehaviour
         this.GetComponentInParent<Transform>().tag = playerTag;
 
         Player.PlayerTag = playerTag;
-        Player.PlayerNumber = networkManager.numPlayers;
+        Player.PlayerNumber = playerNumber + 1;
 
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         InitializeProperties();
-        CreatePlayerLineObject();        
+        CreatePlayerLineObject();
     }
 
     void Update()
@@ -224,14 +237,16 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody.velocity = Vector2.zero;
     }
-    #endregion MonoBehaviour
+    #endregion Events..
 
     #region Private Methods
     private void CreatePlayerLineObject()
     {
         _playerLines = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
         _playerLines.tag = Player.PlayerTag;
-        _drawErase = _playerLines.AddComponent<DrawErase>();
+        _playerLines.name = Player.PlayerTag + "Lines";
+        DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
+        drawErase.Player = this.Player;
     }
 
     private void InitializeProperties()

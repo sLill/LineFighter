@@ -17,7 +17,7 @@ public class MainMenuNetworkLobbyManagerHud : MonoBehaviour
 
     #region Properties..
     public NetworkLobbyManager Manager;
-    [SerializeField] public bool ShowGUI = false;
+    //[SerializeField] public bool ShowGUI = true;
     [SerializeField] public int OffsetX;
     [SerializeField] public int FffsetY; 
     #endregion
@@ -30,9 +30,6 @@ public class MainMenuNetworkLobbyManagerHud : MonoBehaviour
 
     void Update()
     {
-        if (!ShowGUI)
-            return;
-
         if (!Manager.IsClientConnected() && !NetworkServer.active && Manager.matchMaker == null)
         {
             if (UnityEngine.Application.platform != RuntimePlatform.WebGLPlayer)
@@ -62,9 +59,6 @@ public class MainMenuNetworkLobbyManagerHud : MonoBehaviour
 
     void OnGUI()
     {
-        if (!ShowGUI)
-            return;
-
         int xpos = 10 + OffsetX;
         int ypos = 40 + FffsetY;
         const int spacing = 24;

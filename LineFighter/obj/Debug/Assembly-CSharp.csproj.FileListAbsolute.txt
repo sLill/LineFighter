@@ -166,8 +166,6 @@ D:\Code\Unity\LineFighter\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
 D:\Code\Unity\LineFighter\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\Code\Unity\LineFighter\obj\Debug\Assembly-CSharp.dll
 D:\Code\Unity\LineFighter\obj\Debug\Assembly-CSharp.pdb
-C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
-C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 D:\Code\Github\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 D:\Code\Github\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\Assembly-CSharp.dll
@@ -506,6 +504,8 @@ C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\Unity
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEngine.Networking.xml
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
+C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.dll
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.pdb
+C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache

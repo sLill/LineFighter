@@ -9,16 +9,37 @@
         public const string Speed = "Speed";
     }
 
+    public static class Assets
+    {
+        public const string EraseCursorSmall = "Erase_Cursor_Small";
+
+        public const string LineMaterialBase = "LineMaterial_Base";
+
+        public const string LineObjectPrefab = "LineObject";
+
+        public const string NetworkLobbyManagerObjectPrefab = "NetworkLobbyManagerObject";
+
+        public const string PlayerPrefab = "Player";
+
+        public const string PlayerLinesPrefab = "PlayerLines";
+    }
+
     public static class AssetPaths
     {
-        public const string DrawCursor = "Assets/Resources/Artwork/UI/Draw_Cursor.png";
+        public const string Ui = "Artwork/UI";
 
-        public const string EraseCursorSmall = "Assets/Resources/Artwork/UI/Erase_Cursor_Small.png";
+        public const string Materials = "Materials";
+
+        public const string Prefabs = "Prefabs";
     }
 
     public static class GameObjects
     {
         public const string AboutButton = "AboutButton";
+
+        public const string ApplyButton = "ApplyButton";
+
+        public const string CancelButton = "CancelButton";
 
         public const string EraserGauge = "EraserGauge";
 
@@ -29,6 +50,8 @@
         public const string EraserCursor = "EraserCursor";
 
         public const string ExitButton = "ExitButton";
+
+        public const string EventSystem = "EventSystem";
 
         public const string FpsCounter = "FpsCounter";
 
@@ -56,6 +79,10 @@
 
         public const string PlayerLines = "PlayerLines";
 
+        public const string SavedText = "SavedText";
+
+        public const string SettingsPanel = "SettingsPanel";
+
         public const string SettingsButton = "SettingsButton";
     }
 
@@ -80,8 +107,16 @@
 
     public static class Tags
     {
-        public const string LineObject = "LineObject"; 
+        public const string LineObject = "LineObject";
 
-        public const string SplitLine = "SplitLine"; 
+        public const string NetworkLobbyPlayer = "NetworkLobbyPlayer";
+
+        public const string PlayerOne = "PlayerOne";
+
+        public const string PlayerTwo = "PlayerTwo";
+
+        public const string PlayerThree = "PlayerThree";
+
+        public const string PlayerFour = "PlayerFour";
     }
 }

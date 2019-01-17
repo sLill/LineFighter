@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class HudController : MonoBehaviour
+public class HudController : NetworkBehaviour
 {
-    #region Member Variables
+    #region Member Variables..
+    private object[] _assets;
     private float _drawAlphaFocus;
     private float _drawAlphaUnfocus;
     private Image _eraserGauge;
@@ -17,16 +20,21 @@ public class HudController : MonoBehaviour
     private Image _pencilGaugeContainer;
     private SpriteRenderer _pencilSpriteRenderer;
     private PlayerController _playerController;
-    #endregion Member Variables
+    #endregion Member Variables..
 
+    #region Properties..
     public DrawType DrawMode { get; private set; }
+    #endregion Properties..
 
+    #region Enums..
     public enum DrawType
     {
         Draw,
         Erase
     }
+    #endregion Enums..
 
+    #region Events..
     // Use this for initialization
     void Start()
     {
@@ -57,25 +65,50 @@ public class HudController : MonoBehaviour
             Sprite cursorSprite;
             Vector2 hotspot;
 
+            if (_playerController == null)
+            {
+                int playerNumber = GameObject.FindObjectOfType<NetworkLobbyManager>().numPlayers;
+
+                string playerTag = string.Empty;
+                switch (playerNumber)
+                {
+                    case 1:
+                        playerTag = Fields.Tags.PlayerOne;
+                        break;
+                    case 2:
+                        playerTag = Fields.Tags.PlayerTwo;
+                        break;
+                    case 3:
+                        playerTag = Fields.Tags.PlayerThree;
+                        break;
+                    case 4:
+                        playerTag = Fields.Tags.PlayerFour;
+                        break;
+                }
+
+                _playerController = GameObject.FindGameObjectWithTag(playerTag).GetComponent<PlayerController>();
+            }
+
             if (hudController.DrawMode == HudController.DrawType.Draw)
             {
-                cursorSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(Fields.AssetPaths.DrawCursor);
+                cursorSprite = AssetLibrary.UiAssets["Draw_Cursor"];
                 hotspot = new Vector2(0, 48);
             }
             else
             {
-                string path = string.Empty;
+                Sprite cursor = null;
                 switch (_playerController.Eraser.Size)
                 {
                     case Eraser.EraserSize.Small:
-                        path = Fields.AssetPaths.EraseCursorSmall;
+                        cursor = AssetLibrary.UiAssets[Fields.Assets.EraseCursorSmall];
                         break;
                     default:
-                        path = Fields.AssetPaths.EraseCursorSmall;
+                        //cursor = AssetLibrary.UiAssets["Erase_Cursor_Large"];
                         break;
                 }
 
-                cursorSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(path);
+
+                cursorSprite = cursor;
                 hotspot = new Vector2(24, 24);
             }
 
@@ -87,7 +120,9 @@ public class HudController : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
     }
+    #endregion Events..
 
+    #region Private Methods..
     private void InitializeHud()
     {
         _drawAlphaFocus = 1f;
@@ -150,5 +185,6 @@ public class HudController : MonoBehaviour
                 break;
         }
     }
+    #endregion Private Methods..
 }
 

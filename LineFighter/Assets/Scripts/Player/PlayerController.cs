@@ -1,19 +1,23 @@
 ﻿using Assets.Scripts.Properties;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     #region Member Variables
     private Animator _animator;
+    private DrawErase _drawErase;
+    private bool _isGrounded = false;
+    private List<Direction> _keysDown;
+    private bool _moving = false;
+    private GameObject _playerLines;
+    private bool _queueJump = false;
     private Rigidbody2D _rigidbody;
     private float _speed;
     private float _time = 0;
-    private bool _moving = false;
-    private bool _queueJump = false;
-    private bool _isGrounded = false;
-    private List<Direction> _keysDown;
     #endregion Member Variables
 
     #region Public Properties
@@ -35,19 +39,58 @@ public class PlayerController : MonoBehaviour
     }
     #endregion Enum Types
 
-    #region MonoBehaviour
+    private void Awake()
+    {
+        Eraser = new Eraser();
+        Line = new Line();
+        Player = new Player();
+    }
+
+    #region Events..
     void Start()
     {
+        Player.IsLocalPlayer = isLocalPlayer;
+        Player.PlayerControllerId = this.GetComponentInParent<NetworkIdentity>().playerControllerId;
+
+        if (!isLocalPlayer)
+        {
+            this.enabled = false;
+        }
+
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
+
+        NetworkLobbyController networkLobbyController = GameObject.FindObjectOfType<NetworkLobbyController>();
+
+        string playerTag = string.Empty;
+        int playerNumber = networkLobbyController.PlayerList.IndexOf(networkLobbyController.PlayerList.First(x => x.PlayerControllerIds.Any(z => z == Player.PlayerControllerId)));
+        switch (playerNumber)
+        {
+            case 0:
+                playerTag = Fields.Tags.PlayerOne;
+                break;
+            case 1:
+                playerTag = Fields.Tags.PlayerTwo;
+                break;
+            case 2:
+                playerTag = Fields.Tags.PlayerThree;
+                break;
+            case 3:
+                playerTag = Fields.Tags.PlayerFour;
+                break;
+        }
+
+        this.GetComponentInParent<Transform>().tag = playerTag;
+
+        Player.PlayerTag = playerTag;
+        Player.PlayerNumber = playerNumber + 1;
 
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
-        Eraser = new Eraser();
-        Line = new Line();
-        Player = new Player();
+        InitializeProperties();
+        CreatePlayerLineObject();
     }
 
     void Update()
@@ -194,5 +237,28 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody.velocity = Vector2.zero;
     }
-    #endregion MonoBehaviour
+    #endregion Events..
+
+    #region Private Methods
+    private void CreatePlayerLineObject()
+    {
+        _playerLines = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
+        _playerLines.tag = Player.PlayerTag;
+        _playerLines.name = Player.PlayerTag + "Lines";
+        DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
+        drawErase.Player = this.Player;
+    }
+
+    private void InitializeProperties()
+    {
+        this.Eraser.Radius = 0.21f;
+        this.Eraser.RefillRate = 30;
+        this.Eraser.ResourceMax = 1000;
+        this.Eraser.Size = Eraser.EraserSize.Small;
+        this.Line.RefillRate = 30;
+        this.Line.ResourceMax = 1000;
+        this.Line.LineGravity = true;
+        this.Line.Thickness = 0.13f;
+    }
+    #endregion Private Methods
 }

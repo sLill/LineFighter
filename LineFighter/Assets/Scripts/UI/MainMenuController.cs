@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    #region MonoBehaviour
-    void Start()
-    {
-        InitializeMenuButtonEvents();
-    }
-    #endregion MonoBehaviour
+    #region Member Variables..
+    private GameObject _networkLobbyPanel;
+    private GameObject _settingsPanel;
+    #endregion Member Variables..
 
     #region Events
+    void Start()
+    {
+        InitializeMenu();
+        InitializeMenuButtonEvents();
+    }
 
     private void AboutButton_Clicked()
     {
@@ -23,7 +27,7 @@ public class MainMenuController : MonoBehaviour
 
     private void ExitButton_Clicked()
     {
-
+        Application.Quit();
     }
 
     private void LordsOfLineButton_Clicked()
@@ -33,16 +37,22 @@ public class MainMenuController : MonoBehaviour
 
     private void MultiplayerButton_Clicked()
     {
-
+        _networkLobbyPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.NetworkLobbyManagerObjectPrefab]);
     }
 
     private void SettingsButton_Clicked()
     {
-
+        _settingsPanel.SetActive(true);
     }
     #endregion Events
 
     #region Private Methods
+    private void InitializeMenu()
+    {
+        _settingsPanel = GameObject.Find(Fields.GameObjects.SettingsPanel);
+        _settingsPanel.SetActive(false);
+    }
+
     private void InitializeMenuButtonEvents()
     {
         Button[] menuButtons = GameObject.FindObjectsOfType<Button>();

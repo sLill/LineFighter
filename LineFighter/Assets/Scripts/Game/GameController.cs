@@ -5,48 +5,50 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    #region Member Variables
+    #region Member Variables..
     private HudController _hudController;
-    private PlayerController _playerController;
-    #endregion Member Variables
+    #endregion Member Variables..
 
+    #region Properties..
+
+    #endregion Properties..
+
+    #region Events..
     private void Awake()
     {
+        // Load Assets
+        AssetLibrary.LoadUiAssets();
+        AssetLibrary.LoadMaterialAssets();
+        AssetLibrary.LoadPrefabAssets();
+
         HudSettings.FpsCounterActive = true;
         DisplaySettings.FrameRateCap = 300;
         DisplaySettings.VSyncEnabled = 0;
+
+        GameObject Game = GameObject.Find(Fields.GameObjects.Game);
+        DontDestroyOnLoad(Game);
     }
 
-    // Use this for initialization
     void Start()
     {
         // Initialize game and player settings
-        // These will be moved over to the Settings screen once it gets finished
-        _playerController = GameObject.FindObjectOfType<PlayerController>();
-        _playerController.Eraser.Radius = 0.21f;
-        _playerController.Eraser.RefillRate = 30;
-        _playerController.Eraser.ResourceMax = 1000;
-        _playerController.Eraser.Size = Eraser.EraserSize.Small;
-        _playerController.Line.RefillRate = 30;
-        _playerController.Line.ResourceMax = 1000;
-        _playerController.Line.LineGravity = true;
-        _playerController.Line.Thickness = 0.13f;
-
-         _hudController = GameObject.FindObjectOfType<HudController>();
+        _hudController = GameObject.FindObjectOfType<HudController>();
 
         InitDisplaySettings();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
+    #endregion Events..
 
+    #region Private Methods..
     private void InitDisplaySettings()
     {
         QualitySettings.vSyncCount = DisplaySettings.VSyncEnabled;
         Application.targetFrameRate = DisplaySettings.FrameRateCap;
     }
+    #endregion Private Methods..
 }
 

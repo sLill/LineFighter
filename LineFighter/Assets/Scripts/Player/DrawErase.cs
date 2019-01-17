@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Properties;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class DrawErase : MonoBehaviour
+public class DrawErase : NetworkBehaviour
 {
     #region Member Variables
     private Camera _cameraMain;
@@ -18,18 +21,30 @@ public class DrawErase : MonoBehaviour
     private List<Vector2> _pointsList;
     #endregion Member Variables
 
-    #region MonoBehaviour
+    #region Properties..
+    public Player Player { get; set; } 
+    #endregion Properties..
+
+    #region Events..
     private void Start()
     {
-        _cameraMain = Camera.main;
-        _hudController = GameObject.FindObjectOfType<HudController>();
-        _parentObject = gameObject.GetComponentInParent<Transform>();
-        _playerController = GameObject.FindObjectOfType<PlayerController>();
-        _playerLines = GameObject.Find(Fields.GameObjects.PlayerLines);
+        if (Player.IsLocalPlayer)
+        {
+            Initialize();
+        }
+        else
+        {
+            this.enabled = false;
+        }
     }
 
     void Update()
     {
+        if (_hudController == null)
+        {
+            _hudController = GameObject.FindObjectOfType<HudController>();
+        }
+
         switch (_hudController.DrawMode)
         {
             case HudController.DrawType.Draw:
@@ -39,8 +54,26 @@ public class DrawErase : MonoBehaviour
                 EraseLine();
                 break;
         }
+
+        // Spawn/De-spawn line objects
+        NetworkServer.SpawnObjects();
     }
-    #endregion MonoBehaviour
+    #endregion Events..
+
+    #region Public Methods
+    public void Initialize()
+    {
+        _cameraMain = Camera.main;
+        _hudController = GameObject.FindObjectOfType<HudController>();
+        _parentObject = gameObject.GetComponentInParent<Transform>();
+        _playerController = GameObject.FindObjectOfType<PlayerController>();
+
+        string playerLinesObjectName = _playerController.Player.PlayerTag + "Lines";
+        _playerLines = GameObject.Find(playerLinesObjectName);
+
+        _pointsList = new List<Vector2>();
+    }
+    #endregion Public Methods
 
     #region Private Methods
     private void DrawLine()
@@ -53,12 +86,9 @@ public class DrawErase : MonoBehaviour
                 _isMousePressed = true;
 
                 // Create a new line Object
-                _lineObject = new GameObject();
-                _lineObject.name = Fields.GameObjects.LineObject;
-                _lineObject.tag = Fields.Tags.LineObject;
+                _lineObject = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                 _lineObject.transform.parent = _parentObject;
-                _lineObject.AddComponent<LineRenderer>();
-                _renderer = _lineObject.GetComponent<LineRenderer>();
+                _renderer = _lineObject.AddComponent<LineRenderer>();
                 SetLineProperties(_renderer);
             }
 
@@ -116,9 +146,9 @@ public class DrawErase : MonoBehaviour
             {
                 try
                 {
-                    if (mouseHit && (mouseHit.collider.tag == Fields.Tags.LineObject || mouseHit.collider.tag == Fields.Tags.SplitLine))
+                    if (mouseHit && mouseHit.collider.tag == Fields.Tags.LineObject)
                     {
-                        EdgeCollider2D lineCollider = (EdgeCollider2D)mouseHit.collider;
+                        EdgeCollider2D lineCollider = (EdgeCollider2D) mouseHit.collider;
                         Vector2 contactPoint = mouseHit.point;
                         int closestPointIndex = -1;
                         float closestPointDistance = (float)int.MaxValue;
@@ -164,13 +194,10 @@ public class DrawErase : MonoBehaviour
                         if (firstLineV2Arr.Length > 1)
                         {
                             // Create a new GameObject, LineRenderer and Collider for the first new line
-                            GameObject firstLineObject = new GameObject();
-                            firstLineObject.name = Fields.GameObjects.LineObject;
-                            firstLineObject.tag = Fields.Tags.SplitLine;
+                            GameObject firstLineObject = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                             firstLineObject.transform.parent = _playerLines.transform;
-                            firstLineObject.AddComponent<LineRenderer>();
 
-                            LineRenderer lineRendererOne = firstLineObject.GetComponent<LineRenderer>();
+                            LineRenderer lineRendererOne = firstLineObject.AddComponent<LineRenderer>();
                             SetLineProperties(lineRendererOne);
 
                             lineRendererOne.positionCount = firstLineV3Arr.Length;
@@ -192,13 +219,10 @@ public class DrawErase : MonoBehaviour
                         // Create a new GameObject, LineRenderer and Collider for the second new line
                         if (secondLineV2Arr.Length > 1)
                         {
-                            GameObject secondLineObject = new GameObject();
-                            secondLineObject.name = Fields.GameObjects.LineObject;
-                            secondLineObject.tag = Fields.Tags.SplitLine;
+                            GameObject secondLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                             secondLineObject.transform.parent = _playerLines.transform;
-                            secondLineObject.AddComponent<LineRenderer>();
 
-                            LineRenderer lineRendererTwo = secondLineObject.GetComponent<LineRenderer>();
+                            LineRenderer lineRendererTwo = secondLineObject.AddComponent<LineRenderer>();
                             SetLineProperties(lineRendererTwo);
 
                             lineRendererTwo.positionCount = secondLineV3Arr.Length;
@@ -230,7 +254,7 @@ public class DrawErase : MonoBehaviour
 
     private void SetLineProperties(LineRenderer lineRenderer)
     {
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.material = AssetLibrary.MaterialAssets[Fields.Assets.LineMaterialBase];
         lineRenderer.startColor = new Color(255, 255, 255, 100);
         lineRenderer.endColor = new Color(255, 255, 255, 100);
         lineRenderer.startWidth = _playerController.Line.Thickness;

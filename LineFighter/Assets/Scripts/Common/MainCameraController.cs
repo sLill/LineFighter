@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
-	// Use this for initialization
-	void Start ()
-    {
-
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    #region Events..
+    // Use this for initialization
+    void Start()
     {
 
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+    #endregion Events..
 }

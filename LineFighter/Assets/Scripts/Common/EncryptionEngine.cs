@@ -5,14 +5,17 @@ using System.Text;
 
 public static class EncryptionEngine
 {
+    #region Member Variables..
     private const string _hash = "SHA1";
     private const string _initialVector = "OhLna7^m*bDD$12s";
     private const int _iterations = 2;
     private const int _keySize = 256;
     private const string _password = "ItsNotJustABoulder";
     private const string _salt = "ItsARock";
+    #endregion Member Variables..
 
 
+    #region Public Methods..
     public static string Decrypt(string encryptedText)
     {
         int ByteCount = 0;
@@ -79,4 +82,5 @@ public static class EncryptionEngine
         SymmetricKey.Clear();
         return Convert.ToBase64String(CipherTextBytes);
     }
+    #endregion Public Methods..
 }

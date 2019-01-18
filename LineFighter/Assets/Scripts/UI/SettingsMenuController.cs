@@ -9,15 +9,17 @@ using UnityEngine.UI;
 
 public class SettingsMenuController : MonoBehaviour
 {
+    #region Member Variables..
     private Text _savedText;
-    
-    #region MonoBehaviour
+    #endregion Member Variables..
+
+    #region Events..
     void Start()
     {
         InitializeMenuButtonEvents();
         InitializeUI();
     }
-    #endregion MonoBehaviour
+    #endregion Events..
 
     #region Events
     private void ApplyButton_Clicked()

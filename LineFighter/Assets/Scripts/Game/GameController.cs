@@ -9,37 +9,49 @@ public class GameController : MonoBehaviour
     private HudController _hudController;
     #endregion Member Variables..
 
+    #region Properties..
+    public List<PlayerProfile> PlayerList { get; set; }
+    #endregion Properties..
+
+    #region Events..
     private void Awake()
     {
         // Load Assets
         AssetLibrary.LoadUiAssets();
         AssetLibrary.LoadMaterialAssets();
         AssetLibrary.LoadPrefabAssets();
-
+        
         HudSettings.FpsCounterActive = true;
         DisplaySettings.FrameRateCap = 300;
         DisplaySettings.VSyncEnabled = 0;
+
+        GameObject Game = GameObject.Find(Fields.GameObjects.Game);
+
+        PlayerList = new List<PlayerProfile>();
+
+        DontDestroyOnLoad(Game);
     }
 
-    // Use this for initialization
     void Start()
     {
         // Initialize game and player settings
-         _hudController = GameObject.FindObjectOfType<HudController>();
+        _hudController = GameObject.FindObjectOfType<HudController>();
 
         InitDisplaySettings();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
+    #endregion Events..
 
+    #region Private Methods..
     private void InitDisplaySettings()
     {
         QualitySettings.vSyncCount = DisplaySettings.VSyncEnabled;
         Application.targetFrameRate = DisplaySettings.FrameRateCap;
     }
+    #endregion Private Methods..
 }
 

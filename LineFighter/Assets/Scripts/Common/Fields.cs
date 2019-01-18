@@ -15,6 +15,10 @@
 
         public const string LineMaterialBase = "LineMaterial_Base";
 
+        public const string LineObjectPrefab = "LineObject";
+
+        public const string NetworkLobbyManagerObjectPrefab = "NetworkLobbyManagerObject";
+
         public const string PlayerPrefab = "Player";
 
         public const string PlayerLinesPrefab = "PlayerLines";
@@ -105,6 +109,8 @@
     {
         public const string LineObject = "LineObject";
 
+        public const string NetworkLobbyPlayer = "NetworkLobbyPlayer";
+
         public const string PlayerOne = "PlayerOne";
 
         public const string PlayerTwo = "PlayerTwo";
@@ -112,7 +118,5 @@
         public const string PlayerThree = "PlayerThree";
 
         public const string PlayerFour = "PlayerFour";
-
-        public const string SplitLine = "SplitLine";
     }
 }

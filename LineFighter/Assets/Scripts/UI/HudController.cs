@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class HudController : MonoBehaviour
+public class HudController : NetworkBehaviour
 {
-    #region Member Variables
+    #region Member Variables..
     private object[] _assets;
     private float _drawAlphaFocus;
     private float _drawAlphaUnfocus;
@@ -20,16 +20,21 @@ public class HudController : MonoBehaviour
     private Image _pencilGaugeContainer;
     private SpriteRenderer _pencilSpriteRenderer;
     private PlayerController _playerController;
-    #endregion Member Variables
+    #endregion Member Variables..
 
+    #region Properties..
     public DrawType DrawMode { get; private set; }
+    #endregion Properties..
 
+    #region Enums..
     public enum DrawType
     {
         Draw,
         Erase
     }
+    #endregion Enums..
 
+    #region Events..
     // Use this for initialization
     void Start()
     {
@@ -62,7 +67,7 @@ public class HudController : MonoBehaviour
 
             if (_playerController == null)
             {
-                int playerNumber = GameObject.FindObjectOfType<NetworkManager>().numPlayers;
+                int playerNumber = GameObject.FindObjectOfType<NetworkLobbyManager>().numPlayers;
 
                 string playerTag = string.Empty;
                 switch (playerNumber)
@@ -115,7 +120,9 @@ public class HudController : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
     }
+    #endregion Events..
 
+    #region Private Methods..
     private void InitializeHud()
     {
         _drawAlphaFocus = 1f;
@@ -178,5 +185,6 @@ public class HudController : MonoBehaviour
                 break;
         }
     }
+    #endregion Private Methods..
 }
 

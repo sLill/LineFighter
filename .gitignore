@@ -336,11 +336,4 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
-/LineFighter/Build bin/LineFighter_Data/.gitignore
-/LineFighter/Library/PlayerDataCache/Win64/Data/.gitignore
-/LineFighter/Library/ShaderCache/9/.gitignore
-/LineFighter/Library/ShaderCache/b/.gitignore
-/LineFighter/Library/metadata/2e/.gitignore
-/LineFighter/Library/metadata/64/.gitignore
-/LineFighter/Library/metadata/71/.gitignore
-/LineFighter/Library/metadata/a7/.gitignore
+/LineFighter/Temp

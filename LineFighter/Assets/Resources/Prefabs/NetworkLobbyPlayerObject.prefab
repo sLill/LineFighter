@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 9196383542366027587}
   - component: {fileID: 1054993931507985316}
   - component: {fileID: 6923860626983667304}
-  - component: {fileID: 1659343475532994837}
   m_Layer: 0
   m_Name: NetworkLobbyPlayerObject
   m_TagString: NetworkLobbyPlayer
@@ -79,15 +78,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowLobbyGUI: 1
---- !u!114 &1659343475532994837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 607503509168052709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 467c15354bf4ba1449f3d49135263444, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

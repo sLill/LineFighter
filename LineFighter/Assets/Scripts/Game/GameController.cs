@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class GameController : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class GameController : MonoBehaviour
     #endregion Member Variables..
 
     #region Properties..
-    public List<PlayerProfile> PlayerList { get; set; }
     #endregion Properties..
 
     #region Events..
@@ -26,8 +26,6 @@ public class GameController : MonoBehaviour
         DisplaySettings.VSyncEnabled = 0;
 
         GameObject Game = GameObject.Find(Fields.GameObjects.Game);
-
-        PlayerList = new List<PlayerProfile>();
 
         DontDestroyOnLoad(Game);
     }
@@ -45,6 +43,10 @@ public class GameController : MonoBehaviour
 
     }
     #endregion Events..
+
+    #region Public Methods..
+    
+    #endregion Public Methods..
 
     #region Private Methods..
     private void InitDisplaySettings()

@@ -1,8 +1,10 @@
-﻿public interface IPlayer
-{
-    bool IsLocalPlayer { get; set; }
+﻿using UnityEngine.Networking;
 
-    short PlayerControllerId { get; set; }
+public interface IPlayer
+{
+    int ConnectionId { get; set; }
+
+    bool IsLocalPlayer { get; set; }
 
     int PlayerNumber { get; set; }
 

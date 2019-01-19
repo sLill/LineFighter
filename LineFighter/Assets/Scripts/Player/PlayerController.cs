@@ -39,32 +39,29 @@ public class PlayerController : NetworkBehaviour
     }
     #endregion Enum Types
 
-    private void Awake()
+    #region Events..
+
+    void Start()
     {
         Eraser = new Eraser();
         Line = new Line();
         Player = new Player();
-    }
-
-    #region Events..
-    void Start()
-    {
-        Player.IsLocalPlayer = isLocalPlayer;
-        Player.PlayerControllerId = this.GetComponentInParent<NetworkIdentity>().playerControllerId;
-
-        if (!isLocalPlayer)
+        
+        if (!this.isLocalPlayer)
         {
             this.enabled = false;
         }
 
+        Player.IsLocalPlayer = isLocalPlayer;
+        Player.ConnectionId = this.GetComponentInParent<NetworkIdentity>().connectionToServer.connectionId;
+
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        GameController gameController = GameObject.FindObjectOfType<GameController>();
-
+        NetworkController networkLobbyController = GameObject.FindObjectOfType<NetworkController>();
+       
         string playerTag = string.Empty;
-        int playerNumber = gameController.PlayerList.IndexOf(gameController.PlayerList.First(x => x.PlayerControllerIds.Any(z => z == Player.PlayerControllerId)));
-        switch (playerNumber)
+        switch (Player.ConnectionId)
         {
             case 0:
                 playerTag = Fields.Tags.PlayerOne;
@@ -83,10 +80,10 @@ public class PlayerController : NetworkBehaviour
         this.GetComponentInParent<Transform>().tag = playerTag;
 
         Player.PlayerTag = playerTag;
-        Player.PlayerNumber = playerNumber + 1;
+        Player.PlayerNumber = Player.ConnectionId + 1;
 
-        _animator = GetComponent<Animator>();
-        _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = this.GetComponentInParent<Animator>();
+        _rigidbody = this.GetComponentInParent<Rigidbody2D>();
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         InitializeProperties();

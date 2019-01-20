@@ -111,6 +111,10 @@
 
         public const string NetworkLobbyPlayer = "NetworkLobbyPlayer";
 
+        public const string Player = "Player";
+
+        public const string PlayerLines  = "PlayerLines";
+
         public const string PlayerOne = "PlayerOne";
 
         public const string PlayerTwo = "PlayerTwo";

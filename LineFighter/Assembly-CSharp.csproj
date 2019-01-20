@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Common\AssetLibrary.cs" />
     <Compile Include="Assets\Scripts\Common\EncryptionEngine.cs" />
+    <Compile Include="Assets\Scripts\Common\Extensions.cs" />
     <Compile Include="Assets\Scripts\Common\Fields.cs" />
     <Compile Include="Assets\Scripts\Common\MainCameraController.cs" />
     <Compile Include="Assets\Scripts\Common\Tools\FpsCounter.cs" />
@@ -75,10 +76,14 @@
     <Compile Include="Assets\Scripts\Interfaces\ILine.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayerProfile.cs" />
+    <Compile Include="Assets\Scripts\Network\Message\LobbyInformationMessage.cs" />
+    <Compile Include="Assets\Scripts\Network\Message\MessageType.cs" />
+    <Compile Include="Assets\Scripts\Network\Message\PlayerInformationMessage.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkController.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterController2D.cs" />
     <Compile Include="Assets\Scripts\Player\DrawErase.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerLinesController.cs" />
     <Compile Include="Assets\Scripts\Properties\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\Properties\Eraser.cs" />
     <Compile Include="Assets\Scripts\Properties\Line.cs" />

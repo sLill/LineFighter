@@ -86,8 +86,8 @@ public class DrawErase : NetworkBehaviour
                 _isMousePressed = true;
 
                 // Create a new line Object
-                _lineObject = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
-                _lineObject.transform.parent = _parentObject;
+                _lineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
+                 _lineObject.transform.parent = _parentObject;
                 _renderer = _lineObject.AddComponent<LineRenderer>();
                 SetLineProperties(_renderer);
             }
@@ -95,7 +95,7 @@ public class DrawErase : NetworkBehaviour
             // Drawing line when mouse is moving(presses)
             if (_isMousePressed)
             {
-                _mousePos = _cameraMain.ScreenToWorldPoint(Input.mousePosition);
+                _mousePos = _cameraMain.ScreenPointToRay(Input.mousePosition).origin;
                 _mousePos.z = 0;
                 if (!_pointsList.Contains(_mousePos))
                 {
@@ -115,7 +115,7 @@ public class DrawErase : NetworkBehaviour
                 {
                     _lineCollider = _lineObject.AddComponent<EdgeCollider2D>();
                     _lineCollider.edgeRadius = _playerController.Line.Thickness - 0.01f;
-                    _lineCollider.offset = new Vector2(0.0f, 0.04f);
+                    _lineCollider.offset = new Vector2(0.0f, 0.00f);
                     Vector2[] vertices = new Vector2[_pointsList.Count];
 
                     for (int i = 0; i < _pointsList.Count; i++)
@@ -205,7 +205,7 @@ public class DrawErase : NetworkBehaviour
 
                             EdgeCollider2D lineColliderOne = firstLineObject.AddComponent<EdgeCollider2D>();
                             lineColliderOne.edgeRadius = _playerController.Line.Thickness - 0.01f;
-                            lineColliderOne.offset = new Vector2(0.0f, 0.04f);
+                            lineColliderOne.offset = new Vector2(0.0f, 0.00f);
                             Vector2[] lineOneVertices = new Vector2[firstLineV2Arr.Length];
 
                             for (int i = 0; i < firstLineV2Arr.Length; i++)

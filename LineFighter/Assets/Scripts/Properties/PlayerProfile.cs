@@ -13,8 +13,6 @@ public class PlayerProfile : IPlayerProfile
 
     public int HostId { get; set; }
 
-    public bool IsLocalProfile { get; set; }
-
     public short PlayerControllerId { get; set; }
 
     public string PlayerName { get; set; }

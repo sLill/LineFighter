@@ -8,7 +8,7 @@ namespace Assets.Scripts.Properties
 
         public bool IsLocalPlayer { get; set; }
 
-        public int PlayerNumber { get; set; }
+        public NetworkInstanceId NetId { get; set; }
 
         public string PlayerTag { get; set; }
     }

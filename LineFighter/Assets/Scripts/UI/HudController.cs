@@ -67,10 +67,10 @@ public class HudController : NetworkBehaviour
 
             if (_playerController == null)
             {
-                int playerNumber = GameObject.FindObjectOfType<NetworkLobbyManager>().numPlayers;
+                int connectionId = GameObject.FindObjectOfType<NetworkController>().NetworkConnection.connectionId;
 
                 string playerTag = string.Empty;
-                switch (playerNumber)
+                switch (connectionId)
                 {
                     case 1:
                         playerTag = Fields.Tags.PlayerOne;

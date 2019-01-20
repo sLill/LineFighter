@@ -9,8 +9,6 @@ public interface IPlayerProfile
 
     int HostId { get; set; }
 
-    bool IsLocalProfile { get; set; }
-
     short PlayerControllerId { get; set; }
 
     string PlayerName { get; set; }

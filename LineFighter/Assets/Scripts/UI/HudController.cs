@@ -67,25 +67,6 @@ public class HudController : NetworkBehaviour
 
             if (_playerController == null)
             {
-                int connectionId = GameObject.FindObjectOfType<NetworkController>().NetworkConnection.connectionId;
-
-                string playerTag = string.Empty;
-                switch (connectionId)
-                {
-                    case 1:
-                        playerTag = Fields.Tags.PlayerOne;
-                        break;
-                    case 2:
-                        playerTag = Fields.Tags.PlayerTwo;
-                        break;
-                    case 3:
-                        playerTag = Fields.Tags.PlayerThree;
-                        break;
-                    case 4:
-                        playerTag = Fields.Tags.PlayerFour;
-                        break;
-                }
-
                 _playerController = GameObject.FindGameObjectWithTag(playerTag).GetComponent<PlayerController>();
             }
 

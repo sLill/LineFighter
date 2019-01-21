@@ -60,29 +60,14 @@ public class PlayerController : NetworkBehaviour
         Player.NetId = this.netId;
         _playerLines.GetComponent<PlayerLinesController>().NetId = this.netId;
 
+        _networkController = GameObject.FindObjectOfType<NetworkController>();
+
         if (this.isLocalPlayer)
         {
-            _networkController = GameObject.FindObjectOfType<NetworkController>();
-
             Player.IsLocalPlayer = true;
-            Player.ConnectionId = _networkController.NetworkConnection.connectionId;
+            //Player.ConnectionId = _networkController.NetworkConnection.connectionId;
 
             string playerTag = string.Empty;
-            switch (Player.ConnectionId)
-            {
-                case 0:
-                    playerTag = Fields.Tags.PlayerOne;
-                    break;
-                case 1:
-                    playerTag = Fields.Tags.PlayerTwo;
-                    break;
-                case 2:
-                    playerTag = Fields.Tags.PlayerThree;
-                    break;
-                case 3:
-                    playerTag = Fields.Tags.PlayerFour;
-                    break;
-            }
 
             this.GetComponentInParent<Transform>().name = "Player (NetId: " + this.netId + ")";
             //Player.PlayerTag = playerTag;
@@ -147,8 +132,6 @@ public class PlayerController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-
-
         // Jump
         if (_isGrounded && _queueJump)
         {
@@ -220,17 +203,6 @@ public class PlayerController : NetworkBehaviour
         _animator.SetFloat(Fields.Animator.Speed, _speed);
         _animator.SetBool(Fields.Animator.Moving, _moving);
         _animator.SetBool(Fields.Animator.Airborne, !_isGrounded);
-
-        // Send your player information to all other players if you're the host. If not, send it to the host so that he can do it.
-        PlayerInformationMessage playerInformationMessage = new PlayerInformationMessage(Player);
-        if (NetworkServer.active)
-        {
-            _networkController.ServerSendPlayerInformation(playerInformationMessage);
-        }
-        else
-        {
-            _networkController.ClientSendPlayerInformation(playerInformationMessage);
-        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -259,18 +231,7 @@ public class PlayerController : NetworkBehaviour
     #endregion Events..
 
     #region Public Methods..
-    public void UpdatePlayerInformation(PlayerInformationMessage playerInformationMessage)
-    {
-        Player.ConnectionId = playerInformationMessage.ConnectionId;
 
-        this.GetComponentInParent<Transform>().tag = Player.PlayerTag;
-        Player.PlayerTag = playerInformationMessage.PlayerTag;
-
-        _playerLines.tag = Player.PlayerTag;
-        _playerLines.name = Player.PlayerTag + "Lines";
-        DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
-        drawErase.Player = this.Player;
-    }
     #endregion Public Methods..
 
     #region Private Methods

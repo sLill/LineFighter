@@ -114,13 +114,5 @@
         public const string Player = "Player";
 
         public const string PlayerLines  = "PlayerLines";
-
-        public const string PlayerOne = "PlayerOne";
-
-        public const string PlayerTwo = "PlayerTwo";
-
-        public const string PlayerThree = "PlayerThree";
-
-        public const string PlayerFour = "PlayerFour";
     }
 }

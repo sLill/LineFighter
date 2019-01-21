@@ -69,16 +69,13 @@
     <Compile Include="Assets\Scripts\Common\Tools\FpsCounter.cs" />
     <Compile Include="Assets\Scripts\Common\Triangulator.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAIController.cs" />
-    <Compile Include="Assets\Scripts\Game\GameController.cs" />
     <Compile Include="Assets\Scripts\Game\GameSettings.cs" />
+    <Compile Include="Assets\Scripts\Game\MultiplayerGameController.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IEnemyAI.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IEraser.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ILine.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayerProfile.cs" />
-    <Compile Include="Assets\Scripts\Network\Message\LobbyInformationMessage.cs" />
-    <Compile Include="Assets\Scripts\Network\Message\MessageType.cs" />
-    <Compile Include="Assets\Scripts\Network\Message\PlayerInformationMessage.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkController.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterController2D.cs" />
     <Compile Include="Assets\Scripts\Player\DrawErase.cs" />

@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GameController : MonoBehaviour
+public class MultiplayerGameController : NetworkBehaviour
 {
     #region Member Variables..
     private HudController _hudController;
     #endregion Member Variables..
 
     #region Properties..
+    public List<PlayerProfile> PlayerList { get; private set; }
     #endregion Properties..
 
     #region Events..
@@ -35,6 +36,8 @@ public class GameController : MonoBehaviour
         // Initialize game and player settings
         _hudController = GameObject.FindObjectOfType<HudController>();
 
+        PlayerList = new List<PlayerProfile>();
+
         InitDisplaySettings();
     }
 
@@ -45,7 +48,20 @@ public class GameController : MonoBehaviour
     #endregion Events..
 
     #region Public Methods..
-    
+    public void AddPlayer(NetworkConnection conn)
+    {
+        // Create unique player profile)
+        PlayerProfile playerProfile = new PlayerProfile()
+        {
+            Address = conn.address,
+            ConnectionId = conn.connectionId,
+            HostId = conn.hostId,
+            PlayerName = "RippStudwell",
+        };
+
+        this.PlayerList.Add(playerProfile);
+        RpcUpdatePlayerList(this.PlayerList);
+    }
     #endregion Public Methods..
 
     #region Private Methods..
@@ -53,6 +69,12 @@ public class GameController : MonoBehaviour
     {
         QualitySettings.vSyncCount = DisplaySettings.VSyncEnabled;
         Application.targetFrameRate = DisplaySettings.FrameRateCap;
+    }
+
+    [ClientRpc]
+    private void RpcUpdatePlayerList(List<PlayerProfile> playerList)
+    {
+        this.PlayerList = playerList;
     }
     #endregion Private Methods..
 }

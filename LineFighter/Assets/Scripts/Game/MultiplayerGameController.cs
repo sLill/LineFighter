@@ -60,7 +60,7 @@ public class MultiplayerGameController : NetworkBehaviour
         };
 
         this.PlayerList.Add(playerProfile);
-        RpcUpdatePlayerList(this.PlayerList);
+        //RpcUpdatePlayerList(this.PlayerList);
     }
     #endregion Public Methods..
 
@@ -71,11 +71,11 @@ public class MultiplayerGameController : NetworkBehaviour
         Application.targetFrameRate = DisplaySettings.FrameRateCap;
     }
 
-    [ClientRpc]
-    private void RpcUpdatePlayerList(List<PlayerProfile> playerList)
-    {
-        this.PlayerList = playerList;
-    }
+    //[ClientRpc]
+    //private void RpcUpdatePlayerList(List<PlayerProfile> playerList)
+    //{
+    //    this.PlayerList = playerList;
+    //}
     #endregion Private Methods..
 }
 

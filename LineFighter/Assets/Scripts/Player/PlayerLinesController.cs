@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerLinesController : MonoBehaviour
+public class PlayerLinesController : NetworkBehaviour
 {
     public NetworkInstanceId NetId { get; set; }
 }

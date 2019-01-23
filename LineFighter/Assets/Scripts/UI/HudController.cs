@@ -67,7 +67,7 @@ public class HudController : NetworkBehaviour
 
             if (_playerController == null)
             {
-                _playerController = GameObject.FindGameObjectWithTag(playerTag).GetComponent<PlayerController>();
+                _playerController = GameObject.FindObjectOfType<PlayerController>();
             }
 
             if (hudController.DrawMode == HudController.DrawType.Draw)

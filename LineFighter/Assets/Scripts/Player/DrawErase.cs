@@ -67,9 +67,7 @@ public class DrawErase : NetworkBehaviour
         _hudController = GameObject.FindObjectOfType<HudController>();
         _parentObject = gameObject.GetComponentInParent<Transform>();
         _playerController = GameObject.FindObjectOfType<PlayerController>();
-
-        string playerLinesObjectName = _playerController.Player.PlayerTag + "Lines";
-        _playerLines = GameObject.Find(playerLinesObjectName);
+        _playerLines = _parentObject.gameObject;
 
         _pointsList = new List<Vector2>();
     }

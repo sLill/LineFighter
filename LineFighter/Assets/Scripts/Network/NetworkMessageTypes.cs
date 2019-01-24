@@ -7,6 +7,8 @@ namespace Assets.Scripts.Network
 {
     public static class NetworkMessageTypes
     {
-        public const short LineObjectMessage = 2000;
+        public const short LineObjectSpawnMessage = 2000;
+
+        public const short LineObjectUpdateMessage = 2100;
     }
 }

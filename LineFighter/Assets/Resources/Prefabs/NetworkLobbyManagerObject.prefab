@@ -60,7 +60,7 @@ MonoBehaviour:
   m_OnlineScene: 
   m_SpawnPrefabs:
   - {fileID: 1508857790709280, guid: 64312d09ee8d3df4ca7ea327a905f562, type: 3}
-  - {fileID: 289020658241088543, guid: 5978c01e29370754685c871261679a89, type: 3}
+  - {fileID: 289020658241088543, guid: 0d3f8bc038127ad4395c066ed819a282, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MaxPlayers: 4
   m_MaxPlayersPerConnection: 1
   m_MinPlayers: 1
-  m_LobbyPlayerPrefab: {fileID: 232184349995424362, guid: 85fde1a89dd6e8b49a45b057fd37d020,
+  m_LobbyPlayerPrefab: {fileID: 232184349995424362, guid: 14cc1c932e2cffe419aeb4da8eb0516b,
     type: 3}
   m_GamePlayerPrefab: {fileID: 1134769877873446, guid: 4bcee498f4d61074aaa31f38c72ac3dc,
     type: 3}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 45}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e740bffb44126f4cb7ef67eaf929d90, type: 3}
+  m_Script: {fileID: 11500000, guid: b2675fa75477f3e49b735278f5ba407a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Manager: {fileID: 0}

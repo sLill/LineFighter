@@ -13,6 +13,13 @@ public static class AssetLibrary
     #endregion Properties..
 
     #region Methods..
+    public static void LoadBaseAssets()
+    {
+        LoadMaterialAssets();
+        LoadPrefabAssets();
+        LoadUiAssets();
+    }
+
     public static void LoadMaterialAssets()
     {
         MaterialAssets = new Dictionary<string, Material>();

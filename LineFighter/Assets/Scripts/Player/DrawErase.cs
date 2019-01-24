@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Properties;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,12 @@ public class DrawErase : NetworkBehaviour
     #region Member Variables
     private Camera _cameraMain;
     private HudController _hudController;
-    private Transform _parentObject;
     private PlayerController _playerController;
     private GameObject _playerLines;
     private EdgeCollider2D _lineCollider;
     private GameObject _lineObject;
     private Vector3 _mousePos;
+    private NetworkController _networkController;
     private LineRenderer _renderer;
     private bool _isMousePressed = false;
     private List<Vector2> _pointsList;
@@ -65,11 +66,21 @@ public class DrawErase : NetworkBehaviour
     {
         _cameraMain = Camera.main;
         _hudController = GameObject.FindObjectOfType<HudController>();
-        _parentObject = gameObject.GetComponentInParent<Transform>();
+        _networkController = GameObject.FindObjectOfType<NetworkController>();
         _playerController = GameObject.FindObjectOfType<PlayerController>();
-        _playerLines = _parentObject.gameObject;
+        _playerLines = gameObject.GetComponentInParent<Transform>().gameObject;
 
         _pointsList = new List<Vector2>();
+    }
+
+    public void SetLineProperties(LineRenderer lineRenderer, Line line)
+    {
+        lineRenderer.material = AssetLibrary.MaterialAssets[Fields.Assets.LineMaterialBase];
+        lineRenderer.startColor = new Color(255, 255, 255, 100);
+        lineRenderer.endColor = new Color(255, 255, 255, 100);
+        lineRenderer.startWidth = (float)line.Thickness;
+        lineRenderer.endWidth = (float)line.Thickness;
+        lineRenderer.useWorldSpace = true;
     }
     #endregion Public Methods
 
@@ -85,9 +96,11 @@ public class DrawErase : NetworkBehaviour
 
                 // Create a new line Object
                 _lineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
-                 _lineObject.transform.parent = _parentObject;
-                _renderer = _lineObject.AddComponent<LineRenderer>();
-                SetLineProperties(_renderer);
+                 _lineObject.transform.parent = _playerLines.transform;
+                _renderer = _lineObject.GetComponent<LineRenderer>();
+                SetLineProperties(_renderer, _playerController.Line);
+
+                _networkController.ServerSpawnPlayerLine(_lineObject);
             }
 
             // Drawing line when mouse is moving(presses)
@@ -111,9 +124,8 @@ public class DrawErase : NetworkBehaviour
                 // Collider
                 if (_pointsList.Count > 1)
                 {
-                    _lineCollider = _lineObject.AddComponent<EdgeCollider2D>();
-                    _lineCollider.edgeRadius = _playerController.Line.Thickness - 0.01f;
-                    _lineCollider.offset = new Vector2(0.0f, 0.00f);
+                    _lineCollider = _lineObject.GetComponent<EdgeCollider2D>();
+                    _lineCollider.edgeRadius = (float)_playerController.Line.Thickness - 0.01f;
                     Vector2[] vertices = new Vector2[_pointsList.Count];
 
                     for (int i = 0; i < _pointsList.Count; i++)
@@ -196,13 +208,13 @@ public class DrawErase : NetworkBehaviour
                             firstLineObject.transform.parent = _playerLines.transform;
 
                             LineRenderer lineRendererOne = firstLineObject.AddComponent<LineRenderer>();
-                            SetLineProperties(lineRendererOne);
+                            SetLineProperties(lineRendererOne, _playerController.Line);
 
                             lineRendererOne.positionCount = firstLineV3Arr.Length;
                             lineRendererOne.SetPositions(firstLineV3Arr);
 
                             EdgeCollider2D lineColliderOne = firstLineObject.AddComponent<EdgeCollider2D>();
-                            lineColliderOne.edgeRadius = _playerController.Line.Thickness - 0.01f;
+                            lineColliderOne.edgeRadius = (float)_playerController.Line.Thickness - 0.01f;
                             lineColliderOne.offset = new Vector2(0.0f, 0.00f);
                             Vector2[] lineOneVertices = new Vector2[firstLineV2Arr.Length];
 
@@ -221,13 +233,13 @@ public class DrawErase : NetworkBehaviour
                             secondLineObject.transform.parent = _playerLines.transform;
 
                             LineRenderer lineRendererTwo = secondLineObject.AddComponent<LineRenderer>();
-                            SetLineProperties(lineRendererTwo);
+                            SetLineProperties(lineRendererTwo, _playerController.Line);
 
                             lineRendererTwo.positionCount = secondLineV3Arr.Length;
                             lineRendererTwo.SetPositions(secondLineV3Arr);
 
                             EdgeCollider2D lineColliderTwo = secondLineObject.AddComponent<EdgeCollider2D>();
-                            lineColliderTwo.edgeRadius = _playerController.Line.Thickness - 0.01f;
+                            lineColliderTwo.edgeRadius = (float)_playerController.Line.Thickness - 0.01f;
                             lineColliderTwo.offset = new Vector2(0.0f, 0.04f);
                             Vector2[] lineTwoVertices = new Vector2[secondLineV2Arr.Length];
 
@@ -248,16 +260,6 @@ public class DrawErase : NetworkBehaviour
         {
             _isMousePressed = false;
         }
-    }
-
-    private void SetLineProperties(LineRenderer lineRenderer)
-    {
-        lineRenderer.material = AssetLibrary.MaterialAssets[Fields.Assets.LineMaterialBase];
-        lineRenderer.startColor = new Color(255, 255, 255, 100);
-        lineRenderer.endColor = new Color(255, 255, 255, 100);
-        lineRenderer.startWidth = _playerController.Line.Thickness;
-        lineRenderer.endWidth = _playerController.Line.Thickness;
-        lineRenderer.useWorldSpace = true;
     }
     #endregion Private Methods
 }

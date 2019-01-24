@@ -47,33 +47,27 @@ public class PlayerController : NetworkBehaviour
         Line = new Line();
         Player = new Player();
 
+        _animator = this.GetComponentInParent<Animator>();
+        _rigidbody = this.GetComponentInParent<Rigidbody2D>();
+        _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        _networkController = GameObject.FindObjectOfType<NetworkController>();
+
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        _animator = this.GetComponentInParent<Animator>();
+        this.GetComponentInParent<Transform>().name = "Player (NetId: " + this.netId + ")";
+        Player.NetId = this.netId;
+
         _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
-        _rigidbody = this.GetComponentInParent<Rigidbody2D>();
-        _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        _playerLines.GetComponent<PlayerLinesController>().NetId = this.netId;
+        _playerLines.name = "Player Lines (NetId: " + Player.NetId + ")";
 
         InitializeProperties();
-
-        Player.NetId = this.netId;
-        _playerLines.GetComponent<PlayerLinesController>().NetId = this.netId;
-
-        _networkController = GameObject.FindObjectOfType<NetworkController>();
 
         if (this.isLocalPlayer)
         {
             Player.IsLocalPlayer = true;
-            //Player.ConnectionId = _networkController.NetworkConnection.connectionId;
 
-            string playerTag = string.Empty;
-
-            this.GetComponentInParent<Transform>().name = "Player (NetId: " + this.netId + ")";
-            //Player.PlayerTag = playerTag;
-
-            //_playerLines.tag = Player.PlayerTag;
-            _playerLines.name = "Player Lines (NetId: " + Player.NetId + ")";
             DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
             drawErase.Player = this.Player;
         }
@@ -245,7 +239,7 @@ public class PlayerController : NetworkBehaviour
         this.Line.RefillRate = 30;
         this.Line.ResourceMax = 1000;
         this.Line.LineGravity = true;
-        this.Line.Thickness = 0.13f;
+        this.Line.Thickness = 0.13;
     }
     #endregion Private Methods
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Network;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,20 +41,22 @@ public class NetworkController : NetworkLobbyManager
     {
         base.OnLobbyServerConnect(conn);
 
-        // Host adds the player to the playerlist
-        if (NetworkServer.active)
+        if (_gameController == null)
         {
-            _gameController.AddPlayer(conn);
-
-            Debug.Log("PLAYER CONNECTED");
+            _gameController = GameObject.FindObjectOfType<MultiplayerGameController>();
         }
+        
+        _gameController.AddPlayer(conn);
+        Debug.Log("PLAYER CONNECTED");
+
     }
 
+    // Occurs when any player (including the host) joins a lobby
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
 
-        NetworkConnection = conn;
+        client.RegisterHandler(NetworkMessageTypes.LineObjectMessage, ClientSpawnLine);
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
@@ -64,10 +67,26 @@ public class NetworkController : NetworkLobbyManager
     }
     #endregion NetworkLobbyManager..
 
+    public void ClientSpawnLine(NetworkMessage msg)
+    {
+        LineObjectMessage lineObjectMessage = new LineObjectMessage() { MessageType = LineObjectMessage.MsgType.Spawn };
+        lineObjectMessage.Deserialize(msg.reader);
+
+        GameObject playerLinesObject = GameObject.FindGameObjectsWithTag(Fields.Tags.PlayerLines).Where(x => x.GetComponent<PlayerController>().netId == lineObjectMessage.SpawnMessage.NetId).FirstOrDefault();
+        GameObject lineObject = Instantiate(AssetLibrary.PrefabAssets[Fields.Tags.LineObject]) as GameObject;
+
+        lineObject.transform.parent = playerLinesObject.transform;
+    }
+
     #endregion Events..
 
     #region Public Methods..
+    public void ServerSpawnPlayerLine(GameObject lineObject)
+    {
+        //NetworkServer.Spawn(lineObject);
+        LineObjectMessage lineObjectMessage = new LineObjectMessage() { MessageType = LineObjectMessage.MsgType.Spawn };
 
+    }
     #endregion Public Methods..
 
     #region Private Methods..

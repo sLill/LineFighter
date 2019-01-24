@@ -1,4 +1,6 @@
-﻿public static class Fields
+﻿using UnityEngine;
+
+public static class Fields
 {
     public static class Animator
     {

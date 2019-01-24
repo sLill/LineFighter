@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     #region Member Variables..
+    private GameObject _game;
     private GameObject _networkLobbyPanel;
     private GameObject _settingsPanel;
     #endregion Member Variables..
@@ -16,6 +18,9 @@ public class MainMenuController : MonoBehaviour
     #region Events
     void Start()
     {
+        // Load Assets
+        AssetLibrary.LoadBaseAssets();
+
         InitializeMenu();
         InitializeMenuButtonEvents();
     }
@@ -38,6 +43,9 @@ public class MainMenuController : MonoBehaviour
     private void MultiplayerButton_Clicked()
     {
         _networkLobbyPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.NetworkLobbyManagerObjectPrefab]);
+
+        _game = GameObject.Find(Fields.GameObjects.Game);
+        _game.AddComponent<MultiplayerGameController>();
     }
 
     private void SettingsButton_Clicked()

@@ -2,7 +2,7 @@
 {
     bool LineGravity { get; set; }
 
-    float Thickness { get; set; }
+    double Thickness { get; set; }
 
     // Per 1/10 second
     int RefillRate { get; set; }

@@ -1,4 +1,6 @@
-﻿public class Eraser : IEraser<Eraser.EraserSize>
+﻿using UnityEngine;
+
+public class Eraser : IEraser<Eraser.EraserSize>
 {
     #region Properties
     public float Radius { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -6,7 +7,6 @@ using UnityEngine.Networking;
 public class PlayerProfile : IPlayerProfile
 {
     #region Properties..
-
     public string Address { get; set; }
 
     public int ConnectionId { get; set; }

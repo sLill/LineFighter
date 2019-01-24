@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Properties
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Properties
 {
     public static class GameSettings
     {

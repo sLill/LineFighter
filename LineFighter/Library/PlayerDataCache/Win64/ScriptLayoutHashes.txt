@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-D:/Code/Github/LineFighter/LineFighter/Build bin/LineFighter.exe
+C:/Users/lills/Desktop/VS Solutions/LineFighter/LineFighter/Build bin/LineFighter.exe
 SceneListBegin?
 Assets/Scenes/MainMenu.unity
 Assets/Scenes/SceneTemplate.unity
@@ -118,13 +118,14 @@ d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.Spa
 303ad70ce203ad874efe2965d0fbcff9 Unity.Analytics.Tracker.dll:UnityEngine.Analytics.AnalyticsEventTracker
 7fb9de8dcf73854b6b328eca1f7a6e6d Unity.Analytics.Tracker.dll:UnityEngine.Analytics.AnalyticsTracker
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.FpsCounter
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.Triangulator
 94017dcc9f00fe671ea7dc427b4da011 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
 b3ab2106268377ffe25dd18ac23dca28 Unity.TextMeshPro.dll:TMPro.TMP_Asset
-71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.GameController
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.EnemyAI
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.MultiplayerGameController
 265cf27ba050d55ff33a8acab4ded6c0 Assembly-CSharp.dll:.NetworkController
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.Analytics.Editor.dll:UnityEditor.Analytics.AnalyticsEventTrackerEditor
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
-63a7fa7e92af9242223bdd77bc5d2686 Assembly-CSharp.dll:.MainMenuNetworkLobbyManagerHud
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.PlayerLinesController
 4fd8bf02e3089425d3502e26c44ba31a Unity.TextMeshPro.dll:TMPro.TextContainer
 e6ae40841db498b6e673877ac45ad208 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -153,7 +154,6 @@ cf96e5f7b3d069bab453925bd41be04e UnityEngine.TestRunner.dll:UnityEngine.TestTool
 fb6a1ea36b4f6ef5948d283d93760765 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 5b0391b7e3d9ea9db6c0a8fbd0ca23f6 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioSoundfieldExtension
 5b0391b7e3d9ea9db6c0a8fbd0ca23f6 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtension
-a995fa517fe67c14197406b574ac54c8 Assembly-CSharp.dll:.CharacterController2D
 931f489e44eadf809e9310429c99dde5 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtension
 fb6a1ea36b4f6ef5948d283d93760765 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 5b0391b7e3d9ea9db6c0a8fbd0ca23f6 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioSoundfieldExtension
@@ -172,4 +172,4 @@ c6666661329916e218bee7f5e79e60f5 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 8649814970b42d345b89944b862453cc Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.EnemyAIController
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.HudController
-21e871d89bbce53c038fc75ad1b7c7f3 Assembly-CSharp.dll:.NetworkGameController
+63a7fa7e92af9242223bdd77bc5d2686 Assembly-CSharp.dll:.MainMenuNetworkLobbyManagerHud

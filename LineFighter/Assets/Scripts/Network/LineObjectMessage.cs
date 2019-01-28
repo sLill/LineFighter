@@ -25,6 +25,8 @@ namespace Assets.Scripts.Network
 
         public override void Serialize(NetworkWriter writer)
         {
+            writer.SeekZero();
+
             if (MessageType == MsgType.Spawn)
             {
                 writer.StartMessage(NetworkMessageTypes.LineObjectSpawnMessage);
@@ -54,6 +56,8 @@ namespace Assets.Scripts.Network
 
         public override void Deserialize(NetworkReader reader)
         {
+            reader.SeekZero();
+
             if (MessageType == MsgType.Spawn)
             {
                 SpawnMessage = new LineSpawn();

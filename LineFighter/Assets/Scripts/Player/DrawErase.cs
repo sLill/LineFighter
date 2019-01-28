@@ -61,19 +61,19 @@ public class DrawErase : NetworkBehaviour
                 break;
         }
 
-        // Enforce a limit on network requests of 10/second
+        // Limit network requests to 10/second
         if (_timeSinceLastUpdate > 0.1f)
         {
             if (_sendNetworkLineSpawn)
             {
-                _networkController.ClientSpawnPlayerLine(_lineObject);
+                _networkController.SpawnPlayerLine(_lineObject);
 
                 _timeSinceLastUpdate = 0f;
                 _sendNetworkLineSpawn = false;
             }
             else if (_sendNetworkLineUpdate)
             {
-                _networkController.ClientUpdatePlayerLine(_lineObject, _pointsList);
+               // _networkController.UpdatePlayerLine(_lineObject, _pointsList);
 
                 _timeSinceLastUpdate = 0f;
                 _sendNetworkLineUpdate = false;
@@ -121,7 +121,7 @@ public class DrawErase : NetworkBehaviour
 
                 // Create a new line Object
                 _lineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
-                 _lineObject.transform.parent = _playerLines.transform;
+                _lineObject.transform.parent = _playerLines.transform;
                 _renderer = _lineObject.GetComponent<LineRenderer>();
                 SetLineProperties(_renderer, _playerController.Line);
 

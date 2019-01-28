@@ -69,14 +69,14 @@ public class NetworkController : NetworkLobbyManager
 
     private void ClientSpawnPlayerLine(NetworkMessage msg)
     {
-        LineObjectMessage lineObjectMessage = new LineObjectMessage() { MessageType = LineObjectMessage.MsgType.Spawn };
-        lineObjectMessage.Deserialize(msg.reader);
+        //LineObjectMessage lineObjectMessage = new LineObjectMessage() { MessageType = LineObjectMessage.MsgType.Spawn };
+        //lineObjectMessage.Deserialize(msg.reader);
+
+        LineObjectMessage lineObjectMessage = msg.ReadMessage<LineObjectMessage>();
 
         if (lineObjectMessage.SpawnMessage.IpAddress != client.connection.address)
         {
-            GameObject playerLinesObject = GameObject.FindGameObjectsWithTag(Fields.Tags.PlayerLines)
-                .Where(x => x.GetComponent<NetworkIdentity>().netId == lineObjectMessage.SpawnMessage.NetId)
-                .FirstOrDefault();
+            GameObject playerLinesObject = GameObject.FindObjectsOfType<PlayerLinesController>().Where(x => x.NetId == lineObjectMessage.SpawnMessage.NetId).FirstOrDefault().gameObject;
 
             GameObject lineObject = Instantiate(AssetLibrary.PrefabAssets[Fields.Tags.LineObject]) as GameObject;
             lineObject.transform.parent = playerLinesObject.transform;
@@ -118,10 +118,12 @@ public class NetworkController : NetworkLobbyManager
 
     private void ServerSpawnPlayerLine(NetworkMessage msg)
     {
-        LineObjectMessage lineObjectMessage = new LineObjectMessage() { MessageType = LineObjectMessage.MsgType.Spawn };
-        lineObjectMessage.Deserialize(msg.reader);
+        ClientSpawnPlayerLine(msg);
 
-        NetworkServer.SendToAll(NetworkMessageTypes.LineObjectSpawnMessage, lineObjectMessage);
+        //LineObjectMessage lineObjectMessage = new LineObjectMessage() { MessageType = LineObjectMessage.MsgType.Spawn };
+        //lineObjectMessage.Deserialize(msg.reader);
+
+        NetworkServer.SendToAll(NetworkMessageTypes.LineObjectSpawnMessage, msg.ReadMessage<LineObjectMessage>());
         Debug.Log("SERVER: LINEOBJECT SPAWN SENT");
     }
 
@@ -138,18 +140,27 @@ public class NetworkController : NetworkLobbyManager
 
     #region Public Methods..
 
-    public void ClientSpawnPlayerLine(GameObject lineObject)
+    public void SpawnPlayerLine(GameObject lineObject)
     {
         LineObjectMessage lineObjectMessage = new LineObjectMessage() { MessageType = LineObjectMessage.MsgType.Spawn };
 
         lineObjectMessage.SpawnMessage.IpAddress = client.connection.address;
-        lineObjectMessage.SpawnMessage.NetId = lineObject.GetComponent<NetworkIdentity>().netId;
+        lineObjectMessage.SpawnMessage.NetId = GameObject.FindObjectsOfType<PlayerController>().Where(x => x.Player.IsLocalPlayer).FirstOrDefault().Player.NetId;
         lineObjectMessage.SpawnMessage.Thickness = lineObject.GetComponent<LineRenderer>().startWidth;
 
-        client.Send(NetworkMessageTypes.LineObjectSpawnMessage, lineObjectMessage);
+        if (NetworkServer.active)
+        {
+            NetworkServer.SendToAll(NetworkMessageTypes.LineObjectSpawnMessage, lineObjectMessage);
+            Debug.Log("SERVER: LINEOBJECT SPAWN SENT");
+        }
+        else
+        {
+            client.Send(NetworkMessageTypes.LineObjectSpawnMessage, lineObjectMessage);
+            Debug.Log("CLIENT: LINEOBJECT SPAWN SENT");
+        }
     }
 
-    public void ClientUpdatePlayerLine(GameObject lineObject, List<SerializableVector2> pointList)
+    public void UpdatePlayerLine(GameObject lineObject, List<SerializableVector2> pointList)
     {
         if (pointList.Count > 0)
         {
@@ -171,9 +182,11 @@ public class NetworkController : NetworkLobbyManager
             NetworkServer.RegisterHandler(NetworkMessageTypes.LineObjectSpawnMessage, ServerSpawnPlayerLine);
             NetworkServer.RegisterHandler(NetworkMessageTypes.LineObjectUpdateMessage, ServerUpdatePlayerLine);
         }
-
-        client.RegisterHandler(NetworkMessageTypes.LineObjectSpawnMessage, ClientSpawnPlayerLine);
-        client.RegisterHandler(NetworkMessageTypes.LineObjectUpdateMessage, ClientUpdatePlayerLine);
+        else
+        {
+            client.RegisterHandler(NetworkMessageTypes.LineObjectSpawnMessage, ClientSpawnPlayerLine);
+            client.RegisterHandler(NetworkMessageTypes.LineObjectUpdateMessage, ClientUpdatePlayerLine);
+        }
     }
     #endregion Private Methods..
 }

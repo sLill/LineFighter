@@ -51,7 +51,7 @@ public class MultiplayerGameController : NetworkBehaviour
             Address = conn.address,
             ConnectionId = conn.connectionId,
             HostId = conn.hostId,
-            PlayerName = "RippStudwell",
+            PlayerName = "RippStudwell"
         };
 
         this.PlayerList.Add(playerProfile);

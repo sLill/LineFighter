@@ -1,10 +1,12 @@
 ﻿
+using UnityEngine;
+
 public class Line : ILine
 {
     #region Properties
     public bool LineGravity { get; set; }
 
-    public float Thickness { get; set; }
+    public double Thickness { get; set; }
 
     public int RefillRate { get; set; }
 

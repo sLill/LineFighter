@@ -1,13 +1,14 @@
-﻿namespace Assets.Scripts.Properties
+﻿using UnityEngine;
+using UnityEngine.Networking;
+
+public class Player : IPlayer
 {
-    public class Player : IPlayer
-    {
-        public bool IsLocalPlayer { get; set; }
+    public int ConnectionId { get; set; }
 
-        public short PlayerControllerId { get; set; }
+    public bool IsLocalPlayer { get; set; }
 
-        public int PlayerNumber { get; set; }
+    public NetworkInstanceId NetId { get; set; }
 
-        public string PlayerTag { get; set; }
-    }
+    public string PlayerTag { get; set; }
 }
+

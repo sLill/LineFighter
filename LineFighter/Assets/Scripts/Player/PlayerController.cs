@@ -13,6 +13,7 @@ public class PlayerController : NetworkBehaviour
     private bool _isGrounded = false;
     private List<Direction> _keysDown;
     private bool _moving = false;
+    private NetworkController _networkController;
     private GameObject _playerLines;
     private bool _queueJump = false;
     private Rigidbody2D _rigidbody;
@@ -39,58 +40,42 @@ public class PlayerController : NetworkBehaviour
     }
     #endregion Enum Types
 
-    private void Awake()
+    #region Events..
+    void Start()
     {
         Eraser = new Eraser();
         Line = new Line();
         Player = new Player();
-    }
 
-    #region Events..
-    void Start()
-    {
-        Player.IsLocalPlayer = isLocalPlayer;
-        Player.PlayerControllerId = this.GetComponentInParent<NetworkIdentity>().playerControllerId;
-
-        if (!isLocalPlayer)
-        {
-            this.enabled = false;
-        }
+        _animator = this.GetComponentInParent<Animator>();
+        _rigidbody = this.GetComponentInParent<Rigidbody2D>();
+        _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        _networkController = GameObject.FindObjectOfType<NetworkController>();
 
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        GameController gameController = GameObject.FindObjectOfType<GameController>();
+        this.GetComponentInParent<Transform>().name = "Player (NetId: " + this.netId + ")";
+        Player.NetId = this.netId;
 
-        string playerTag = string.Empty;
-        int playerNumber = gameController.PlayerList.IndexOf(gameController.PlayerList.First(x => x.PlayerControllerIds.Any(z => z == Player.PlayerControllerId)));
-        switch (playerNumber)
-        {
-            case 0:
-                playerTag = Fields.Tags.PlayerOne;
-                break;
-            case 1:
-                playerTag = Fields.Tags.PlayerTwo;
-                break;
-            case 2:
-                playerTag = Fields.Tags.PlayerThree;
-                break;
-            case 3:
-                playerTag = Fields.Tags.PlayerFour;
-                break;
-        }
-
-        this.GetComponentInParent<Transform>().tag = playerTag;
-
-        Player.PlayerTag = playerTag;
-        Player.PlayerNumber = playerNumber + 1;
-
-        _animator = GetComponent<Animator>();
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
+        _playerLines.GetComponent<PlayerLinesController>().NetId = this.netId;
+        _playerLines.name = "Player Lines (NetId: " + Player.NetId + ")";
 
         InitializeProperties();
-        CreatePlayerLineObject();
+
+        if (this.isLocalPlayer)
+        {
+            Player.IsLocalPlayer = true;
+
+            DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
+            drawErase.Player = this.Player;
+        }
+        else
+        {
+            Player.IsLocalPlayer = false;
+            this.enabled = false;
+        }
     }
 
     void Update()
@@ -239,15 +224,11 @@ public class PlayerController : NetworkBehaviour
     }
     #endregion Events..
 
+    #region Public Methods..
+
+    #endregion Public Methods..
+
     #region Private Methods
-    private void CreatePlayerLineObject()
-    {
-        _playerLines = (GameObject) Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
-        _playerLines.tag = Player.PlayerTag;
-        _playerLines.name = Player.PlayerTag + "Lines";
-        DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
-        drawErase.Player = this.Player;
-    }
 
     private void InitializeProperties()
     {
@@ -258,7 +239,7 @@ public class PlayerController : NetworkBehaviour
         this.Line.RefillRate = 30;
         this.Line.ResourceMax = 1000;
         this.Line.LineGravity = true;
-        this.Line.Thickness = 0.13f;
+        this.Line.Thickness = 0.13;
     }
     #endregion Private Methods
 }

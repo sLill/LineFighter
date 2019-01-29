@@ -1,4 +1,6 @@
-﻿public static class Fields
+﻿using UnityEngine;
+
+public static class Fields
 {
     public static class Animator
     {
@@ -111,12 +113,8 @@
 
         public const string NetworkLobbyPlayer = "NetworkLobbyPlayer";
 
-        public const string PlayerOne = "PlayerOne";
+        public const string Player = "Player";
 
-        public const string PlayerTwo = "PlayerTwo";
-
-        public const string PlayerThree = "PlayerThree";
-
-        public const string PlayerFour = "PlayerFour";
+        public const string PlayerLines  = "PlayerLines";
     }
 }

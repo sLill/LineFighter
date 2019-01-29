@@ -3,11 +3,13 @@ using UnityEngine.Networking;
 
 public interface IPlayerProfile
 {
-    bool IsLocalProfile { get; set; }
+    string Address { get; set; }
 
-    NetworkConnection NetworkConnection { get; set; }
+    int ConnectionId { get; set; }
 
-    List<short> PlayerControllerIds { get; set; }
+    int HostId { get; set; }
+
+    short PlayerControllerId { get; set; }
 
     string PlayerName { get; set; }
 }

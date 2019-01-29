@@ -1,29 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerProfile : MonoBehaviour, IPlayerProfile
+public class PlayerProfile : IPlayerProfile
 {
     #region Properties..
-    public bool IsLocalProfile { get; set; }
+    public string Address { get; set; }
 
-    public NetworkConnection NetworkConnection { get; set; }
+    public int ConnectionId { get; set; }
 
-    public List<short> PlayerControllerIds { get; set; }
+    public int HostId { get; set; }
+
+    public short PlayerControllerId { get; set; }
 
     public string PlayerName { get; set; }
     #endregion Properties..
 
-    #region Events..
-    void Start()
+    #region Constructors..
+    public PlayerProfile()
     {
-        PlayerControllerIds = new List<short>();
+
     }
-
-    void Update()
-    {
-
-    } 
-    #endregion
+    #endregion Constructors..
 }

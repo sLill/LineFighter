@@ -5,11 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - LineObject
-  - PlayerOne
-  - PlayerTwo
-  - PlayerThree
-  - PlayerFour
   - NetworkLobbyPlayer
+  - PlayerLines
   layers:
   - Default
   - TransparentFX

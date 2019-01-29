@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/lills/Desktop/VS Solutions/LineFighter/LineFighter/Build bin/LineFighter.exe
+D:/Code/Github/LineFighter/LineFighter/Build bin/LineFighter.exe
 SceneListBegin?
 Assets/Scenes/MainMenu.unity
 Assets/Scenes/SceneTemplate.unity

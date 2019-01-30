@@ -45,7 +45,7 @@ public class MainMenuController : MonoBehaviour
         _game = GameObject.Find(Fields.GameObjects.Game);
         _game.AddComponent<MultiplayerGameController>();
 
-        _networkLobbyPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.NetworkLobbyManagerObjectPrefab]);
+        //_networkLobbyPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.NetworkLobbyManagerObjectPrefab]);
     }
 
     private void SettingsButton_Clicked()

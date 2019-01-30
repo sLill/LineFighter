@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class HudController : NetworkBehaviour
+public class HudController : MonoBehaviour
 {
     #region Member Variables..
     private object[] _assets;

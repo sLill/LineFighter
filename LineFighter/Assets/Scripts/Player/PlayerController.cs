@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using Steamworks;
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController : MonoBehaviour
 {
     #region Member Variables
     private Animator _animator;
@@ -13,7 +14,6 @@ public class PlayerController : NetworkBehaviour
     private bool _isGrounded = false;
     private List<Direction> _keysDown;
     private bool _moving = false;
-    private NetworkController _networkController;
     private GameObject _playerLines;
     private bool _queueJump = false;
     private Rigidbody2D _rigidbody;
@@ -50,21 +50,17 @@ public class PlayerController : NetworkBehaviour
         _animator = this.GetComponentInParent<Animator>();
         _rigidbody = this.GetComponentInParent<Rigidbody2D>();
         _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        _networkController = GameObject.FindObjectOfType<NetworkController>();
 
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-        this.GetComponentInParent<Transform>().name = "Player (NetId: " + this.netId + ")";
-        Player.NetId = this.netId;
 
         _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
-        _playerLines.GetComponent<PlayerLinesController>().NetId = this.netId;
         _playerLines.name = "Player Lines (NetId: " + Player.NetId + ")";
 
         InitializeProperties();
 
-        if (this.isLocalPlayer)
+        if (SteamFriends.)
         {
             Player.IsLocalPlayer = true;
 

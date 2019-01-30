@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Network;
+﻿using Assets.Scripts;
 using Assets.Scripts.Properties;
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class MultiplayerGameController : NetworkBehaviour
+public class MultiplayerGameController : MonoBehaviour
 {
     #region Member Variables..
     private HudController _hudController;

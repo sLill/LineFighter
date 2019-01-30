@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class DrawErase : NetworkBehaviour
+public class DrawErase : MonoBehaviour
 {
     #region Member Variables
     private Camera _cameraMain;
@@ -19,11 +19,6 @@ public class DrawErase : NetworkBehaviour
     private LineRenderer _renderer;
     private bool _isDrawing = false;
     private List<SerializableVector2> _pointsList;
-
-    private NetworkController _networkController;
-    private bool _sendNetworkLineSpawn = false;
-    private bool _sendNetworkLineUpdate = false;
-    private float _timeSinceLastUpdate = 0f;
 
     #endregion Member Variables
 
@@ -60,29 +55,6 @@ public class DrawErase : NetworkBehaviour
                 EraseLine();
                 break;
         }
-
-        // Limit network requests to 10/second
-        if (_timeSinceLastUpdate > 0.1f)
-        {
-            if (_sendNetworkLineSpawn)
-            {
-                _networkController.SpawnPlayerLine(_lineObject);
-
-                _timeSinceLastUpdate = 0f;
-                _sendNetworkLineSpawn = false;
-            }
-            else if (_sendNetworkLineUpdate)
-            {
-               // _networkController.UpdatePlayerLine(_lineObject, _pointsList);
-
-                _timeSinceLastUpdate = 0f;
-                _sendNetworkLineUpdate = false;
-            }
-        }
-        else
-        {
-            _timeSinceLastUpdate += Time.deltaTime;
-        }
     }
     #endregion Events..
 
@@ -91,7 +63,6 @@ public class DrawErase : NetworkBehaviour
     {
         _cameraMain = Camera.main;
         _hudController = GameObject.FindObjectOfType<HudController>();
-        _networkController = GameObject.FindObjectOfType<NetworkController>();
         _playerController = GameObject.FindObjectOfType<PlayerController>();
         _playerLines = gameObject.GetComponentInParent<Transform>().gameObject;
 
@@ -124,8 +95,6 @@ public class DrawErase : NetworkBehaviour
                 _lineObject.transform.parent = _playerLines.transform;
                 _renderer = _lineObject.GetComponent<LineRenderer>();
                 SetLineProperties(_renderer, _playerController.Line);
-
-                _sendNetworkLineSpawn = true;
             }
 
             // Drawing line when mouse is moving(presses)
@@ -138,8 +107,6 @@ public class DrawErase : NetworkBehaviour
                     _pointsList.Add(new Vector2(_mousePos.x, _mousePos.y));
                     _renderer.positionCount = _pointsList.Count;
                     _renderer.SetPosition(_pointsList.Count - 1, (Vector2)_pointsList[_pointsList.Count - 1]);
-
-                    _sendNetworkLineUpdate = true;
                 }
             }
 
@@ -163,8 +130,6 @@ public class DrawErase : NetworkBehaviour
                     _lineCollider.points = vertices;
                 }
             }
-
-            //NetworkServer.SpawnObjects();
         }
         catch { }
     }

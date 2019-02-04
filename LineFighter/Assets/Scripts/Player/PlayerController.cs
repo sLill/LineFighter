@@ -60,18 +60,18 @@ public class PlayerController : MonoBehaviour
 
         InitializeProperties();
 
-        if (SteamFriends.)
-        {
+        //if (SteamFriends.)
+        //{
             Player.IsLocalPlayer = true;
 
             DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
             drawErase.Player = this.Player;
-        }
-        else
-        {
-            Player.IsLocalPlayer = false;
-            this.enabled = false;
-        }
+        //}
+        //else
+        //{
+        //    Player.IsLocalPlayer = false;
+        //    this.enabled = false;
+        //}
     }
 
     void Update()

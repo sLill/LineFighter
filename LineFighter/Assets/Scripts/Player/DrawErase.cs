@@ -13,12 +13,12 @@ public class DrawErase : MonoBehaviour
     private HudController _hudController;
     private PlayerController _playerController;
     private GameObject _playerLines;
-    private EdgeCollider2D _lineCollider;
+    private CapsuleCollider2D _lineCollider;
     private GameObject _lineObject;
-    private Vector3 _mousePos;
+    private Ray _mousePos;
     private LineRenderer _renderer;
     private bool _isDrawing = false;
-    private List<SerializableVector2> _pointsList;
+    private List<Vector2> _pointsList;
 
     #endregion Member Variables
 
@@ -66,7 +66,7 @@ public class DrawErase : MonoBehaviour
         _playerController = GameObject.FindObjectOfType<PlayerController>();
         _playerLines = gameObject.GetComponentInParent<Transform>().gameObject;
 
-        _pointsList = new List<SerializableVector2>();
+        _pointsList = new List<Vector2>();
     }
 
     public void SetLineProperties(LineRenderer lineRenderer, Line line)
@@ -76,7 +76,6 @@ public class DrawErase : MonoBehaviour
         lineRenderer.endColor = new Color(255, 255, 255, 100);
         lineRenderer.startWidth = (float)line.Thickness;
         lineRenderer.endWidth = (float)line.Thickness;
-        lineRenderer.useWorldSpace = true;
     }
     #endregion Public Methods
 
@@ -90,9 +89,12 @@ public class DrawErase : MonoBehaviour
                 _pointsList.Clear();
                 _isDrawing = true;
 
+                _mousePos = _cameraMain.ScreenPointToRay(Input.mousePosition);
+
                 // Create a new line Object
                 _lineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.LineObjectPrefab]);
                 _lineObject.transform.parent = _playerLines.transform;
+
                 _renderer = _lineObject.GetComponent<LineRenderer>();
                 SetLineProperties(_renderer, _playerController.Line);
             }
@@ -100,11 +102,10 @@ public class DrawErase : MonoBehaviour
             // Drawing line when mouse is moving(presses)
             if (Input.GetMouseButton(1) && _isDrawing)
             {
-                _mousePos = _cameraMain.ScreenPointToRay(Input.mousePosition).origin;
-                _mousePos.z = 0;
-                if (!_pointsList.Contains((Vector2)_mousePos))
+                _mousePos = _cameraMain.ScreenPointToRay(Input.mousePosition);
+                if (!_pointsList.Contains((Vector2)_mousePos.origin))
                 {
-                    _pointsList.Add(new Vector2(_mousePos.x, _mousePos.y));
+                    _pointsList.Add(new Vector2(_mousePos.origin.x, _mousePos.origin.y));
                     _renderer.positionCount = _pointsList.Count;
                     _renderer.SetPosition(_pointsList.Count - 1, (Vector2)_pointsList[_pointsList.Count - 1]);
                 }
@@ -118,16 +119,19 @@ public class DrawErase : MonoBehaviour
                 // Collider
                 if (_pointsList.Count > 1)
                 {
-                    _lineCollider = _lineObject.GetComponent<EdgeCollider2D>();
-                    _lineCollider.edgeRadius = (float)_playerController.Line.Thickness - 0.01f;
+                    //_lineCollider.edgeRadius = (float)_playerController.Line.Thickness - 0.01f;
                     Vector2[] vertices = new Vector2[_pointsList.Count];
 
                     for (int i = 0; i < _pointsList.Count; i++)
                     {
-                        vertices[i] = new Vector2(_pointsList[i].x, _pointsList[i].y);
+                        _lineCollider = _lineObject.AddComponent<CapsuleCollider2D>();
+                        _lineCollider.transform.position = _pointsList[i];
+                        _lineCollider.size = new Vector2(0.5f, 0.5f);
+                        //vertices[i] = _pointsList[i];
                     }
 
-                    _lineCollider.points = vertices;
+                    //_lineCollider.SetPath(0, vertices);
+                    _lineObject.GetComponent<LineController>().IsComplete = true;
                 }
             }
         }
@@ -143,8 +147,8 @@ public class DrawErase : MonoBehaviour
 
         if (_isDrawing)
         {
-            Ray mouseRay = _cameraMain.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D[] mouseHits = Physics2D.CircleCastAll(mouseRay.origin, _playerController.Eraser.Radius, mouseRay.direction);
+            Vector3 mouseRay = _cameraMain.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D[] mouseHits = Physics2D.CircleCastAll(mouseRay, _playerController.Eraser.Radius, Vector2.zero);
 
             foreach (RaycastHit2D mouseHit in mouseHits)
             {

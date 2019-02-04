@@ -19,12 +19,7 @@ public class MultiplayerGameController : MonoBehaviour
     #region Events..
     private void Awake()
     {       
-        HudSettings.FpsCounterActive = true;
-        DisplaySettings.FrameRateCap = 300;
-        DisplaySettings.VSyncEnabled = 0;
-
         GameObject Game = GameObject.Find(Fields.GameObjects.Game);
-
         DontDestroyOnLoad(Game);
     }
 

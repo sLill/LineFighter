@@ -30,7 +30,7 @@ public class SettingsMenuController : MonoBehaviour
     private void CancelButton_Clicked()
     {
         _savedText.text = string.Empty;
-        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
     #endregion Events
 

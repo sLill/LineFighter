@@ -64,8 +64,10 @@ public class PlayerController : MonoBehaviour
         //{
             Player.IsLocalPlayer = true;
 
-            DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
-            drawErase.Player = this.Player;
+        //DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
+        //drawErase.Player = this.Player;
+        DrawLine drawLine = _playerLines.AddComponent<DrawLine>();
+
         //}
         //else
         //{

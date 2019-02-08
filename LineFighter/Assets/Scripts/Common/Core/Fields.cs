@@ -2,6 +2,7 @@
 
 public static class Fields
 {
+    #region Animator
     public static class Animator
     {
         public const string Airborne = "Airborne";
@@ -10,24 +11,55 @@ public static class Fields
 
         public const string Speed = "Speed";
     }
+    #endregion Animator
 
+    #region Assets
     public static class Assets
     {
-        public const string EraseCursorSmall = "Erase_Cursor_Small";
+        #region Materials
+        public static class Materials
+        {
+            public const string EraseCursorSmall = "Erase_Cursor_Small";
 
-        public const string LineMaterialBase = "LineMaterial_Base";
+            public const string LineMaterialBase = "LineMaterial_Base";
+        } 
+        #endregion Materials
 
-        public const string LineObjectPrefab = "LineObject";
+        #region Prefabs
+        public static class Prefabs
+        {
+            #region Common
+            public static class Common
+            {
+                public const string ColliderPrefab = "Collider";
 
-        public const string NetworkLobbyManagerObjectPrefab = "NetworkLobbyManagerObject";
+                public const string LineObjectPrefab = "LineObject";
 
-        public const string PlayerPrefab = "Player";
+                public const string TrailPrefab = "TrailPrefab";
+            }
+            #endregion Common
 
-        public const string PlayerLinesPrefab = "PlayerLines";
+            #region Player
+            public static class Player
+            {
+                public const string PlayerPrefab = "Player";
 
-        public const string SettingsMenuPrefab = "SettingsPanel";
+                public const string PlayerLinesPrefab = "PlayerLines";
+            }
+            #endregion Player
+
+            #region UI
+            public static class UI
+            {
+                public const string SettingsMenuPrefab = "SettingsPanel";
+            }
+            #endregion UI
+        } 
+        #endregion Prefabs
     }
+    #endregion Assets
 
+    #region AssetPaths
     public static class AssetPaths
     {
         public const string Ui = "Artwork/UI";
@@ -35,8 +67,18 @@ public static class Fields
         public const string Materials = "Materials";
 
         public const string Prefabs = "Prefabs";
-    }
 
+        public const string PrefabsCommon = "Prefabs/Common";
+
+        public const string PrefabsEnemy = "Prefabs/Enemy";
+
+        public const string PrefabsPlayer = "Prefabs/Player";
+
+        public const string PrefabsUI = "Prefabs/UI";
+    }
+    #endregion AssetPaths
+
+    #region GameObjects
     public static class GameObjects
     {
         public const string AboutButton = "AboutButton";
@@ -89,12 +131,16 @@ public static class Fields
 
         public const string SettingsButton = "SettingsButton";
     }
+    #endregion GameObjects
 
+    #region Scenes
     public static class Scenes
     {
         public const string SceneTemplate = "SceneTemplate";
     }
+    #endregion Scenes
 
+    #region Settings
     public static class Settings
     {
         // Display
@@ -108,15 +154,20 @@ public static class Fields
         // Keyboard
         public const string DrawModeKey = "DrawModeKey";
     }
+    #endregion Settings
 
+    #region Tags
     public static class Tags
     {
         public const string LineObject = "LineObject";
+
+        public const string LineObjectCollider = "LineObjectCollider";
 
         public const string NetworkLobbyPlayer = "NetworkLobbyPlayer";
 
         public const string Player = "Player";
 
-        public const string PlayerLines  = "PlayerLines";
-    }
+        public const string PlayerLines = "PlayerLines";
+    } 
+    #endregion Tags
 }

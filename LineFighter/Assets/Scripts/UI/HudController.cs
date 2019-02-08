@@ -81,7 +81,7 @@ public class HudController : MonoBehaviour
                 switch (_playerController.Eraser.Size)
                 {
                     case Eraser.EraserSize.Small:
-                        cursor = AssetLibrary.UiAssets[Fields.Assets.EraseCursorSmall];
+                        cursor = AssetLibrary.UiAssets[Fields.Assets.Materials.EraseCursorSmall];
                         break;
                     default:
                         //cursor = AssetLibrary.UiAssets["Erase_Cursor_Large"];

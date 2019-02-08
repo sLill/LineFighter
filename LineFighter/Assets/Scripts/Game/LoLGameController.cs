@@ -26,7 +26,7 @@ public class LoLGameController : MonoBehaviour
     #region Methods..
     private void SpawnPlayer(Scene current, Scene next)
     {
-        Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerPrefab]);
+        Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Player.PlayerPrefab]);
     }
     #endregion Methods..
 }

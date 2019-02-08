@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         _keysDown = new List<Direction>() { Direction.None };
 
 
-        _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.PlayerLinesPrefab]);
+        _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Player.PlayerLinesPrefab]);
         _playerLines.name = "Player Lines (NetId: " + Player.NetId + ")";
 
         InitializeProperties();
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
         //DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
         //drawErase.Player = this.Player;
-        DrawLine drawLine = _playerLines.AddComponent<DrawLine>();
+        DrawErase drawLine = _playerLines.AddComponent<DrawErase>();
 
         //}
         //else
@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour
         this.Line.RefillRate = 30;
         this.Line.ResourceMax = 1000;
         this.Line.LineGravity = true;
-        this.Line.Thickness = 0.13;
+        this.Line.Thickness = 0.1;
     }
     #endregion Private Methods
 }

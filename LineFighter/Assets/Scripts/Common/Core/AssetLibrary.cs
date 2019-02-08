@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class AssetLibrary
@@ -16,7 +17,7 @@ public static class AssetLibrary
     public static void LoadBaseAssets()
     {
         LoadMaterialAssets();
-        LoadPrefabAssets();
+        LoadAllPrefabAssets();
         LoadUiAssets();
     }
 
@@ -42,10 +43,17 @@ public static class AssetLibrary
         }
     }
 
-    public static void LoadPrefabAssets()
+    public static void LoadAllPrefabAssets()
     {
         PrefabAssets = new Dictionary<string, GameObject>();
         var assets = Resources.LoadAll<GameObject>(Fields.AssetPaths.Prefabs);
+
+        //List<GameObject> assets = new List<GameObject>();
+
+        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsCommon).ToList());
+        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsEnemy).ToList());
+        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsPlayer).ToList());
+        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsUI).ToList());
 
         foreach (GameObject prefab in assets)
         {

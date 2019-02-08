@@ -14,4 +14,9 @@ public static class Extensions
 
         return results;
     }
+
+    public static float GetDistance(Vector3 positionOne, Vector3 positionTwo)
+    {
+        return Mathf.Sqrt(Mathf.Pow((positionOne.x - positionTwo.x), 2) + Mathf.Pow((positionOne.y - positionTwo.y), 2));
+    }
 }

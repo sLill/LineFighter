@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Common\Core\AssetLibrary.cs" />
     <Compile Include="Assets\Scripts\Common\Core\EncryptionEngine.cs" />
+    <Compile Include="Assets\Scripts\Common\Core\Enums.cs" />
     <Compile Include="Assets\Scripts\Common\Core\Extensions.cs" />
     <Compile Include="Assets\Scripts\Common\Core\Fields.cs" />
     <Compile Include="Assets\Scripts\Common\Core\MainCameraController.cs" />

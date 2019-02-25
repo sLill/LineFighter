@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
         // Increment Draw/Erase Gauges
         _time += Time.deltaTime;
-        if (Line.ResourceCurrent < Line.ResourceMax && _time < .1f)
+        if ((Line.AutoRefill) && (Line.ResourceCurrent < Line.ResourceMax && _time < .1f))
         {
             if (Line.ResourceCurrent < Line.ResourceMax)
             {
@@ -218,7 +218,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _rigidbody.velocity = Vector2.zero;
+        if (collision.gameObject.tag == Fields.Tags.DrawFuel)
+        {
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.tag == Fields.Tags.EraseFuel)
+        {
+            Destroy(collision.gameObject);
+        }
+        else
+        {
+            _rigidbody.velocity = Vector2.zero;
+        }
     }
     #endregion Events..
 
@@ -230,11 +241,14 @@ public class PlayerController : MonoBehaviour
 
     private void InitializeProperties()
     {
+        this.Line.AutoRefill = false;
         this.Eraser.Radius = 0.21f;
-        this.Eraser.RefillRate = 30;
+        this.Eraser.RefillRate = 1;
+        this.Eraser.ResourceCurrent = 1000;
         this.Eraser.ResourceMax = 1000;
-        this.Eraser.Size = Eraser.EraserSize.Small;
-        this.Line.RefillRate = 30;
+        this.Eraser.Size = EraserSize.Small;
+        this.Line.RefillRate = 1;
+        this.Line.ResourceCurrent = 1000;
         this.Line.ResourceMax = 1000;
         this.Line.LineGravity = true;
         this.Line.Thickness = 0.1;

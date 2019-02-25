@@ -168,6 +168,10 @@ public static class Fields
         public const string Player = "Player";
 
         public const string PlayerLines = "PlayerLines";
+
+        public const string DrawFuel = "DrawFuel";
+
+        public const string EraseFuel = "EraseFuel";
     } 
     #endregion Tags
 }

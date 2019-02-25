@@ -45,15 +45,24 @@ public class DrawErase : MonoBehaviour
 
         switch (_hudController.DrawMode)
         {
-            case HudController.DrawType.Draw:
+            case DrawType.Draw:
                 Draw();
                 break;
-            case HudController.DrawType.Erase:
+            case DrawType.Erase:
                 Erase();
                 break;
         }
-    }
 
+        // Pencil/Eraser gauge refill tick
+        if (_playerController.Line.ResourceCurrent < _playerController.Line.ResourceMax)
+        {
+            _playerController.Line.ResourceCurrent += _playerController.Line.RefillRate;
+        }
+        if (_playerController.Eraser.ResourceCurrent < _playerController.Eraser.ResourceMax)
+        {
+            _playerController.Eraser.ResourceCurrent += _playerController.Eraser.RefillRate;
+        }
+    }
     #endregion MonoBehaviour
     #endregion Events..
 
@@ -91,48 +100,59 @@ public class DrawErase : MonoBehaviour
     #region Private Methods..
     private void Draw()
     {
-        if (Input.GetMouseButton(1) && !_isDrawing)
+        if (_playerController.Line.ResourceCurrent > 0.00f)
         {
-            _isDrawing = true;
-            _listPoint.Clear();
-
-            _currentLine = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
-            _currentLine.transform.parent = GameObject.FindGameObjectWithTag(Fields.GameObjects.PlayerLines).transform;
-            _currentLine.tag = Fields.Tags.LineObject;
-            _currentLineRenderer = _currentLine.GetComponent<LineRenderer>();
-
-            SetLineProperties(_currentLineRenderer, _playerController.Line);
-        }
-
-        if (Input.GetMouseButton(1) && _isDrawing)
-        {
-            Vector2 item = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            LineFX.transform.position = new Vector2(item.x, item.y);
-            LineFX.SetActive(true);
-
-            if (!_listPoint.Contains(item))
+            if (Input.GetMouseButton(1) && !_isDrawing)
             {
-                _listPoint.Add(item);
-                _currentLineRenderer.positionCount = _listPoint.Count;
-                _currentLineRenderer.SetPosition(_listPoint.Count - 1, _listPoint[_listPoint.Count - 1]);
+                _isDrawing = true;
+                _listPoint.Clear();
 
-                if (_listPoint.Count >= 2)
+                _currentLine = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
+                _currentLine.transform.parent = GameObject.FindGameObjectWithTag(Fields.GameObjects.PlayerLines).transform;
+                _currentLine.tag = Fields.Tags.LineObject;
+                _currentLineRenderer = _currentLine.GetComponent<LineRenderer>();
+
+                SetLineProperties(_currentLineRenderer, _playerController.Line);
+            }
+
+            if (Input.GetMouseButton(1) && _isDrawing)
+            {
+                Vector2 item = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                LineFX.transform.position = new Vector2(item.x, item.y);
+                LineFX.SetActive(true);
+
+                if (!_listPoint.Contains(item))
                 {
-                    Vector2 vector = _listPoint[_listPoint.Count - 2];
-                    Vector2 vector2 = _listPoint[_listPoint.Count - 1];
+                    _listPoint.Add(item);
+                    _currentLineRenderer.positionCount = _listPoint.Count;
+                    _currentLineRenderer.SetPosition(_listPoint.Count - 1, _listPoint[_listPoint.Count - 1]);
 
-                    _currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
-                    _currentColliderObject.transform.position = ((vector + vector2) / 2f);
-                    _currentColliderObject.transform.right = ((vector2 - vector).normalized);
-                    _currentColliderObject.transform.parent = _currentLine.transform;
-                    _currentBoxCollider2D = _currentColliderObject.GetComponent<BoxCollider2D>();
-                    _currentBoxCollider2D.size = new Vector3((vector2 - vector).magnitude, (float)_playerController.Line.Thickness, (float)_playerController.Line.Thickness);
-                    _currentBoxCollider2D.enabled = false;
+                    if (_listPoint.Count >= 2)
+                    {
+                        Vector2 vector = _listPoint[_listPoint.Count - 2];
+                        Vector2 vector2 = _listPoint[_listPoint.Count - 1];
+
+                        _currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
+                        _currentColliderObject.transform.position = ((vector + vector2) / 2f);
+                        _currentColliderObject.transform.right = ((vector2 - vector).normalized);
+                        _currentColliderObject.transform.parent = _currentLine.transform;
+                        _currentBoxCollider2D = _currentColliderObject.GetComponent<BoxCollider2D>();
+                        _currentBoxCollider2D.size = new Vector3((vector2 - vector).magnitude, (float)_playerController.Line.Thickness, (float)_playerController.Line.Thickness);
+                        _currentBoxCollider2D.enabled = false;
+                    }
+
+                    // Calculate Draw resource used
+                    if (_listPoint.Count > 1)
+                    {
+                        float distance = Vector2.Distance(_listPoint[_listPoint.Count - 1], _listPoint[_listPoint.Count - 2]);
+                        _playerController.Line.ResourceCurrent -= (distance * 50);
+                    }
                 }
             }
         }
-        if (!Input.GetMouseButton(1) && _isDrawing)
+
+        if ((!Input.GetMouseButton(1) || _playerController.Line.ResourceCurrent <= 0) && _isDrawing)
         {
             LineFX.SetActive(false);
 
@@ -162,158 +182,167 @@ public class DrawErase : MonoBehaviour
 
     private void Erase()
     {
-        if (Input.GetMouseButton(1) && !_isDrawing)
+        if (_playerController.Eraser.ResourceCurrent > 0.00f)
         {
-            _isDrawing = true;
-        }
-
-        if (Input.GetMouseButton(1) && _isDrawing)
-        {
-            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D[] eraserHits = Physics2D.CircleCastAll(mouseRay.origin, _playerController.Eraser.Radius, Vector2.zero);
-
-            try
+            if (Input.GetMouseButton(1) && !_isDrawing)
             {
-                foreach (RaycastHit2D eraserHit in eraserHits)
+                _isDrawing = true;
+            }
+
+            if (Input.GetMouseButton(1) && _isDrawing)
+            {
+                Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit2D[] eraserHits = Physics2D.CircleCastAll(mouseRay.origin, _playerController.Eraser.Radius, Vector2.zero);
+
+                try
                 {
-                    if (eraserHit && eraserHit.collider.tag == Fields.Tags.LineObjectCollider)
+                    foreach (RaycastHit2D eraserHit in eraserHits)
                     {
-                        BoxCollider2D lineCollider = (BoxCollider2D)eraserHit.collider;
-                        Vector3 contactPoint = eraserHit.point;
-                        int closestPointIndex = -1;
-                        float closestPointDistance = (float)int.MaxValue;
-
-                        LineRenderer renderer = lineCollider.GetComponentInParent<LineRenderer>();
-
-                        // Get the closest point to the collision
-                        for (int i = 0; i < renderer.positionCount; i++)
+                        if (eraserHit && eraserHit.collider.tag == Fields.Tags.LineObjectCollider)
                         {
-                            var pointPosition = renderer.gameObject.transform.TransformPoint(renderer.GetPosition(i));
-                            var distance = (pointPosition.normalized - contactPoint.normalized).magnitude;
+                            BoxCollider2D lineCollider = (BoxCollider2D)eraserHit.collider;
+                            Vector3 contactPoint = eraserHit.point;
+                            int closestPointIndex = -1;
+                            float closestPointDistance = (float)int.MaxValue;
 
-                            //float distance = Extensions.GetDistance(renderer.GetPosition(i), contactPoint);
-                            if (distance < closestPointDistance)
+                            LineRenderer renderer = lineCollider.GetComponentInParent<LineRenderer>();
+
+                            // Get the closest point to the collision
+                            for (int i = 0; i < renderer.positionCount; i++)
                             {
-                                closestPointIndex = i;
-                                closestPointDistance = distance;
-                            }
-                        }
+                                var pointPosition = renderer.gameObject.transform.TransformPoint(renderer.GetPosition(i));
+                                var distance = (pointPosition.normalized - contactPoint.normalized).magnitude;
 
-                        // Split into two lines
-                        int firstLineSize = closestPointIndex;
-                        int secondLineSize = renderer.positionCount - closestPointIndex - 1;
-
-                        Vector3[] firstLineV3Arr = new Vector3[firstLineSize];
-                        Vector3[] secondLineV3Arr = new Vector3[secondLineSize];
-
-                        for (int i = 0; i < renderer.positionCount; i++)
-                        {
-                            if (i < closestPointIndex)
-                            {
-                                firstLineV3Arr[i] = renderer.GetPosition(i);
-                            }
-                            else if (i > closestPointIndex)
-                            {
-                                secondLineV3Arr[i - closestPointIndex - 1] = renderer.GetPosition(i);
-                            }
-                        }
-
-                        Vector3 transformPosition = eraserHit.collider.gameObject.transform.parent.gameObject.transform.position;
-                        Quaternion transformRotation = eraserHit.collider.gameObject.transform.parent.gameObject.transform.rotation;
-
-                        // De-reference the original line
-                        DestroyImmediate(eraserHit.collider.gameObject.transform.parent.gameObject);
-
-                        if (firstLineV3Arr.Length > 1)
-                        {
-                            // Create a new GameObject, LineRenderer and Colliders for the first new line
-                            GameObject firstLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
-                            firstLineObject.transform.position = transformPosition;
-                            firstLineObject.transform.parent = _playerLines.transform;
-  
-                            LineRenderer lineRendererOne = firstLineObject.GetComponent<LineRenderer>();
-                            SetLineProperties(lineRendererOne, _playerController.Line);
-
-                            lineRendererOne.positionCount = firstLineV3Arr.Length;
-                            lineRendererOne.SetPositions(firstLineV3Arr);
-
-                            // Colliders
-                            if (firstLineV3Arr.Length >= 2)
-                            {
-                                int endIndex = firstLineV3Arr.Length - (firstLineV3Arr.Length % 2);
-                                for (int i = 0; i < endIndex - 1; i++)
+                                //float distance = Extensions.GetDistance(renderer.GetPosition(i), contactPoint);
+                                if (distance < closestPointDistance)
                                 {
-                                    Vector2 vector = firstLineV3Arr[i];
-                                    Vector2 vector2 = firstLineV3Arr[i + 1];
-
-                                    GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
-                                    currentColliderObject.transform.parent = firstLineObject.transform;
-                                    currentColliderObject.transform.localPosition = ((vector + vector2) / 2);
-                                    currentColliderObject.transform.right = ((vector2 - vector).normalized);
-                                    BoxCollider2D currentBoxCollider2D = currentColliderObject.GetComponent<BoxCollider2D>();
-                                    currentBoxCollider2D.size = new Vector3((vector2 - vector).magnitude, (float)_playerController.Line.Thickness, (float)_playerController.Line.Thickness);
+                                    closestPointIndex = i;
+                                    closestPointDistance = distance;
                                 }
                             }
 
-                            if (UseGravity)
+                            // Split into two lines
+                            int firstLineSize = closestPointIndex;
+                            int secondLineSize = renderer.positionCount - closestPointIndex - 1;
+
+                            Vector3[] firstLineV3Arr = new Vector3[firstLineSize];
+                            Vector3[] secondLineV3Arr = new Vector3[secondLineSize];
+
+                            for (int i = 0; i < renderer.positionCount; i++)
                             {
-                                Rigidbody2D rigidBody = firstLineObject.GetComponent<Rigidbody2D>();
-                                rigidBody.bodyType = RigidbodyType2D.Dynamic;
-                                rigidBody.useAutoMass = true;
-                                rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                            }
-
-                            firstLineObject.transform.rotation = transformRotation;
-                        }
-
-                        // Create a new GameObject, LineRenderer and Collider for the second new line
-                        if (secondLineV3Arr.Length > 1)
-                        {
-                            GameObject secondLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
-                            secondLineObject.transform.position = transformPosition;
-                            secondLineObject.transform.parent = _playerLines.transform;
-
-                            LineRenderer lineRendererTwo = secondLineObject.GetComponent<LineRenderer>();
-                            SetLineProperties(lineRendererTwo, _playerController.Line);
-
-                            lineRendererTwo.positionCount = secondLineV3Arr.Length;
-                            lineRendererTwo.SetPositions(secondLineV3Arr);
-
-                            // Colliders
-                            if (secondLineV3Arr.Length >= 2)
-                            {
-                                int endIndex = secondLineV3Arr.Length - (secondLineV3Arr.Length % 2);
-                                for (int i = 0; i < endIndex - 1; i++)
+                                if (i < closestPointIndex)
                                 {
-                                    Vector2 vector = secondLineV3Arr[i];
-                                    Vector2 vector2 = secondLineV3Arr[i + 1];
-
-                                    GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
-                                    currentColliderObject.transform.parent = secondLineObject.transform;
-                                    currentColliderObject.transform.localPosition = ((vector + vector2) / 2);
-                                    currentColliderObject.transform.right = ((vector2 - vector).normalized);
-                                    BoxCollider2D currentBoxCollider2D = currentColliderObject.GetComponent<BoxCollider2D>();
-                                    currentBoxCollider2D.size = new Vector3((vector2 - vector).magnitude, (float)_playerController.Line.Thickness, (float)_playerController.Line.Thickness);
+                                    firstLineV3Arr[i] = renderer.GetPosition(i);
+                                }
+                                else if (i > closestPointIndex)
+                                {
+                                    secondLineV3Arr[i - closestPointIndex - 1] = renderer.GetPosition(i);
                                 }
                             }
 
-                            if (UseGravity)
+                            Vector3 transformPosition = eraserHit.collider.gameObject.transform.parent.gameObject.transform.position;
+                            Quaternion transformRotation = eraserHit.collider.gameObject.transform.parent.gameObject.transform.rotation;
+
+                            // De-reference the original line
+                            DestroyImmediate(eraserHit.collider.gameObject.transform.parent.gameObject);
+
+                            if (firstLineV3Arr.Length > 1)
                             {
-                                Rigidbody2D rigidBody = secondLineObject.GetComponent<Rigidbody2D>();
-                                rigidBody.bodyType = RigidbodyType2D.Dynamic;
-                                rigidBody.useAutoMass = true;
-                                rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                                // Create a new GameObject, LineRenderer and Colliders for the first new line
+                                GameObject firstLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
+                                firstLineObject.transform.position = transformPosition;
+                                firstLineObject.transform.parent = _playerLines.transform;
+
+                                LineRenderer lineRendererOne = firstLineObject.GetComponent<LineRenderer>();
+                                SetLineProperties(lineRendererOne, _playerController.Line);
+
+                                lineRendererOne.positionCount = firstLineV3Arr.Length;
+                                lineRendererOne.SetPositions(firstLineV3Arr);
+
+                                // Colliders
+                                if (firstLineV3Arr.Length >= 2)
+                                {
+                                    int endIndex = firstLineV3Arr.Length - (firstLineV3Arr.Length % 2);
+                                    for (int i = 0; i < endIndex - 1; i++)
+                                    {
+                                        Vector2 vector = firstLineV3Arr[i];
+                                        Vector2 vector2 = firstLineV3Arr[i + 1];
+
+                                        GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
+                                        currentColliderObject.transform.parent = firstLineObject.transform;
+                                        currentColliderObject.transform.localPosition = ((vector + vector2) / 2);
+                                        currentColliderObject.transform.right = ((vector2 - vector).normalized);
+                                        BoxCollider2D currentBoxCollider2D = currentColliderObject.GetComponent<BoxCollider2D>();
+                                        currentBoxCollider2D.size = new Vector3((vector2 - vector).magnitude, (float)_playerController.Line.Thickness, (float)_playerController.Line.Thickness);
+                                    }
+                                }
+
+                                if (UseGravity)
+                                {
+                                    Rigidbody2D rigidBody = firstLineObject.GetComponent<Rigidbody2D>();
+                                    rigidBody.bodyType = RigidbodyType2D.Dynamic;
+                                    rigidBody.useAutoMass = true;
+                                    rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                                }
+
+                                firstLineObject.transform.rotation = transformRotation;
                             }
 
-                            secondLineObject.transform.rotation = transformRotation;
+                            // Create a new GameObject, LineRenderer and Collider for the second new line
+                            if (secondLineV3Arr.Length > 1)
+                            {
+                                GameObject secondLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
+                                secondLineObject.transform.position = transformPosition;
+                                secondLineObject.transform.parent = _playerLines.transform;
+
+                                LineRenderer lineRendererTwo = secondLineObject.GetComponent<LineRenderer>();
+                                SetLineProperties(lineRendererTwo, _playerController.Line);
+
+                                lineRendererTwo.positionCount = secondLineV3Arr.Length;
+                                lineRendererTwo.SetPositions(secondLineV3Arr);
+
+                                // Colliders
+                                if (secondLineV3Arr.Length >= 2)
+                                {
+                                    int endIndex = secondLineV3Arr.Length - (secondLineV3Arr.Length % 2);
+                                    for (int i = 0; i < endIndex - 1; i++)
+                                    {
+                                        Vector2 vector = secondLineV3Arr[i];
+                                        Vector2 vector2 = secondLineV3Arr[i + 1];
+
+                                        GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
+                                        currentColliderObject.transform.parent = secondLineObject.transform;
+                                        currentColliderObject.transform.localPosition = ((vector + vector2) / 2);
+                                        currentColliderObject.transform.right = ((vector2 - vector).normalized);
+                                        BoxCollider2D currentBoxCollider2D = currentColliderObject.GetComponent<BoxCollider2D>();
+                                        currentBoxCollider2D.size = new Vector3((vector2 - vector).magnitude, (float)_playerController.Line.Thickness, (float)_playerController.Line.Thickness);
+                                    }
+                                }
+
+                                if (UseGravity)
+                                {
+                                    Rigidbody2D rigidBody = secondLineObject.GetComponent<Rigidbody2D>();
+                                    rigidBody.bodyType = RigidbodyType2D.Dynamic;
+                                    rigidBody.useAutoMass = true;
+                                    rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                                }
+
+                                secondLineObject.transform.rotation = transformRotation;
+                            }
+                        }
+
+                        // Calculate Erase resource used
+                        if (_playerController.Eraser.ResourceCurrent > 0.00f)
+                        {
+                            _playerController.Eraser.ResourceCurrent -= 100f;
                         }
                     }
                 }
+                catch { }
             }
-            catch { }
         }
 
-        if (!Input.GetMouseButton(1) && _isDrawing)
+        if ((!Input.GetMouseButton(1) || _playerController.Line.ResourceCurrent <= 0) && _isDrawing)
         {
             _isDrawing = false;
         }

@@ -8,6 +8,8 @@ TagManager:
   - NetworkLobbyPlayer
   - PlayerLines
   - LineObjectCollider
+  - DrawFuel
+  - EraseFuel
   layers:
   - Default
   - TransparentFX

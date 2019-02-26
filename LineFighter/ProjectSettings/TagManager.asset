@@ -10,6 +10,9 @@ TagManager:
   - LineObjectCollider
   - DrawFuel
   - EraseFuel
+  - Enemy
+  - PlayerProjectile
+  - EnemyProjectile
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,15 @@
 ﻿
+#region Direction
+public enum Direction
+{
+    None,
+    Up,
+    Right,
+    Down,
+    Left
+}
+#endregion Direction
+
 #region DrawType
 public enum DrawType
 {
@@ -6,6 +17,14 @@ public enum DrawType
     Erase
 }
 #endregion DrawType
+
+#region EnemyState
+public enum EnemyState
+{
+    Idle,
+    Alert
+}
+#endregion EnemyState
 
 #region EraserSize
 public enum EraserSize

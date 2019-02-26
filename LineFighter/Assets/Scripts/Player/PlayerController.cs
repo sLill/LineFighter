@@ -29,17 +29,6 @@ public class PlayerController : MonoBehaviour
     public Player Player { get; set; }
     #endregion Public Properties
 
-    #region Enum Types
-    private enum Direction
-    {
-        None,
-        Up,
-        Right,
-        Down,
-        Left
-    }
-    #endregion Enum Types
-
     #region Events..
     void Start()
     {
@@ -54,26 +43,13 @@ public class PlayerController : MonoBehaviour
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
 
-
         _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Player.PlayerLinesPrefab]);
         _playerLines.name = "Player Lines (NetId: " + Player.NetId + ")";
 
         InitializeProperties();
+        Player.IsLocalPlayer = true;
 
-        //if (SteamFriends.)
-        //{
-            Player.IsLocalPlayer = true;
-
-        //DrawErase drawErase = _playerLines.AddComponent<DrawErase>();
-        //drawErase.Player = this.Player;
         DrawErase drawLine = _playerLines.AddComponent<DrawErase>();
-
-        //}
-        //else
-        //{
-        //    Player.IsLocalPlayer = false;
-        //    this.enabled = false;
-        //}
     }
 
     void Update()
@@ -103,8 +79,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Increment Draw/Erase Gauges
-        _time += Time.deltaTime;
-        if ((Line.AutoRefill) && (Line.ResourceCurrent < Line.ResourceMax && _time < .1f))
+        if (Line.AutoRefill && _time > .1f)
         {
             if (Line.ResourceCurrent < Line.ResourceMax)
             {
@@ -115,10 +90,12 @@ public class PlayerController : MonoBehaviour
             {
                 Eraser.ResourceCurrent += Eraser.RefillRate;
             }
+
+            _time = 0f;
         }
         else
         {
-            _time = 0;
+            _time += Time.deltaTime;
         }
     }
 
@@ -241,13 +218,13 @@ public class PlayerController : MonoBehaviour
 
     private void InitializeProperties()
     {
-        this.Line.AutoRefill = false;
+        this.Line.AutoRefill = true;
         this.Eraser.Radius = 0.21f;
-        this.Eraser.RefillRate = 1;
+        this.Eraser.RefillRate = 10;
         this.Eraser.ResourceCurrent = 1000;
         this.Eraser.ResourceMax = 1000;
         this.Eraser.Size = EraserSize.Small;
-        this.Line.RefillRate = 1;
+        this.Line.RefillRate = 10;
         this.Line.ResourceCurrent = 1000;
         this.Line.ResourceMax = 1000;
         this.Line.LineGravity = true;

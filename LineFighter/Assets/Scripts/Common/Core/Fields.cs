@@ -159,6 +159,8 @@ public static class Fields
     #region Tags
     public static class Tags
     {
+        public const string Enemy = "Enemy";
+
         public const string LineObject = "LineObject";
 
         public const string LineObjectCollider = "LineObjectCollider";
@@ -168,6 +170,10 @@ public static class Fields
         public const string Player = "Player";
 
         public const string PlayerLines = "PlayerLines";
+
+        public const string EnemyProjectile = "EnemyProjectile";
+
+        public const string PlayerProjectile = "PlayerProjectile";
 
         public const string DrawFuel = "DrawFuel";
 

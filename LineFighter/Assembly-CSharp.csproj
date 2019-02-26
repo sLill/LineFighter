@@ -61,6 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BaseClasses\EnemyAI.cs" />
+    <Compile Include="Assets\Scripts\BaseClasses\Eraser.cs" />
+    <Compile Include="Assets\Scripts\BaseClasses\Line.cs" />
+    <Compile Include="Assets\Scripts\BaseClasses\Player.cs" />
+    <Compile Include="Assets\Scripts\BaseClasses\PlayerProfile.cs" />
+    <Compile Include="Assets\Scripts\BaseClasses\Projectile.cs" />
     <Compile Include="Assets\Scripts\Common\Core\AssetLibrary.cs" />
     <Compile Include="Assets\Scripts\Common\Core\EncryptionEngine.cs" />
     <Compile Include="Assets\Scripts\Common\Core\Enums.cs" />
@@ -72,7 +78,7 @@
     <Compile Include="Assets\Scripts\Common\Core\Triangulator.cs" />
     <Compile Include="Assets\Scripts\Common\DrawLine\DrawErase.cs" />
     <Compile Include="Assets\Scripts\Common\Template.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyAIController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\ThugAIController.cs" />
     <Compile Include="Assets\Scripts\Game\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Game\LoLGameController.cs" />
     <Compile Include="Assets\Scripts\Game\MultiplayerGameController.cs" />
@@ -81,15 +87,11 @@
     <Compile Include="Assets\Scripts\Interfaces\ILine.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayer.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayerProfile.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IProjectile.cs" />
     <Compile Include="Assets\Scripts\Network\Steam\SteamGameController.cs" />
     <Compile Include="Assets\Scripts\Network\Steam\SteamManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerLinesController.cs" />
-    <Compile Include="Assets\Scripts\Properties\EnemyAI.cs" />
-    <Compile Include="Assets\Scripts\Properties\Eraser.cs" />
-    <Compile Include="Assets\Scripts\Properties\Line.cs" />
-    <Compile Include="Assets\Scripts\Properties\Player.cs" />
-    <Compile Include="Assets\Scripts\Properties\PlayerProfile.cs" />
     <Compile Include="Assets\Scripts\System\DisplaySettings.cs" />
     <Compile Include="Assets\Scripts\System\HudSettings.cs" />
     <Compile Include="Assets\Scripts\System\KeyboardSettings.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Assets\Scripts\UI\MainMenuNetworkLobbyManagerHud.cs" />
     <Compile Include="Assets\Scripts\UI\MenuButtonManager.cs" />
     <Compile Include="Assets\Scripts\UI\SettingsMenuController.cs" />
+    <Compile Include="Assets\Scripts\Weapon\BlasterBulletController.cs" />
     <None Include="Assets\Scripts\Common\DrawLine\ReadMe.txt" />
     <None Include="Assets\Resources\Materials\GlowAdditiveSimple.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">

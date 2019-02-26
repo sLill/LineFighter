@@ -52,16 +52,6 @@ public class DrawErase : MonoBehaviour
                 Erase();
                 break;
         }
-
-        // Pencil/Eraser gauge refill tick
-        if (_playerController.Line.ResourceCurrent < _playerController.Line.ResourceMax)
-        {
-            _playerController.Line.ResourceCurrent += _playerController.Line.RefillRate;
-        }
-        if (_playerController.Eraser.ResourceCurrent < _playerController.Eraser.ResourceMax)
-        {
-            _playerController.Eraser.ResourceCurrent += _playerController.Eraser.RefillRate;
-        }
     }
     #endregion MonoBehaviour
     #endregion Events..
@@ -332,9 +322,13 @@ public class DrawErase : MonoBehaviour
                         }
 
                         // Calculate Erase resource used
-                        if (_playerController.Eraser.ResourceCurrent > 0.00f)
+                        if (_playerController.Eraser.ResourceCurrent >= 100f)
                         {
                             _playerController.Eraser.ResourceCurrent -= 100f;
+                        }
+                        else if (_playerController.Eraser.ResourceCurrent > 0.0f)
+                        {
+                            _playerController.Eraser.ResourceCurrent = 0.0f;
                         }
                     }
                 }

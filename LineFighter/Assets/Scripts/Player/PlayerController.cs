@@ -9,16 +9,18 @@ using Steamworks;
 public class PlayerController : MonoBehaviour
 {
     #region Member Variables
-    private Animator _animator;
-    private DrawErase _drawErase;
     private bool _isGrounded = false;
-    private List<Direction> _keysDown;
     private bool _moving = false;
-    private GameObject _playerLines;
     private bool _queueJump = false;
-    private Rigidbody2D _rigidbody;
     private float _speed;
     private float _time = 0;
+    private Animator _animator;
+    private DrawErase _drawErase;
+    private Direction _directionFacing;
+    private List<Direction> _keysDown;
+    private GameObject _projectiles;
+    private GameObject _playerLines;
+    private Rigidbody2D _rigidbody;
     #endregion Member Variables
 
     #region Public Properties
@@ -30,6 +32,11 @@ public class PlayerController : MonoBehaviour
     #endregion Public Properties
 
     #region Events..
+    private void Awake()
+    {
+        _projectiles = GameObject.Find(Fields.GameObjects.Projectiles);
+    }
+
     void Start()
     {
         Eraser = new Eraser();
@@ -42,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
+        _directionFacing = Direction.Right;
 
         _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Player.PlayerLinesPrefab]);
         _playerLines.name = "Player Lines (NetId: " + Player.NetId + ")";
@@ -97,6 +105,28 @@ public class PlayerController : MonoBehaviour
         {
             _time += Time.deltaTime;
         }
+
+        // Fire weapon
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject projectile = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
+            projectile.transform.parent = _projectiles.transform;
+
+            // Set position
+            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float projectileAngle = Mathf.Atan2(mousePosition.y - this.transform.position.y, mousePosition.x - this.transform.position.x) * 180 / Mathf.PI;
+
+            switch (_directionFacing)
+            {
+                case Direction.Right:
+                    projectile.transform.position = this.transform.position + new Vector3(0.5f,0);
+                    break;
+                case Direction.Left:
+                    projectile.transform.position = this.transform.position- new Vector3(0.5f, 0);
+                    break;
+            }
+
+        }
     }
 
     private void FixedUpdate()
@@ -130,6 +160,8 @@ public class PlayerController : MonoBehaviour
         Direction mostRecentDirection = _keysDown[_keysDown.Count - 1];
         if (mostRecentDirection == Direction.Right)
         {
+            _directionFacing = Direction.Right;
+
             if (!_isGrounded)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x < 4.5 ? _rigidbody.velocity.x + 1.5f : _rigidbody.velocity.x, _rigidbody.velocity.y);
@@ -144,6 +176,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (mostRecentDirection == Direction.Left)
         {
+            _directionFacing = Direction.Left;
+
             if (!_isGrounded)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x > -4.5 ? _rigidbody.velocity.x - 1.5f : _rigidbody.velocity.x, _rigidbody.velocity.y);
@@ -160,13 +194,7 @@ public class PlayerController : MonoBehaviour
         {
             _moving = false;
             _speed = 0.00f;
-        }
-
-        // Fire
-        if (Input.GetMouseButton(0))
-        {
-
-        }
+        }     
 
         // Set animation fields
         _animator.SetFloat(Fields.Animator.Speed, _speed);

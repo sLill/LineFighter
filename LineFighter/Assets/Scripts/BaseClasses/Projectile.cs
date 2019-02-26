@@ -28,6 +28,11 @@ public class Projectile : MonoBehaviour, IProjectile
     {
 
     }
+
+    public virtual void FixedUpdate()
+    {
+
+    }
     #endregion MonoBehaviour.. 
     #endregion Events..
 

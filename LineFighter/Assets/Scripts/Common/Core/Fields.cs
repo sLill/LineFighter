@@ -31,6 +31,8 @@ public static class Fields
             #region Common
             public static class Common
             {
+                public const string Bullet = "Bullet";
+
                 public const string ColliderPrefab = "Collider";
 
                 public const string LineObjectPrefab = "LineObject";
@@ -124,6 +126,8 @@ public static class Fields
         public const string Player = "Player";
 
         public const string PlayerLines = "PlayerLines";
+
+        public const string Projectiles = "Projectiles";
 
         public const string SavedText = "SavedText";
 

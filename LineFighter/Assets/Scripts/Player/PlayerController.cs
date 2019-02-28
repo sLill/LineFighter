@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private List<Direction> _keysDown;
     private GameObject _projectiles;
     private GameObject _playerLines;
-    private Rigidbody2D _rigidbody;
+    private Rigidbody2D _rigidBody;
     #endregion Member Variables
 
     #region Public Properties
@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
         Player = new Player();
 
         _animator = this.GetComponentInParent<Animator>();
-        _rigidbody = this.GetComponentInParent<Rigidbody2D>();
-        _rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        _rigidBody = this.GetComponentInParent<Rigidbody2D>();
+        _rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         // Used like a Queue, except elements can be removed at various indexes
         _keysDown = new List<Direction>() { Direction.None };
@@ -109,23 +109,24 @@ public class PlayerController : MonoBehaviour
         // Fire weapon
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject projectile = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
-            projectile.transform.parent = _projectiles.transform;
-
             // Set position
-            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            float projectileAngle = Mathf.Atan2(mousePosition.y - this.transform.position.y, mousePosition.x - this.transform.position.x) * 180 / Mathf.PI;
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+            Vector3 projectilePosition = Vector3.zero;
             switch (_directionFacing)
             {
                 case Direction.Right:
-                    projectile.transform.position = this.transform.position + new Vector3(0.5f,0);
+                    var direction = (mousePosition - this.transform.position).normalized;
+                    projectilePosition = this.transform.position + (direction * 5);
                     break;
                 case Direction.Left:
-                    projectile.transform.position = this.transform.position- new Vector3(0.5f, 0);
+                    projectilePosition = this.transform.position- new Vector3(0.5f, 0);
                     break;
             }
 
+            GameObject projectile = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
+            projectile.transform.position = projectilePosition;
+            projectile.transform.LookAt(mousePosition, Vector3.forward);
         }
     }
 
@@ -140,19 +141,19 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 _moving = true;
-                _rigidbody.velocity = Vector2.zero;
-                _rigidbody.AddForce(new Vector2(4.5f, 4.5f), ForceMode2D.Impulse);
+                _rigidBody.velocity = Vector2.zero;
+                _rigidBody.AddForce(new Vector2(4.5f, 4.5f), ForceMode2D.Impulse);
             }
             else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 _moving = true;
-                _rigidbody.velocity = Vector2.zero;
-                _rigidbody.AddForce(new Vector2(-4.5f, 4.5f), ForceMode2D.Impulse);
+                _rigidBody.velocity = Vector2.zero;
+                _rigidBody.AddForce(new Vector2(-4.5f, 4.5f), ForceMode2D.Impulse);
             }
             else
             {
-                _rigidbody.velocity = Vector2.zero;
-                _rigidbody.AddForce(new Vector2(0.0f, 4.5f), ForceMode2D.Impulse);
+                _rigidBody.velocity = Vector2.zero;
+                _rigidBody.AddForce(new Vector2(0.0f, 4.5f), ForceMode2D.Impulse);
             }
         }
 
@@ -164,11 +165,11 @@ public class PlayerController : MonoBehaviour
 
             if (!_isGrounded)
             {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x < 4.5 ? _rigidbody.velocity.x + 1.5f : _rigidbody.velocity.x, _rigidbody.velocity.y);
+                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x < 4.5 ? _rigidBody.velocity.x + 1.5f : _rigidBody.velocity.x, _rigidBody.velocity.y);
             }
             else
             {
-                _rigidbody.MovePosition(new Vector2(_rigidbody.transform.position.x + 0.06f, _rigidbody.transform.position.y));
+                _rigidBody.MovePosition(new Vector2(_rigidBody.transform.position.x + 0.06f, _rigidBody.transform.position.y));
             }
 
             _moving = true;
@@ -180,11 +181,11 @@ public class PlayerController : MonoBehaviour
 
             if (!_isGrounded)
             {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x > -4.5 ? _rigidbody.velocity.x - 1.5f : _rigidbody.velocity.x, _rigidbody.velocity.y);
+                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x > -4.5 ? _rigidBody.velocity.x - 1.5f : _rigidBody.velocity.x, _rigidBody.velocity.y);
             }
             else
             {
-                _rigidbody.MovePosition(new Vector2(_rigidbody.transform.position.x - 0.06f, _rigidbody.transform.position.y));
+                _rigidBody.MovePosition(new Vector2(_rigidBody.transform.position.x - 0.06f, _rigidBody.transform.position.y));
             }
 
             _moving = true;
@@ -205,7 +206,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         Vector2 contactPoint = collision.contacts[0].point;
-        Vector2 playerCenter = _rigidbody.worldCenterOfMass;
+        Vector2 playerCenter = _rigidBody.worldCenterOfMass;
 
         float collisionAngle = Mathf.Atan2(playerCenter.y - contactPoint.y, playerCenter.x - contactPoint.x) * 180 / Mathf.PI;
 
@@ -233,7 +234,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _rigidbody.velocity = Vector2.zero;
+            _rigidBody.velocity = Vector2.zero;
         }
     }
     #endregion Events..

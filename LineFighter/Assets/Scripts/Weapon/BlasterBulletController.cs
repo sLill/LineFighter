@@ -15,7 +15,7 @@ public class BlasterBulletController : Projectile
     public override void Awake()
     {
         Damage = 10f;
-        Speed = 10f;
+        Speed = 5.0f;
 
         base.Awake();
     }

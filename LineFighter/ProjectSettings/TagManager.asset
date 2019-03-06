@@ -7,6 +7,12 @@ TagManager:
   - LineObject
   - NetworkLobbyPlayer
   - PlayerLines
+  - LineObjectCollider
+  - DrawFuel
+  - EraseFuel
+  - Enemy
+  - PlayerProjectile
+  - EnemyProjectile
   layers:
   - Default
   - TransparentFX

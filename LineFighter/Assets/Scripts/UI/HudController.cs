@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class HudController : NetworkBehaviour
+public class HudController : MonoBehaviour
 {
     #region Member Variables..
     private object[] _assets;
@@ -25,14 +25,6 @@ public class HudController : NetworkBehaviour
     #region Properties..
     public DrawType DrawMode { get; private set; }
     #endregion Properties..
-
-    #region Enums..
-    public enum DrawType
-    {
-        Draw,
-        Erase
-    }
-    #endregion Enums..
 
     #region Events..
     // Use this for initialization
@@ -70,7 +62,7 @@ public class HudController : NetworkBehaviour
                 _playerController = GameObject.FindObjectOfType<PlayerController>();
             }
 
-            if (hudController.DrawMode == HudController.DrawType.Draw)
+            if (hudController.DrawMode == DrawType.Draw)
             {
                 cursorSprite = AssetLibrary.UiAssets["Draw_Cursor"];
                 hotspot = new Vector2(0, 48);
@@ -80,8 +72,8 @@ public class HudController : NetworkBehaviour
                 Sprite cursor = null;
                 switch (_playerController.Eraser.Size)
                 {
-                    case Eraser.EraserSize.Small:
-                        cursor = AssetLibrary.UiAssets[Fields.Assets.EraseCursorSmall];
+                    case EraserSize.Small:
+                        cursor = AssetLibrary.UiAssets[Fields.Assets.Materials.EraseCursorSmall];
                         break;
                     default:
                         //cursor = AssetLibrary.UiAssets["Erase_Cursor_Large"];
@@ -100,6 +92,10 @@ public class HudController : NetworkBehaviour
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
+
+        // Update HUD
+        _pencilGauge.fillAmount = (_playerController.Line.ResourceCurrent / _playerController.Line.ResourceMax) * 0.6f;
+        _eraserGauge.fillAmount = (_playerController.Eraser.ResourceCurrent / _playerController.Eraser.ResourceMax) * 0.6f;
     }
     #endregion Events..
 
@@ -111,10 +107,10 @@ public class HudController : NetworkBehaviour
         _fpsCounter = GameObject.Find(Fields.GameObjects.FpsCounter);
         _hud = GameObject.Find(Fields.GameObjects.HUD);
         _eraserGauge = GameObject.Find(Fields.GameObjects.EraserGauge).GetComponent<Image>();
-        _eraserGaugeContainer = GameObject.Find(Fields.GameObjects.EraserGaugeContainer).GetComponent<Image>();
+        //_eraserGaugeContainer = GameObject.Find(Fields.GameObjects.EraserGaugeContainer).GetComponent<Image>();
         _eraserSpriteRenderer = GameObject.Find(Fields.GameObjects.EraserSprite).GetComponent<SpriteRenderer>();
         _pencilGauge = GameObject.Find(Fields.GameObjects.PencilGauge).GetComponent<Image>();
-        _pencilGaugeContainer = GameObject.Find(Fields.GameObjects.PencilGaugeContainer).GetComponent<Image>();
+        //_pencilGaugeContainer = GameObject.Find(Fields.GameObjects.PencilGaugeContainer).GetComponent<Image>();
         _pencilSpriteRenderer = GameObject.Find(Fields.GameObjects.PencilSprite).GetComponent<SpriteRenderer>();
 
         DrawMode = DrawType.Draw;
@@ -144,11 +140,11 @@ public class HudController : NetworkBehaviour
 
                 _pencilSpriteRenderer.color = pencilColor;
                 _pencilGauge.color = pencilGaugeColor;
-                _pencilGaugeContainer.color = pencilColor;
+                //_pencilGaugeContainer.color = pencilColor;
 
                 _eraserSpriteRenderer.color = eraserColor;
                 _eraserGauge.color = eraserGaugeColor;
-                _eraserGaugeContainer.color = eraserColor;
+                //_eraserGaugeContainer.color = eraserColor;
                 break;
             case DrawType.Erase:
                 pencilColor.a = _drawAlphaUnfocus;
@@ -158,11 +154,11 @@ public class HudController : NetworkBehaviour
 
                 _pencilSpriteRenderer.color = pencilColor;
                 _pencilGauge.color = pencilGaugeColor;
-                _pencilGaugeContainer.color = pencilColor;
+                //_pencilGaugeContainer.color = pencilColor;
 
                 _eraserSpriteRenderer.color = eraserColor;
                 _eraserGauge.color = eraserGaugeColor;
-                _eraserGaugeContainer.color = eraserColor;
+                //_eraserGaugeContainer.color = eraserColor;
                 break;
         }
     }

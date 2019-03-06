@@ -341,6 +341,9 @@ D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\nunit.framework.xml
 D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\Unity.CollabProxy.Editor.dll
 D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\Unity.PackageManagerUI.Editor.dll
 D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\Unity.TextMeshPro.Editor.dll
+D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
+D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\UnityEditor.UI.dll
+D:\Code\Github\LineFighter\LineFighter\Temp\bin\Debug\UnityEditor.UI.xml
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\Assembly-CSharp.dll
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\Assembly-CSharp.pdb
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\Boo.Lang.dll
@@ -511,7 +514,9 @@ C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\Unity
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEngine.Networking.xml
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
+C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.dll
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.pdb
+C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb

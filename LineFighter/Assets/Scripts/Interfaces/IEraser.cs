@@ -5,9 +5,9 @@
     // Per 1/10 second
     int RefillRate { get; set; }
 
-    int ResourceCurrent { get; set; }
+    float ResourceCurrent { get; set; }
 
-    int ResourceMax { get; set; }
+    float ResourceMax { get; set; }
 
     T Size { get; set; }
 }

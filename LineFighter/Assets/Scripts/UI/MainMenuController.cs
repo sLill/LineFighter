@@ -18,6 +18,8 @@ public class MainMenuController : MonoBehaviour
     #region Events
     void Start()
     {
+        _game = GameObject.Find(Fields.GameObjects.Game);
+
         // Load Assets
         AssetLibrary.LoadBaseAssets();
 
@@ -37,28 +39,26 @@ public class MainMenuController : MonoBehaviour
 
     private void LordsOfLineButton_Clicked()
     {
-
+        _game.AddComponent<LoLGameController>();
+        SceneManager.LoadScene(Fields.Scenes.SceneTemplate);
     }
 
     private void MultiplayerButton_Clicked()
     {
-        _game = GameObject.Find(Fields.GameObjects.Game);
-        _game.AddComponent<MultiplayerGameController>();
-
-        _networkLobbyPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.NetworkLobbyManagerObjectPrefab]);
+        _game.AddComponent<SteamGameController>();
+        //_networkLobbyPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.NetworkLobbyManagerObjectPrefab]);
     }
 
     private void SettingsButton_Clicked()
     {
-        _settingsPanel.SetActive(true);
+        _settingsPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.UI.SettingsMenuPrefab]);
     }
     #endregion Events
 
     #region Private Methods
     private void InitializeMenu()
     {
-        _settingsPanel = GameObject.Find(Fields.GameObjects.SettingsPanel);
-        _settingsPanel.SetActive(false);
+
     }
 
     private void InitializeMenuButtonEvents()

@@ -40,7 +40,8 @@ public class MainMenuController : MonoBehaviour
     private void LordsOfLineButton_Clicked()
     {
         _game.AddComponent<LoLGameController>();
-        SceneManager.LoadScene(Fields.Scenes.SceneTemplate);
+        //SceneManager.LoadScene(Fields.Scenes.SceneTemplate);
+        SceneManager.LoadScene(Fields.Scenes.LordOfFunk);
     }
 
     private void MultiplayerButton_Clicked()

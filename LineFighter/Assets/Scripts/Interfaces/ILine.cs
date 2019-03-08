@@ -2,7 +2,7 @@
 {
     bool AutoRefill { get; set; }
 
-    bool LineGravity { get; set; }
+    bool UseGravity { get; set; }
 
     double Thickness { get; set; }
 

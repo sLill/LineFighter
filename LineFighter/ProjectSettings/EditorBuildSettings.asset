@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MultiplayerTemplate.unity
     guid: 0dd329702227e04438774a6cf9f92b72
+  - enabled: 1
+    path: Assets/Scenes/LoL_LordOfFunk.unity
+    guid: d8f7b70cd8496cb45ae27afa08fa5b80
   m_configObjects: {}

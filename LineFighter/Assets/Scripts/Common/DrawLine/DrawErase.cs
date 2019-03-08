@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class DrawErase : MonoBehaviour
 {
     #region Member Variables..
@@ -14,14 +13,14 @@ public class DrawErase : MonoBehaviour
     private BoxCollider2D _currentBoxCollider2D;
     private LineRenderer _currentLineRenderer;
     private HudController _hudController;
+    private ParticleSystem _currentLineFX;
+    ParticleSystem.EmitParams _lineParticleParams = new ParticleSystem.EmitParams();
     private PlayerController _playerController;
     private bool _isDrawing;
     #endregion Member Variables..
 
     #region Properties..
     public Material LineMaterial { get; set; }
-
-    public GameObject LineFX { get; set; }
 
     public bool UseGravity { get; set; }
 
@@ -71,18 +70,31 @@ public class DrawErase : MonoBehaviour
     {
         LineColor = Color.white;
         LineMaterial = AssetLibrary.MaterialAssets["LineMaterial_Base"];
-        LineFX = AssetLibrary.PrefabAssets["Trail"];
-        UseGravity = true;
+        UseGravity = line.UseGravity;
 
         lineRenderer.material = LineMaterial;
-        lineRenderer.material.EnableKeyword("_EMISSION");
-        lineRenderer.material.SetColor("_EmissionColor", this.LineColor);
+        //lineRenderer.material.EnableKeyword("_EMISSION");
+        //lineRenderer.material.SetColor("_EmissionColor", this.LineColor);
         lineRenderer.positionCount = 0;
         lineRenderer.startWidth = (float)line.Thickness;
         lineRenderer.endWidth = (float)line.Thickness;
         lineRenderer.startColor = LineColor;
         lineRenderer.endColor = LineColor;
         lineRenderer.useWorldSpace = false;
+    }
+
+    public void SetRigidBodyProperties(Rigidbody2D rigidBody)
+    {
+        rigidBody.bodyType = RigidbodyType2D.Dynamic;
+        rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        rigidBody.useAutoMass = false;
+        rigidBody.mass = 1f;
+
+        if (!UseGravity)
+        {
+            rigidBody.gravityScale = 0;
+            rigidBody.AddForce(new Vector2(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f)), ForceMode2D.Impulse);
+        }
     }
 
     #endregion Public Methods..
@@ -100,6 +112,7 @@ public class DrawErase : MonoBehaviour
                 _currentLine = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
                 _currentLine.transform.parent = GameObject.FindGameObjectWithTag(Fields.GameObjects.PlayerLines).transform;
                 _currentLine.tag = Fields.Tags.LineObject;
+                _currentLineFX = _currentLine.GetComponent<ParticleSystem>();
                 _currentLineRenderer = _currentLine.GetComponent<LineRenderer>();
 
                 SetLineProperties(_currentLineRenderer, _playerController.Line);
@@ -107,14 +120,14 @@ public class DrawErase : MonoBehaviour
 
             if (Input.GetMouseButton(1) && _isDrawing)
             {
-                Vector2 item = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                LineFX.transform.position = new Vector2(item.x, item.y);
-                LineFX.SetActive(true);
+                _lineParticleParams.position = mousePos;
+                _currentLineFX.Emit(_lineParticleParams, 10);
 
-                if (!_listPoint.Contains(item))
+                if (!_listPoint.Contains(mousePos))
                 {
-                    _listPoint.Add(item);
+                    _listPoint.Add(mousePos);
                     _currentLineRenderer.positionCount = _listPoint.Count;
                     _currentLineRenderer.SetPosition(_listPoint.Count - 1, _listPoint[_listPoint.Count - 1]);
 
@@ -144,8 +157,6 @@ public class DrawErase : MonoBehaviour
 
         if ((!Input.GetMouseButton(1) || _playerController.Line.ResourceCurrent <= 0) && _isDrawing)
         {
-            LineFX.SetActive(false);
-
             if (_currentLine.transform.childCount > 0)
             {
                 for (int j = 0; j < _currentLine.transform.childCount; j++)
@@ -153,13 +164,8 @@ public class DrawErase : MonoBehaviour
                     _currentLine.transform.GetChild(j).GetComponent<BoxCollider2D>().enabled = true;
                 }
 
-                if (UseGravity)
-                {
-                    Rigidbody2D rigidBody = _currentLine.GetComponent<Rigidbody2D>();
-                    rigidBody.bodyType = RigidbodyType2D.Dynamic;
-                    rigidBody.useAutoMass = true;
-                    rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                }
+                Rigidbody2D rigidBody = _currentLine.GetComponent<Rigidbody2D>();
+                SetRigidBodyProperties(rigidBody);
             }
             else
             {
@@ -267,13 +273,8 @@ public class DrawErase : MonoBehaviour
                                     }
                                 }
 
-                                if (UseGravity)
-                                {
-                                    Rigidbody2D rigidBody = firstLineObject.GetComponent<Rigidbody2D>();
-                                    rigidBody.bodyType = RigidbodyType2D.Dynamic;
-                                    rigidBody.useAutoMass = true;
-                                    rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                                }
+                                Rigidbody2D rigidBody = firstLineObject.GetComponent<Rigidbody2D>();
+                                SetRigidBodyProperties(rigidBody);
 
                                 firstLineObject.transform.rotation = transformRotation;
                             }
@@ -290,6 +291,7 @@ public class DrawErase : MonoBehaviour
 
                                 lineRendererTwo.positionCount = secondLineV3Arr.Length;
                                 lineRendererTwo.SetPositions(secondLineV3Arr);
+
 
                                 // Colliders
                                 if (secondLineV3Arr.Length >= 2)
@@ -309,13 +311,8 @@ public class DrawErase : MonoBehaviour
                                     }
                                 }
 
-                                if (UseGravity)
-                                {
-                                    Rigidbody2D rigidBody = secondLineObject.GetComponent<Rigidbody2D>();
-                                    rigidBody.bodyType = RigidbodyType2D.Dynamic;
-                                    rigidBody.useAutoMass = true;
-                                    rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                                }
+                                Rigidbody2D rigidBody = secondLineObject.GetComponent<Rigidbody2D>();
+                                SetRigidBodyProperties(rigidBody);
 
                                 secondLineObject.transform.rotation = transformRotation;
                             }

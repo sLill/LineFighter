@@ -1,4 +1,4 @@
-﻿public interface IEnemyAI
+﻿public interface IEnemy
 {
-
+    void TakeDamage(float damage);
 }

@@ -78,7 +78,7 @@
     <Compile Include="Assets\Scripts\Common\Core\Triangulator.cs" />
     <Compile Include="Assets\Scripts\Common\DrawLine\DrawErase.cs" />
     <Compile Include="Assets\Scripts\Common\Template.cs" />
-    <Compile Include="Assets\Scripts\Enemy\ThugAIController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\LordOfFunkController.cs" />
     <Compile Include="Assets\Scripts\Game\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Game\LoLGameController.cs" />
     <Compile Include="Assets\Scripts\Game\MultiplayerGameController.cs" />

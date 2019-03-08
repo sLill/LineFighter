@@ -41,6 +41,13 @@ public static class Fields
             }
             #endregion Common
 
+            #region Enemy
+            public static class Enemy
+            {
+                public const string LordOfFunkPrefab = "LordOfFunk";
+            }
+            #endregion Enemy
+
             #region Player
             public static class Player
             {
@@ -140,6 +147,8 @@ public static class Fields
     #region Scenes
     public static class Scenes
     {
+        public const string LordOfFunk = "LoL_LordOfFunk";
+
         public const string SceneTemplate = "SceneTemplate";
     }
     #endregion Scenes

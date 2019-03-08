@@ -6,7 +6,7 @@ public class Line : ILine
     #region Properties
     public bool AutoRefill { get; set; }
 
-    public bool LineGravity { get; set; }
+    public bool UseGravity { get; set; }
 
     public double Thickness { get; set; }
 

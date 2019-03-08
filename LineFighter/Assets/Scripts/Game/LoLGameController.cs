@@ -8,7 +8,7 @@ public class LoLGameController : MonoBehaviour
     #region Events..
     void Awake()
     {
-        SceneManager.activeSceneChanged += SpawnPlayer;
+        SceneManager.activeSceneChanged += SpawnCharacters;
     }
 
 
@@ -24,9 +24,16 @@ public class LoLGameController : MonoBehaviour
     #endregion Events..
 
     #region Methods..
-    private void SpawnPlayer(Scene current, Scene next)
+    private void SpawnCharacters(Scene current, Scene next)
     {
+        // Player
         Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Player.PlayerPrefab]);
+
+        // Enemy
+        if (next.name == Fields.Scenes.LordOfFunk)
+        {
+            Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Enemy.LordOfFunkPrefab]);
+        }
     }
     #endregion Methods..
 }

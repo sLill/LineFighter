@@ -2,11 +2,11 @@
 
 public interface IPlayer
 {
-    int ConnectionId { get; set; }
+    float Hp { get; set; }
 
-    bool IsLocalPlayer { get; set; }
+    bool Moving { get; set; }
 
-    NetworkInstanceId NetId { get; set; }
+    float Speed { get; set; }
 
-    string PlayerTag { get; set; }
+    void TakeDamage(float damage);
 }

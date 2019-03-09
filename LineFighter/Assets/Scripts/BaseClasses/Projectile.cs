@@ -47,7 +47,8 @@ public class Projectile : MonoBehaviour, IProjectile
                 enemyController.TakeDamage(Damage);
                 break;
             case Fields.Tags.LineObject:
-
+                var lineController = collider.gameObject.GetComponent<ILine>();
+                lineController.TakeDamage(this);
                 break;
         }
 

@@ -16,5 +16,12 @@ public class Line : ILine
 
     public float ResourceMax { get; set; }
     #endregion Properties
+
+    #region Public Methods..
+    public void TakeDamage(IProjectile projectile)
+    {
+
+    }
+    #endregion Public Methods..
 }
 

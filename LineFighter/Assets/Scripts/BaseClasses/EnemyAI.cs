@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour, IEnemy
     private bool _damageTaken = false;
     private bool _flashRed = false;
     private float _flashingFor = 0f;
+    private GameObject _projectiles;
     private SpriteRenderer _spriteRenderer;
     #endregion Member Variables..
 
@@ -21,6 +22,7 @@ public class EnemyAI : MonoBehaviour, IEnemy
     #region MonoBehaviour..
     public virtual void Awake()
     {
+        _projectiles = GameObject.Find(Fields.GameObjects.Projectiles);
         _spriteRenderer = this.GetComponentInParent<SpriteRenderer>();
         State = EnemyState.Idle;
     }
@@ -58,6 +60,18 @@ public class EnemyAI : MonoBehaviour, IEnemy
     #endregion Events..
 
     #region Public Methods..
+    public virtual void FireProjectile(Vector3 position, Vector3 direction)
+    {
+        GameObject projectile = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
+        projectile.GetComponent<SpriteRenderer>().color = Color.red;
+        projectile.GetComponent<BlasterBulletController>().Speed = 1f;
+
+        projectile.transform.position = position;
+        projectile.transform.LookAt(direction, Vector3.forward);
+        projectile.transform.parent = _projectiles.transform;
+        projectile.tag = Fields.Tags.EnemyProjectile;
+    }
+
     public virtual void InitializeProperties()
     {
 

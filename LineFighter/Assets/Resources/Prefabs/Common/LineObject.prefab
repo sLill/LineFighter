@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7188727801765993582}
   - component: {fileID: 4878036227900781071}
   - component: {fileID: 3381544018806309309}
+  - component: {fileID: 5646685816351308327}
   - component: {fileID: 3192368482197454478}
   m_Layer: 0
   m_Name: LineObject
@@ -4556,6 +4557,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &5646685816351308327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289020658241088543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661896bcf9b6cfc48952a79553669195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!199 &3192368482197454478
 ParticleSystemRenderer:
   serializedVersion: 6

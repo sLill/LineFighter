@@ -56,10 +56,9 @@ public class LordOfFunkController : EnemyAI
         for (int i = 1; i < 21; i++)
         {
             float ang = i * 360;
-            Vector3 pos;
-            pos.x = this.gameObject.transform.position.x + 2f * Mathf.Sin(ang * Mathf.Deg2Rad);
-            pos.y = this.gameObject.transform.position.y + 2f * Mathf.Cos(ang * Mathf.Deg2Rad);
-            pos.z = this.gameObject.transform.position.z;
+            Vector2 pos;
+            pos.x = this.gameObject.transform.position.x + 2f;// * Mathf.Sin(ang * Mathf.Deg2Rad);
+            pos.y = this.gameObject.transform.position.y;// * Mathf.Cos(ang * Mathf.Deg2Rad);
 
             FireProjectile(this.gameObject.transform.position, pos);
         }

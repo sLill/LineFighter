@@ -1,21 +1,45 @@
-﻿
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Line : ILine
+public class Line : MonoBehaviour, ILine
 {
-    #region Properties
-    public bool AutoRefill { get; set; }
+    #region Member Variables..
+    Camera _mainCamera;
+    #endregion Member Variables..
 
-    public bool UseGravity { get; set; }
+    #region Properties..
+    #endregion Properties..
 
-    public double Thickness { get; set; }
+    #region Events..
+    #region MonoBehaviour..
+    public virtual void Awake()
+    {
 
-    public float RefillRate { get; set; }
+    }
+    public virtual void Start()
+    {
 
-    public float ResourceCurrent { get; set; }
+    }
 
-    public float ResourceMax { get; set; }
-    #endregion Properties
+    public virtual void Update()
+    {
+        var left = (_mainCamera.transform.position.x - 25);
+        var right = (_mainCamera.transform.position.x + 25);
+        var top = (_mainCamera.transform.position.y + 25);
+        var bottom = (_mainCamera.transform.position.y - 25);
+
+        // Destroy projectiles that have left the screen
+        if (this.transform.position.x < left
+            || this.transform.position.x > right
+            || this.transform.position.y < bottom
+            || this.transform.position.y > top)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    #endregion MonoBehaviour.. 
+    #endregion Events..
 
     #region Public Methods..
     public void TakeDamage(IProjectile projectile)
@@ -23,5 +47,7 @@ public class Line : ILine
 
     }
     #endregion Public Methods..
-}
 
+    #region Private Methods..
+    #endregion Private Methods..
+}

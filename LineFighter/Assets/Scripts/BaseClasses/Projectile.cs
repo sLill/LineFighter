@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour, IProjectile
 {
     #region Member Variables..
+    Camera _mainCamera;
     #endregion Member Variables..
 
     #region Properties..
@@ -17,7 +18,7 @@ public class Projectile : MonoBehaviour, IProjectile
     #region MonoBehaviour..
     public virtual void Awake()
     {
-
+        _mainCamera = Camera.main;
     }
     public virtual void Start()
     {
@@ -26,7 +27,19 @@ public class Projectile : MonoBehaviour, IProjectile
 
     public virtual void Update()
     {
+        var left = (_mainCamera.transform.position.x - 15);
+        var right = (_mainCamera.transform.position.x + 15);
+        var top = (_mainCamera.transform.position.y + 15);
+        var bottom = (_mainCamera.transform.position.y - 15);
 
+        // Destroy projectiles that have left the screen
+        if (this.transform.position.x < left
+            || this.transform.position.x > right
+            || this.transform.position.y < bottom
+            || this.transform.position.y > top)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public virtual void FixedUpdate()
@@ -40,11 +53,17 @@ public class Projectile : MonoBehaviour, IProjectile
         {
             case Fields.Tags.Player:
                 var playerController = collider.gameObject.GetComponent<IPlayer>();
-                playerController.TakeDamage(Damage);
+                if (this.transform.tag != Fields.Tags.PlayerProjectile)
+                {
+                    playerController.TakeDamage(Damage);
+                }
                 break;
             case Fields.Tags.Enemy:
                 var enemyController = collider.gameObject.GetComponent<IEnemy>();
-                enemyController.TakeDamage(Damage);
+                if (this.transform.tag != Fields.Tags.EnemyProjectile)
+                {
+                    enemyController.TakeDamage(Damage);
+                }
                 break;
             case Fields.Tags.LineObject:
                 var lineController = collider.gameObject.GetComponent<ILine>();
@@ -52,7 +71,11 @@ public class Projectile : MonoBehaviour, IProjectile
                 break;
         }
 
-        Destroy(this.gameObject);
+        if (collider.gameObject.transform.tag != Fields.Tags.PlayerProjectile
+            && collider.gameObject.transform.tag != Fields.Tags.EnemyProjectile)
+        {
+            Destroy(this.gameObject);
+        }
     }
     #endregion MonoBehaviour.. 
     #endregion Events..

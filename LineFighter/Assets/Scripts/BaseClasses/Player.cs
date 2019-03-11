@@ -13,11 +13,11 @@ public class Player : MonoBehaviour, IPlayer
     #endregion Member Variables..
 
     #region Properties
-    public Eraser Eraser { get; set; }
+    public EraserProperties Eraser { get; set; }
 
     public float Hp { get; set; }
 
-    public Line Line { get; set; }
+    public LineProperties Line { get; set; }
 
     public bool Moving { get; set; }
 
@@ -33,8 +33,8 @@ public class Player : MonoBehaviour, IPlayer
     }
     public virtual void Start()
     {
-        Eraser = new Eraser();
-        Line = new Line();
+        Eraser = new EraserProperties();
+        Line = new LineProperties();
 
         InitializeProperties();
 

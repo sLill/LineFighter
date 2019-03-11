@@ -66,7 +66,7 @@ public class DrawErase : MonoBehaviour
         }
     }
 
-    public void SetLineProperties(LineRenderer lineRenderer, Line line)
+    public void SetLineProperties(LineRenderer lineRenderer, LineProperties line)
     {
         LineColor = Color.white;
         LineMaterial = AssetLibrary.MaterialAssets["LineMaterial_Base"];

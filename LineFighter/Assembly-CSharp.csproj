@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BaseClasses\EnemyAI.cs" />
-    <Compile Include="Assets\Scripts\BaseClasses\Eraser.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\Line.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\Player.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\PlayerProfile.cs" />
@@ -90,6 +89,9 @@
     <Compile Include="Assets\Scripts\Interfaces\IProjectile.cs" />
     <Compile Include="Assets\Scripts\Network\Steam\SteamGameController.cs" />
     <Compile Include="Assets\Scripts\Network\Steam\SteamManager.cs" />
+    <Compile Include="Assets\Scripts\Player\EraserProperties.cs" />
+    <Compile Include="Assets\Scripts\Player\LineController.cs" />
+    <Compile Include="Assets\Scripts\Player\LineProperties.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerLinesController.cs" />
     <Compile Include="Assets\Scripts\System\DisplaySettings.cs" />

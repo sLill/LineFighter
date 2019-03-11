@@ -64,7 +64,6 @@ public class EnemyAI : MonoBehaviour, IEnemy
     {
         GameObject projectile = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
         projectile.GetComponent<SpriteRenderer>().color = Color.red;
-        projectile.GetComponent<BlasterBulletController>().Speed = 1f;
 
         projectile.transform.position = position;
         projectile.transform.LookAt(direction, Vector3.forward);

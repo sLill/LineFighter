@@ -519,6 +519,4 @@ C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-C
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.dll
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\obj\Debug\Assembly-CSharp.pdb
-C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEditor.UI.dll
 C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
-C:\Users\lills\Desktop\VS Solutions\LineFighter\LineFighter\Temp\bin\Debug\UnityEditor.UI.xml

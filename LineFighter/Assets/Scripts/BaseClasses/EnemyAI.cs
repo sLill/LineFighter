@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour, IEnemy
 
         projectile.transform.position = position;
         projectile.transform.LookAt(direction, Vector3.forward);
-        projectile.transform.parent = _projectiles.transform;
+        projectile.transform.parent = _projectiles.gameObject.transform;
         projectile.tag = Fields.Tags.EnemyProjectile;
     }
 

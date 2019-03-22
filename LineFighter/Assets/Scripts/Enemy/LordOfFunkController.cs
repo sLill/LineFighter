@@ -53,7 +53,7 @@ public class LordOfFunkController : EnemyAI
     private void StaffBurst()
     {
         // Ring of projectiles
-        for (int i = 1; i < 21; i++)
+        for (int i = 1; i < 2; i++)
         {
             float ang = i * 360;
             Vector2 pos;

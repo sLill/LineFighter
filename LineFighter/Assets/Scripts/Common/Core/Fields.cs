@@ -82,8 +82,6 @@ public static class Fields
         public const string PrefabsEnemy = "Prefabs/Enemy";
 
         public const string PrefabsPlayer = "Prefabs/Player";
-
-        public const string PrefabsUI = "Prefabs/UI";
     }
     #endregion AssetPaths
 

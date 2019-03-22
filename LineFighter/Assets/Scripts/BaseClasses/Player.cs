@@ -38,7 +38,7 @@ public class Player : MonoBehaviour, IPlayer
 
         InitializeProperties();
 
-        _playerLines = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Player.PlayerLinesPrefab]);
+        _playerLines = (GameObject)Instantiate(AssetLibrary.PlayerPrefabAssets[Fields.Assets.Prefabs.Player.PlayerLinesPrefab]);
         _playerLines.name = "Player Lines";
 
         _playerLines.AddComponent<DrawErase>();
@@ -79,11 +79,10 @@ public class Player : MonoBehaviour, IPlayer
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 projectilePosition = mousePosition.x > this.transform.position.x ? this.transform.position + new Vector3(0.75f, 0, 0) : this.transform.position - new Vector3(0.75f, 0, 0);
 
-        GameObject projectile = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
+        GameObject projectile = (GameObject)Instantiate(AssetLibrary.PlayerPrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
         projectile.transform.position = projectilePosition;
         projectile.transform.LookAt(mousePosition, Vector3.forward);
         projectile.transform.parent = _projectiles.transform;
-        projectile.tag = Fields.Tags.PlayerProjectile;
     }
 
     public void TakeDamage(float damage)

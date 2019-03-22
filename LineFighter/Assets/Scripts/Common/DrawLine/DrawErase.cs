@@ -109,7 +109,7 @@ public class DrawErase : MonoBehaviour
                 _isDrawing = true;
                 _listPoint.Clear();
 
-                _currentLine = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
+                _currentLine = (GameObject)Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
                 _currentLine.transform.parent = GameObject.FindGameObjectWithTag(Fields.GameObjects.PlayerLines).transform;
                 _currentLine.tag = Fields.Tags.LineObject;
                 _currentLineFX = _currentLine.GetComponent<ParticleSystem>();
@@ -136,7 +136,7 @@ public class DrawErase : MonoBehaviour
                         Vector2 vector = _listPoint[_listPoint.Count - 2];
                         Vector2 vector2 = _listPoint[_listPoint.Count - 1];
 
-                        _currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
+                        _currentColliderObject = (GameObject)Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
                         _currentColliderObject.transform.position = ((vector + vector2) / 2f);
                         _currentColliderObject.transform.right = ((vector2 - vector).normalized);
                         _currentColliderObject.transform.parent = _currentLine.transform;
@@ -245,7 +245,7 @@ public class DrawErase : MonoBehaviour
                             if (firstLineV3Arr.Length > 1)
                             {
                                 // Create a new GameObject, LineRenderer and Colliders for the first new line
-                                GameObject firstLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
+                                GameObject firstLineObject = (GameObject)Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
                                 firstLineObject.transform.position = transformPosition;
                                 firstLineObject.transform.parent = _playerLines.transform;
 
@@ -264,7 +264,7 @@ public class DrawErase : MonoBehaviour
                                         Vector2 vector = firstLineV3Arr[i];
                                         Vector2 vector2 = firstLineV3Arr[i + 1];
 
-                                        GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
+                                        GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
                                         currentColliderObject.transform.parent = firstLineObject.transform;
                                         currentColliderObject.transform.localPosition = ((vector + vector2) / 2);
                                         currentColliderObject.transform.right = ((vector2 - vector).normalized);
@@ -282,7 +282,7 @@ public class DrawErase : MonoBehaviour
                             // Create a new GameObject, LineRenderer and Collider for the second new line
                             if (secondLineV3Arr.Length > 1)
                             {
-                                GameObject secondLineObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
+                                GameObject secondLineObject = (GameObject)Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
                                 secondLineObject.transform.position = transformPosition;
                                 secondLineObject.transform.parent = _playerLines.transform;
 
@@ -302,7 +302,7 @@ public class DrawErase : MonoBehaviour
                                         Vector2 vector = secondLineV3Arr[i];
                                         Vector2 vector2 = secondLineV3Arr[i + 1];
 
-                                        GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
+                                        GameObject currentColliderObject = (GameObject)Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.Common.ColliderPrefab]);
                                         currentColliderObject.transform.parent = secondLineObject.transform;
                                         currentColliderObject.transform.localPosition = ((vector + vector2) / 2);
                                         currentColliderObject.transform.right = ((vector2 - vector).normalized);

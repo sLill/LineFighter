@@ -10,7 +10,11 @@ public static class AssetLibrary
 
     public static Dictionary<string, Material> MaterialAssets { get; private set; }
 
-    public static Dictionary<string, GameObject> PrefabAssets { get; private set; }
+    public static Dictionary<string, GameObject> CommonPrefabAssets { get; private set; }
+
+    public static Dictionary<string, GameObject> EnemyPrefabAssets { get; private set; }
+
+    public static Dictionary<string, GameObject> PlayerPrefabAssets { get; private set; }
     #endregion Properties..
 
     #region Methods..
@@ -45,19 +49,30 @@ public static class AssetLibrary
 
     public static void LoadAllPrefabAssets()
     {
-        PrefabAssets = new Dictionary<string, GameObject>();
-        var assets = Resources.LoadAll<GameObject>(Fields.AssetPaths.Prefabs);
+        CommonPrefabAssets = new Dictionary<string, GameObject>();
+        EnemyPrefabAssets = new Dictionary<string, GameObject>();
+        PlayerPrefabAssets = new Dictionary<string, GameObject>();
 
-        //List<GameObject> assets = new List<GameObject>();
+        var commonPrefabAssets = Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsCommon);
+        var enemyPrefabAssets = Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsEnemy);
+        var playerPrefabAssets = Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsPlayer);
 
-        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsCommon).ToList());
-        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsEnemy).ToList());
-        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsPlayer).ToList());
-        //assets.AddRange(Resources.LoadAll<GameObject>(Fields.AssetPaths.PrefabsUI).ToList());
-
-        foreach (GameObject prefab in assets)
+        // Common
+        foreach (GameObject prefab in commonPrefabAssets)
         {
-            PrefabAssets[prefab.name] = prefab;
+            CommonPrefabAssets[prefab.name] = prefab;
+        }
+
+        // Enemy
+        foreach (GameObject prefab in enemyPrefabAssets)
+        {
+            EnemyPrefabAssets[prefab.name] = prefab;
+        }
+
+        // Player
+        foreach (GameObject prefab in playerPrefabAssets)
+        {
+            PlayerPrefabAssets[prefab.name] = prefab;
         }
     }
     #endregion Methods..

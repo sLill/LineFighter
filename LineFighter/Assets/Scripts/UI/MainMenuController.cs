@@ -52,7 +52,7 @@ public class MainMenuController : MonoBehaviour
 
     private void SettingsButton_Clicked()
     {
-        _settingsPanel = Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.UI.SettingsMenuPrefab]);
+        //_settingsPanel = Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.UI.SettingsMenuPrefab]);
     }
     #endregion Events
 

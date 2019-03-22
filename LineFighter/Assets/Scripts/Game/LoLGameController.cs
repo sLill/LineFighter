@@ -27,12 +27,12 @@ public class LoLGameController : MonoBehaviour
     private void SpawnCharacters(Scene current, Scene next)
     {
         // Player
-        Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Player.PlayerPrefab]);
+        Instantiate(AssetLibrary.PlayerPrefabAssets[Fields.Assets.Prefabs.Player.PlayerPrefab]);
 
         // Enemy
         if (next.name == Fields.Scenes.LordOfFunk)
         {
-            Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Enemy.LordOfFunkPrefab]);
+            Instantiate(AssetLibrary.EnemyPrefabAssets[Fields.Assets.Prefabs.Enemy.LordOfFunkPrefab]);
         }
     }
     #endregion Methods..

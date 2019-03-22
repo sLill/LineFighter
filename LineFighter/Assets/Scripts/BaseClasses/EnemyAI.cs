@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour, IEnemy
     private SpriteRenderer _spriteRenderer;
     #endregion Member Variables..
 
-    #region Properties..
+    #region Properties.. 
     public float Hp { get; set; }
 
     public EnemyState State { get; set; }
@@ -62,13 +62,11 @@ public class EnemyAI : MonoBehaviour, IEnemy
     #region Public Methods..
     public virtual void FireProjectile(Vector3 position, Vector3 direction)
     {
-        GameObject projectile = (GameObject)Instantiate(AssetLibrary.PrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
-        projectile.GetComponent<SpriteRenderer>().color = Color.red;
+        GameObject projectile = (GameObject)Instantiate(AssetLibrary.EnemyPrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
 
         projectile.transform.position = position;
         projectile.transform.LookAt(direction, Vector3.forward);
-        projectile.transform.parent = _projectiles.gameObject.transform;
-        projectile.tag = Fields.Tags.EnemyProjectile;
+        projectile.transform.parent = _projectiles.transform;
     }
 
     public virtual void InitializeProperties()

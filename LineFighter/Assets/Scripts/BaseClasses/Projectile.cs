@@ -33,13 +33,13 @@ public class Projectile : MonoBehaviour, IProjectile
         var bottom = (_mainCamera.transform.position.y - 15);
 
         // Destroy projectiles that have left the screen
-        if (this.transform.position.x < left
-            || this.transform.position.x > right
-            || this.transform.position.y < bottom
-            || this.transform.position.y > top)
-        {
-            Destroy(this.gameObject);
-        }
+        //if (this.transform.position.x < left
+        //    || this.transform.position.x > right
+        //    || this.transform.position.y < bottom
+        //    || this.transform.position.y > top)
+        //{
+        //    Destroy(this.gameObject);
+        //}
     }
 
     public virtual void FixedUpdate()

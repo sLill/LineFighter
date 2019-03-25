@@ -60,12 +60,11 @@ public class EnemyAI : MonoBehaviour, IEnemy
     #endregion Events..
 
     #region Public Methods..
-    public virtual void FireProjectile(Vector3 position, Vector3 direction)
+    public virtual void FireProjectile(Vector3 position, Vector3 lookAtPos)
     {
-        GameObject projectile = (GameObject)Instantiate(AssetLibrary.EnemyPrefabAssets[Fields.Assets.Prefabs.Common.Bullet]);
+        GameObject projectile = (GameObject)Instantiate(AssetLibrary.EnemyPrefabAssets[Fields.Assets.Prefabs.Common.Bullet], position, Quaternion.identity);
 
-        projectile.transform.position = position;
-        projectile.transform.LookAt(direction, Vector3.forward);
+        projectile.transform.LookAt(lookAtPos, Vector3.forward);
         projectile.transform.parent = _projectiles.transform;
     }
 

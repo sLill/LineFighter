@@ -15,7 +15,7 @@ public class Line : MonoBehaviour, ILine
     #region MonoBehaviour..
     public virtual void Awake()
     {
-
+        _mainCamera = Camera.main;
     }
     public virtual void Start()
     {

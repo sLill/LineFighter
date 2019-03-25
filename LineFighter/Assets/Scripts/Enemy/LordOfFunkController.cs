@@ -50,17 +50,48 @@ public class LordOfFunkController : EnemyAI
     #endregion Public Methods..
 
     #region Private Methods..
+    private void CharacterBurst()
+    {
+        // Ring of projectiles
+        for (int i = 1; i < 13; i++)
+        {
+            float point = (i * 1.0f) / 15;
+            float angle = (point * Mathf.PI * 2f) + 0.4f;
+
+            Vector3 position = new Vector3();
+            position.x = (Mathf.Sin(angle) + 5f * this.gameObject.transform.position.x) - 2f;
+            position.y = Mathf.Cos(angle) * this.gameObject.transform.position.y;
+
+            //Quaternion rot = Quaternion.FromToRotation(Vector3.forward, this.transform.position - pos);
+
+            position = position + this.gameObject.transform.position;
+
+            Vector3 direction = Vector3.zero;
+
+            FireProjectile(position, direction);
+        }
+    }
+
     private void StaffBurst()
     {
         // Ring of projectiles
-        for (int i = 1; i < 2; i++)
+        for (int i = 0; i < 50; i++)
         {
-            float ang = i * 360;
-            Vector2 pos;
-            pos.x = this.gameObject.transform.position.x + 2f;// * Mathf.Sin(ang * Mathf.Deg2Rad);
-            pos.y = this.gameObject.transform.position.y;// * Mathf.Cos(ang * Mathf.Deg2Rad);
+            float point = (i * 1.0f) / 50;
+            float angle = point * Mathf.PI * 2f;
 
-            FireProjectile(this.gameObject.transform.position, pos);
+            Vector3 lookAtPos = new Vector3();
+            Vector3 position = new Vector3();
+
+            lookAtPos.x = (Mathf.Sin(angle) + 2f * this.gameObject.transform.position.x);
+            lookAtPos.y = (Mathf.Cos(angle) + 2f * this.gameObject.transform.position.y);
+
+            position.x = lookAtPos.x / 2f;
+            position.y = lookAtPos.y / 2f;
+
+            position = position + this.gameObject.transform.position;
+
+            FireProjectile(position, lookAtPos);
         }
     }
     #endregion Private Methods..

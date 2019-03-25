@@ -33,13 +33,13 @@ public class Projectile : MonoBehaviour, IProjectile
         var bottom = (_mainCamera.transform.position.y - 15);
 
         // Destroy projectiles that have left the screen
-        //if (this.transform.position.x < left
-        //    || this.transform.position.x > right
-        //    || this.transform.position.y < bottom
-        //    || this.transform.position.y > top)
-        //{
-        //    Destroy(this.gameObject);
-        //}
+        if (this.transform.position.x < left
+            || this.transform.position.x > right
+            || this.transform.position.y < bottom
+            || this.transform.position.y > top)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public virtual void FixedUpdate()
@@ -49,6 +49,8 @@ public class Projectile : MonoBehaviour, IProjectile
 
     public virtual void OnTriggerEnter2D(Collider2D collider)
     {
+        bool destroy = false;
+
         switch (collider.gameObject.tag)
         {
             case Fields.Tags.Player:
@@ -56,6 +58,7 @@ public class Projectile : MonoBehaviour, IProjectile
                 if (this.transform.tag != Fields.Tags.PlayerProjectile)
                 {
                     playerController.TakeDamage(Damage);
+                    destroy = true;
                 }
                 break;
             case Fields.Tags.Enemy:
@@ -63,16 +66,18 @@ public class Projectile : MonoBehaviour, IProjectile
                 if (this.transform.tag != Fields.Tags.EnemyProjectile)
                 {
                     enemyController.TakeDamage(Damage);
+                    destroy = true;
+                    
                 }
                 break;
-            case Fields.Tags.LineObject:
-                var lineController = collider.gameObject.GetComponent<ILine>();
+            case Fields.Tags.LineObjectCollider:
+                var lineController = collider.gameObject.GetComponentInParent<ILine>();
                 lineController.TakeDamage(this);
+                destroy = true;
                 break;
         }
 
-        if (collider.gameObject.transform.tag != Fields.Tags.PlayerProjectile
-            && collider.gameObject.transform.tag != Fields.Tags.EnemyProjectile)
+        if (destroy)
         {
             Destroy(this.gameObject);
         }

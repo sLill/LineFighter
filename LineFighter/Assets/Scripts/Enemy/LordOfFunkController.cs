@@ -29,7 +29,7 @@ public class LordOfFunkController : EnemyAI
         // Staff burst
         if (_staffBurstCd > 5)
         {
-            StartCoroutine("StaffBeam");
+            StartCoroutine("StaffSpiralQuad");
             _staffBurstCd = 0;
         }
         else
@@ -74,13 +74,37 @@ public class LordOfFunkController : EnemyAI
 
     private IEnumerator StaffBeam()
     {
+        Vector3 lookAtPos = new Vector3();
+        Vector3 position = new Vector3();
+
         for (int i = 0; i < 50; i++)
         {
             float point = (i * 1.0f) / 50;
             float angle = point * Mathf.PI * 2f;
 
-            Vector3 lookAtPos = new Vector3();
-            Vector3 position = new Vector3();
+            lookAtPos.x = (Mathf.Sin(angle) + 2f * this.gameObject.transform.position.x);
+            lookAtPos.y = (Mathf.Cos(angle) + 2f * this.gameObject.transform.position.y);
+
+            position.x = lookAtPos.x / 2f;
+            position.y = lookAtPos.y / 2f;
+
+            position = position + this.gameObject.transform.position;
+
+            FireProjectile(position, lookAtPos);
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator StaffSpiral(int startingIndex, float timeBetween)
+    {
+        Vector3 lookAtPos = new Vector3();
+        Vector3 position = new Vector3();
+
+        for (int i = startingIndex; i < startingIndex + 150; i++)
+        {
+            float point = (i * 1.0f) / 50;
+            float angle = point * Mathf.PI * 2f;
 
             lookAtPos.x = (Mathf.Sin(angle) + 2f * this.gameObject.transform.position.x);
             lookAtPos.y = (Mathf.Cos(angle) + 2f * this.gameObject.transform.position.y);
@@ -92,20 +116,33 @@ public class LordOfFunkController : EnemyAI
 
             FireProjectile(position, lookAtPos);
 
-            yield return null;
+            yield return new WaitForSeconds(timeBetween);
         }
+    }
+
+    private void StaffSpiralQuad()
+    {
+        IEnumerator staffSpiralCoroutineOne = StaffSpiral(0, 0.1f);
+        IEnumerator staffSpiralCoroutineTwo = StaffSpiral(37, 0.1f);
+        IEnumerator staffSpiralCoroutineThree = StaffSpiral(74, 0.1f);
+        IEnumerator staffSpiralCoroutineFour = StaffSpiral(111, 0.1f);
+
+        StartCoroutine(staffSpiralCoroutineOne);
+        StartCoroutine(staffSpiralCoroutineOne);
+        StartCoroutine(staffSpiralCoroutineOne);
+        StartCoroutine(staffSpiralCoroutineOne);
     }
 
     private void StaffBurst()
     {
+        Vector3 lookAtPos = new Vector3();
+        Vector3 position = new Vector3();
+
         // Ring of projectiles
         for (int i = 0; i < 50; i++)
         {
             float point = (i * 1.0f) / 50;
             float angle = point * Mathf.PI * 2f;
-
-            Vector3 lookAtPos = new Vector3();
-            Vector3 position = new Vector3();
 
             lookAtPos.x = (Mathf.Sin(angle) + 2f * this.gameObject.transform.position.x);
             lookAtPos.y = (Mathf.Cos(angle) + 2f * this.gameObject.transform.position.y);

@@ -27,9 +27,9 @@ public class LordOfFunkController : EnemyAI
         base.Update();
 
         // Staff burst
-        if (_staffBurstCd > 2)
+        if (_staffBurstCd > 5)
         {
-            StaffBurst();
+            StartCoroutine("StaffBeam");
             _staffBurstCd = 0;
         }
         else
@@ -69,6 +69,30 @@ public class LordOfFunkController : EnemyAI
             Vector3 direction = Vector3.zero;
 
             FireProjectile(position, direction);
+        }
+    }
+
+    private IEnumerator StaffBeam()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            float point = (i * 1.0f) / 50;
+            float angle = point * Mathf.PI * 2f;
+
+            Vector3 lookAtPos = new Vector3();
+            Vector3 position = new Vector3();
+
+            lookAtPos.x = (Mathf.Sin(angle) + 2f * this.gameObject.transform.position.x);
+            lookAtPos.y = (Mathf.Cos(angle) + 2f * this.gameObject.transform.position.y);
+
+            position.x = lookAtPos.x / 2f;
+            position.y = lookAtPos.y / 2f;
+            
+            position = position + this.gameObject.transform.position;
+
+            FireProjectile(position, lookAtPos);
+
+            yield return null;
         }
     }
 

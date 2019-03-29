@@ -1,4 +1,6 @@
-﻿public interface ILine
+﻿using UnityEngine;
+
+public interface ILine
 {
     void TakeDamage(IProjectile projectile);
 }

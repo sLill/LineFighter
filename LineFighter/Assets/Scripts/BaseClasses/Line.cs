@@ -5,7 +5,9 @@ using UnityEngine;
 public class Line : MonoBehaviour, ILine
 {
     #region Member Variables..
-    Camera _mainCamera;
+    private Camera _mainCamera;
+    private ParticleSystem _currentLineFX;
+    private ParticleSystem.EmitParams _lineParticleParams = new ParticleSystem.EmitParams();
     #endregion Member Variables..
 
     #region Properties..
@@ -15,6 +17,7 @@ public class Line : MonoBehaviour, ILine
     #region MonoBehaviour..
     public virtual void Awake()
     {
+        _currentLineFX = this.GetComponent<ParticleSystem>();
         _mainCamera = Camera.main;
     }
     public virtual void Start()
@@ -44,7 +47,17 @@ public class Line : MonoBehaviour, ILine
     #region Public Methods..
     public void TakeDamage(IProjectile projectile)
     {
+        var renderer = this.gameObject.GetComponent<LineRenderer>();
+        _currentLineFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
+        Vector3 position;
+        for (int i = 0; i < renderer.positionCount; i++)
+        {
+            position = renderer.transform.TransformPoint(renderer.GetPosition(i));
+
+            _lineParticleParams.position = position;
+            _currentLineFX.Emit(_lineParticleParams, 10);
+        }
     }
     #endregion Public Methods..
 

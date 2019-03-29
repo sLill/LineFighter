@@ -96,12 +96,12 @@ public class LordOfFunkController : EnemyAI
         }
     }
 
-    private IEnumerator StaffSpiral(int startingIndex, float timeBetween)
+    private IEnumerator StaffSpiral()
     {
         Vector3 lookAtPos = new Vector3();
         Vector3 position = new Vector3();
 
-        for (int i = startingIndex; i < startingIndex + 150; i++)
+        for (int i = 0; i < 150; i++)
         {
             float point = (i * 1.0f) / 50;
             float angle = point * Mathf.PI * 2f;
@@ -116,21 +116,32 @@ public class LordOfFunkController : EnemyAI
 
             FireProjectile(position, lookAtPos);
 
-            yield return new WaitForSeconds(timeBetween);
+            yield return null;
         }
     }
 
-    private void StaffSpiralQuad()
+    private IEnumerator StaffSpiralQuad()
     {
-        IEnumerator staffSpiralCoroutineOne = StaffSpiral(0, 0.1f);
-        IEnumerator staffSpiralCoroutineTwo = StaffSpiral(37, 0.1f);
-        IEnumerator staffSpiralCoroutineThree = StaffSpiral(74, 0.1f);
-        IEnumerator staffSpiralCoroutineFour = StaffSpiral(111, 0.1f);
+        Vector3 lookAtPos = new Vector3();
+        Vector3 position = new Vector3();
 
-        StartCoroutine(staffSpiralCoroutineOne);
-        StartCoroutine(staffSpiralCoroutineOne);
-        StartCoroutine(staffSpiralCoroutineOne);
-        StartCoroutine(staffSpiralCoroutineOne);
+        for (int i = 0; i < 150; i++)
+        {
+            float point = (i * 1.0f) / 50;
+            float angle = point * Mathf.PI * 2f;
+
+            lookAtPos.x = (Mathf.Sin(angle) + 2f * this.gameObject.transform.position.x);
+            lookAtPos.y = (Mathf.Cos(angle) + 2f * this.gameObject.transform.position.y);
+
+            position.x = lookAtPos.x / 2f;
+            position.y = lookAtPos.y / 2f;
+
+            position = position + this.gameObject.transform.position;
+
+            FireProjectile(position, lookAtPos);
+
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     private void StaffBurst()

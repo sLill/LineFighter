@@ -112,7 +112,7 @@ public class DrawErase : MonoBehaviour
                 _currentLine = (GameObject)Instantiate(AssetLibrary.CommonPrefabAssets[Fields.Assets.Prefabs.Common.LineObjectPrefab]);
                 _currentLine.transform.parent = GameObject.FindGameObjectWithTag(Fields.GameObjects.PlayerLines).transform;
                 _currentLine.tag = Fields.Tags.LineObject;
-                _currentLineFX = _currentLine.GetComponent<ParticleSystem>();
+                //_currentLineFX = _currentLine.GetComponent<ParticleSystem>();
                 _currentLineRenderer = _currentLine.GetComponent<LineRenderer>();
 
                 SetLineProperties(_currentLineRenderer, _playerController.Line);
@@ -122,8 +122,8 @@ public class DrawErase : MonoBehaviour
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                _lineParticleParams.position = mousePos;
-                _currentLineFX.Emit(_lineParticleParams, 10);
+                //_lineParticleParams.position = mousePos;
+                //_currentLineFX.Emit(_lineParticleParams, 10);
 
                 if (!_listPoint.Contains(mousePos))
                 {

@@ -106,7 +106,7 @@ public class Player : MonoBehaviour, IPlayer
         this.Line.RefillRate = 10;
         this.Line.ResourceCurrent = 1000;
         this.Line.ResourceMax = 1000;
-        this.Line.UseGravity = false;
+        this.Line.UseGravity = true;
         this.Line.Thickness = 0.1;
     }
     #endregion Private Methods..

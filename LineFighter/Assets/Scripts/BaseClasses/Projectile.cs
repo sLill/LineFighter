@@ -71,7 +71,7 @@ public class Projectile : MonoBehaviour, IProjectile
                 }
                 break;
             case Fields.Tags.LineObjectCollider:
-                var lineController = collider.gameObject.GetComponentInParent<ILine>();
+                var lineController = collider.gameObject.GetComponentInParent<ILine>();              
                 lineController.TakeDamage(this);
                 destroy = true;
                 break;
